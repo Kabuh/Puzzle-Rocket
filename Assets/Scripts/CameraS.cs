@@ -9,8 +9,8 @@ public class CameraS : MonoBehaviour
 
     private void Update()
     {
-        transform.Translate(0f, speed*Time.deltaTime, 0f);
-        if(transform.position.y>=currentLevel*8f)
+        transform.Translate(0f, speed * Time.deltaTime, 0f);
+        if (transform.position.y >= currentLevel * 8f)
         {
             Game.Instance.SpawnNewLevel(++currentLevel);
         }
@@ -19,6 +19,10 @@ public class CameraS : MonoBehaviour
     public void ResetCamera()
     {
         currentLevel = 1;
-        transform.position = new Vector3(0f,0f,-10f);
-    }    
+        transform.position = new Vector3(0f, 0f, -10f);
+    }
+
+    public void StopSpeed() {
+        speed = 0;
+    }
 }

@@ -16,6 +16,10 @@ public class Block : MonoBehaviour
     private Vector3 destination;
 
     private bool isMoving;
+
+    public void SetNewLocation(Vector3 destination) {
+        transform.position = destination;
+    }
     
 
     public void ResetElementsCells()
