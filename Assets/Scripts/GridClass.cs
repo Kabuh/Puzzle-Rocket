@@ -32,25 +32,27 @@ public class GridClass
         SetOrigin();
     }
 
-    public Cell GetNeighbour(Directions direction, Cell origin) 
+    
+    public Cell GetNeighbour(Directions direction, Cell origin, int jump) 
     {
         int xPos = origin.XPos;
         int yPos = origin.YPos;
         switch (direction)                  // get neighbour coordinates
         {
             case Directions.Up:
-                yPos += 1;
+                yPos += jump;
                 break;
             case Directions.Left:
-                xPos -= 1;
+                xPos -= jump;
                 break;
             case Directions.Right:
-                xPos += 1;
+                xPos += jump;
                 break;
             case Directions.Down:
-                yPos -= 1;
+                yPos -= jump;
                 break;
         }
+    
 
         if (xPos >= 0 && xPos < width)      // read cell by coordinates
         {            
@@ -63,12 +65,19 @@ public class GridClass
         return null;
     }
 
-    public Cell WorldPosToCell(Vector2 worldPos)    //read cell by vector3
+    public Cell WorldPosToCell(Vector2 worldPos)    //read cell by vector2
     {
         Vector2 diff = worldPos - origin;
         int x = (int)(diff.x / step);
         int y = (int)(diff.y / step);
         return cells[x, y];
+    }
+
+    public Vector2 CellCoordToVect(int x, int y) {
+        Vector2 holder;
+        holder.x = x * step + origin.x;
+        holder.y = y * step + origin.y;
+        return holder;
     }
 
     public void ResetGrid()                         //rebuild grid with same paste data

@@ -8,19 +8,70 @@ public class Block : MonoBehaviour
     public bool immovable;
     [Header("Elements")]
     public Element[] elements;
-    public Element[] uElements;
-    public Element[] lElements;
-    public Element[] rElements;
-    public Element[] dElements;
+    //public Element[] uElements;
+    //public Element[] lElements;
+    //public Element[] rElements;
+    //public Element[] dElements;
 
     private Vector3 destination;
 
     private bool isMoving;
 
-    public void SetNewLocation(Vector3 destination) {
-        transform.position = destination;
+    private float clampUP;
+    private float clampDOWN;
+    private float clampLEFT;
+    private float clampRIGHT;
+    Vector3 ClampedVector;
+    Vector2 currentLocation;
+
+    bool setInCell = true;
+
+    public void SetInstantLocation(Vector3 cursorLoc, Directions dir) {
+        CleanOriginalElements(elements);
+        DoCheck(dir);
+        setInCell = false;
+        ClampedVector = new Vector3(Mathf.Clamp(cursorLoc.x, clampLEFT, clampRIGHT), Mathf.Clamp(cursorLoc.y, clampDOWN, clampUP), cursorLoc.z);
+        transform.position = ClampedVector; 
     }
-    
+
+    public void SetDestinationLocation()
+    {
+        Vector2 originVect = Game.Instance.CombinedGrid.origin;
+        float cellDistances = Game.Instance.CombinedGrid.step;
+        currentLocation = transform.position;
+
+
+        int lowestAmountOfIndexX = (int)((currentLocation.x - originVect.x) / cellDistances);
+        float leftoverX = (currentLocation.x - originVect.x) - (cellDistances*lowestAmountOfIndexX);
+
+        if (leftoverX < cellDistances / 2)
+        {
+            destination.x = originVect.x + (lowestAmountOfIndexX * cellDistances);
+        }
+        else
+        {
+            destination.x = originVect.x + (++lowestAmountOfIndexX * cellDistances);
+        }
+
+        int lowestAmountOfIndexY = (int)((currentLocation.y - originVect.y) / cellDistances);
+        float leftoverY = (currentLocation.y - originVect.y) - (cellDistances * lowestAmountOfIndexY);
+
+        if (leftoverY < cellDistances / 2)
+        {
+            destination.y = originVect.y + (lowestAmountOfIndexY * cellDistances);
+        }
+        else
+        {
+            destination.y = originVect.y + (++lowestAmountOfIndexY * cellDistances);
+        }
+
+
+
+
+        StartCoroutine(Moving(destination));
+        SetNewElementsLocations(elements, destination);
+    }
+
 
     public void ResetElementsCells()
     {
@@ -30,8 +81,59 @@ public class Block : MonoBehaviour
         }
     }
 
-    public void Move(Directions dir)                        //setting movement direction
-    {
+    private void DoCheck(Directions dir) {
+        if (setInCell) {
+            MovementAllowance(dir);
+        }
+    }
+
+
+    public void MovementAllowance(Directions dir) {
+        if (immovable) {                        // check if moving is possible
+            clampUP = transform.position.y;
+            clampDOWN = transform.position.y;
+            clampLEFT = transform.position.x;
+            clampRIGHT = transform.position.x;
+            return;
+        }
+        switch (dir) {
+            case Directions.Horizontal:
+                clampUP = transform.position.y;
+                clampDOWN = transform.position.y;
+                if (!NeighboursAreEmpty(elements, Directions.Left)) {
+                    clampLEFT = transform.position.x;
+                }else{
+                    clampLEFT = transform.position.x - Game.Instance.CombinedGrid.step;
+                }
+                if (!NeighboursAreEmpty(elements, Directions.Right)) {
+                    clampRIGHT = transform.position.x;
+                }else{
+                    clampRIGHT = transform.position.x + Game.Instance.CombinedGrid.step;
+                }
+                break;
+                
+
+            case Directions.Vertical:
+                clampLEFT = transform.position.x;
+                clampRIGHT = transform.position.x;
+                if (!NeighboursAreEmpty(elements, Directions.Up)) {
+                    clampUP = transform.position.y;
+                }
+                else{
+                    clampUP = transform.position.y + Game.Instance.CombinedGrid.step;
+                }
+                if (!NeighboursAreEmpty(elements, Directions.Down)) {
+                    clampDOWN = transform.position.y;
+                }
+                else{
+                    clampDOWN = transform.position.y - Game.Instance.CombinedGrid.step;
+                }
+                break;
+        }
+    }
+    /*
+    public void Move(Directions dir){                        //setting movement direction
+    
         if (immovable)
             return;        
         // check if moving is possible
@@ -62,27 +164,33 @@ public class Block : MonoBehaviour
                 ChangeElements(lElements, rElements,dir);
                 break;
         }
-        StartCoroutine(Moving(destination));
+        
     }
+    */
 
-    IEnumerator Moving(Vector3 destination)             //actual movement coroutine
-    {
+
+    //actual movement coroutine
+    IEnumerator Moving(Vector3 destination){
         isMoving = true;
-        while (isMoving)
-        {
+        while (isMoving){
             transform.position = Vector3.MoveTowards(transform.position, destination, moveSpeed * Time.deltaTime);
-            if (transform.position == destination)
+            if (transform.position == destination) {
+                setInCell = true;
                 isMoving = false;
+            }
             yield return null;
         }
     }
 
-    public void StopMoving()                            //switch that stops
+
+    //switch that stops
+    public void StopMoving()                            
     {
         isMoving = false;
     }
 
-    private bool NeighboursAreEmpty(Element[] elements, Directions dir)         //empty checker
+    //empty checker
+    private bool NeighboursAreEmpty(Element[] elements, Directions dir)         
     {
         for(int i=0;i<elements.Length;i++)
         {
@@ -94,7 +202,28 @@ public class Block : MonoBehaviour
         return true;
     }
 
-    private void ChangeElements(Element[] elementsFree, Element[] elementsFill, Directions dir)         //
+    //clear cell info on departure
+    private void CleanOriginalElements(Element[] elem) {
+        foreach (var item in elem)
+        {
+            item.Cell.IsEmpty = true;
+        }
+    }
+
+    //rewrite cell info on arrival
+    private void SetNewElementsLocations(Element[] NewElem, Vector2 worldPos) {
+        foreach (var item in NewElem)
+        {
+            Cell cell = item.WorldPosToCell(worldPos);
+            if (cell != null)
+            {
+                cell.IsEmpty = false;
+                item.ShiftCellByPos(worldPos);
+            }
+        }
+    }
+
+    private void ChangeElements(Element[] elementsFree, Element[] elementsFill, Vector2 worldPos)         //rewritre of cell fill info
     {   
         foreach(var item in elementsFree)
         {
@@ -103,14 +232,16 @@ public class Block : MonoBehaviour
 
         foreach(var item in elementsFill)
         {
-            Cell cell = item.GetNeighbourCell(dir);
-            if (cell != null)
+            Cell cell = item.WorldPosToCell(worldPos);
+            if (cell != null) {
                 cell.IsEmpty = false;
+            }
+            
         }
 
         foreach (var item in elements)
         {
-            item.ShiftCell(dir);
+            item.ShiftCellByPos(worldPos);
         }
     }
 
@@ -118,8 +249,10 @@ public class Block : MonoBehaviour
     {
         foreach(Element e in elements)
         {
-            if (e.Cell.YPos <= 7)
+            if (e.Cell.YPos <= 7) {
                 return true;
+            }
+            
         }
         return false;
     }

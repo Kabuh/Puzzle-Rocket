@@ -43,7 +43,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4a9fbc845f3b74346bbace400de4ba0a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isLower: 0
 --- !u!1001 &2453611168204964171
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -121,17 +120,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 3360843191516176872, guid: ce43c448ac1f11f4b999e1648575aab4,
-        type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 8560703847697949825, guid: ce43c448ac1f11f4b999e1648575aab4,
-        type: 3}
-      propertyPath: m_Sprite
-      value: 
-      objectReference: {fileID: 21300000, guid: 915610b6198d54e45805603f12fb6db2,
-        type: 3}
     - target: {fileID: 2462019847139971086, guid: ce43c448ac1f11f4b999e1648575aab4,
         type: 3}
       propertyPath: elements.Array.size
@@ -197,6 +185,17 @@ PrefabInstance:
       propertyPath: dElements.Array.data[1]
       value: 
       objectReference: {fileID: 1677034185612019694}
+    - target: {fileID: 3360843191516176872, guid: ce43c448ac1f11f4b999e1648575aab4,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8560703847697949825, guid: ce43c448ac1f11f4b999e1648575aab4,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: ed56f55a6845181468d9a2cfacfea435,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ce43c448ac1f11f4b999e1648575aab4, type: 3}
 --- !u!4 &8905403310720920004 stripped

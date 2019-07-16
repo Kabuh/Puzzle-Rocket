@@ -71,8 +71,10 @@ public class Game : MonoBehaviour
 
     private void SpawnFirstLevel()
     {
-        if(!isDesigner)
+        if (!isDesigner) {
             SpawnLevel(0f, LevelManager.Instance.levels["1"]);
+        }
+        
         count++;        
     }
 

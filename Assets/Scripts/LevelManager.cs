@@ -60,13 +60,17 @@ public class LevelManager : MonoBehaviour
 
         string[] files = Directory.GetFiles(Path.Combine(Application.streamingAssetsPath, "Levels"));
 
-        if (files == null)
+        if (files == null) {
             return;
+        }
+        
 
         foreach (var item in files) //parser
         {
-            if (Path.GetExtension(item) != ".json")
+            if (Path.GetExtension(item) != ".json") {
                 continue;
+            }
+            
             LevelData levelData = JsonUtility.FromJson<LevelData>(File.ReadAllText(item));
             string levelName = Path.GetFileNameWithoutExtension(item);
             levels.Add(levelName, levelData);

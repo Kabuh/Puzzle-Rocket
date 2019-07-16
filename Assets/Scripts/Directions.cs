@@ -1,7 +1,9 @@
-﻿public enum Directions          //no idea what that is for
+﻿public enum Directions          
 {
     Up,
-    Left,
+    Down,
     Right,
-    Down
+    Left,
+    Horizontal,
+    Vertical
 }
