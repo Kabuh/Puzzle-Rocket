@@ -91,6 +91,7 @@
     <Compile Include="Assets\Tilemap\Tiles\Weighted Random Tile\WeightedRandomTile.cs" />
     <None Include="Assets\Tilemap\Tiles\Rule Tile\ScriptTemplates\NewCustomRuleTile.cs.txt" />
     <None Include="Assets\Tilemap\Brushes\Tint Brush Smooth\Shaders\TintedTilemap.shader" />
+    <None Include="Assets\StreamingAssets\Levels\level 1 guide.txt" />
     <Reference Include="Unity.Timeline.Editor">
       <HintPath>R:/Projects/Editor 1/Puzzle-Rocket/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
     </Reference>

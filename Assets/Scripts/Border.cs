@@ -13,7 +13,7 @@ public class Border : MonoBehaviour
         {
             if (!CheatMode)
             {
-                Game.Instance.GameOver();
+                GameOver();
             }
 
         }
@@ -22,6 +22,10 @@ public class Border : MonoBehaviour
     public void CheatButtonActivate (){
         CheatMode = true;
         Debug.Log("cheat mode activated");
+    }
+
+    public void GameOver() {
+        Game.Instance.GameOver();
     }
     
 }

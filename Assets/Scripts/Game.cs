@@ -22,6 +22,9 @@ public class Game : MonoBehaviour
 
     private int count = 0;
 
+    public delegate void StartEvent();
+    public static event StartEvent CreateData;
+
     private void Awake()
     {
         #region Singleton
@@ -39,9 +42,12 @@ public class Game : MonoBehaviour
         CombinedGrid = new GridClass(5, 16, 1);
 
         PopulatePrefabs();
+        
 
         designer = FindObjectOfType<Designer>();
         designer?.ClearLevel();
+
+
     }
 
     private void PopulatePrefabs()
@@ -60,13 +66,15 @@ public class Game : MonoBehaviour
             player.gameObject.SetActive(true);
             designer.background.SetActive(false);
         }
+
         NewGameSetup();
     }
 
     private void NewGameSetup()
-    {        
+    {
+        CreateData();
         SpawnFirstLevel();
-        SpawnSecondLevel();
+        //SpawnSecondLevel();
     }
 
     private void SpawnFirstLevel()
@@ -137,6 +145,7 @@ public class Game : MonoBehaviour
             Destroy(item.gameObject);
         }
         blocks.Clear();
+        LevelManager.Instance.LevelDestroyer();
     }
 
     private void DestroyLowerBlocks()

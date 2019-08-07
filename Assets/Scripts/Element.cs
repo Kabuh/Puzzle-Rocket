@@ -28,7 +28,7 @@ public class Element : MonoBehaviour
         }
         catch (System.IndexOutOfRangeException)
         {
-            Debug.Log(transform.position);
+            //Debug.Log(transform.position);
         }
     }
     

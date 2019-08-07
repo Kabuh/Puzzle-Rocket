@@ -1,5 +1,5 @@
 ﻿[System.Serializable]
-public class LevelData                  //item collector?
+public class LevelData                  //keeper of blocks and probably elements by parenting
 {
     public LevelDataItem[] items;
 }

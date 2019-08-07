@@ -64,10 +64,6 @@ public class Block : MonoBehaviour
         {
             destination.y = originVect.y + (++lowestAmountOfIndexY * cellDistances);
         }
-
-
-
-
         StartCoroutine(Moving(destination));
         SetNewElementsLocations(elements, destination);
     }
@@ -236,7 +232,6 @@ public class Block : MonoBehaviour
             if (cell != null) {
                 cell.IsEmpty = false;
             }
-            
         }
 
         foreach (var item in elements)
@@ -251,8 +246,7 @@ public class Block : MonoBehaviour
         {
             if (e.Cell.YPos <= 7) {
                 return true;
-            }
-            
+            } 
         }
         return false;
     }
