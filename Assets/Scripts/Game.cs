@@ -14,6 +14,7 @@ public class Game : MonoBehaviour
     public GridClass CombinedGrid { get; set; }
 
     public bool isDesigner;
+    public bool isTestMode;
 
     private Dictionary<string, GameObject> prefabs = new Dictionary<string, GameObject>();
     private List<Block> blocks = new List<Block>();
@@ -67,7 +68,14 @@ public class Game : MonoBehaviour
             designer.background.SetActive(false);
         }
 
-        NewGameSetup();
+        if(isTestMode)
+        {
+            TestGameSetup();
+        }
+        else
+        {
+            NewGameSetup();
+        }
     }
 
     private void NewGameSetup()
@@ -190,6 +198,17 @@ public class Game : MonoBehaviour
         ResetPlayer();
         NewGameSetup();
         ResetCamera();
+    }
+
+    private void TestGameSetup()
+    {
+        cameraScript.enabled = false;
+        SpawnPremadeLevel();
+    }
+
+    private void SpawnPremadeLevel()
+    {
+        SpawnLevel(0f, LevelManager.Instance.premadeLevels["1"]);
     }
 
 

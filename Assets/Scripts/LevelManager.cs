@@ -10,6 +10,8 @@ public class LevelManager : MonoBehaviour
 
     public Dictionary<string, LevelData> levels { get; private set; }
 
+    public Dictionary<string, LevelData> premadeLevels { get; private set; }
+
     public static LevelManager Instance { get; private set; }
 
     int[] sizeChancesIftwo = { 45, 15, 10, 15, 5, 10 };
@@ -42,7 +44,7 @@ public class LevelManager : MonoBehaviour
         #endregion
 
         Game.CreateData += CreateNewLevel;
-        //LoadLevels();
+        LoadLevels();
     }
 
 
@@ -73,10 +75,10 @@ public class LevelManager : MonoBehaviour
     //    Debug.Log("saved");
     //}
 
-    /*
+    
     public void LoadLevels() // level reader
     {
-        levels = new Dictionary<string, LevelData>();
+        premadeLevels = new Dictionary<string, LevelData>();
 
         //generating levels layout save directory
         string[] files = Directory.GetFiles(Path.Combine(Application.streamingAssetsPath, "Levels"));
@@ -100,10 +102,10 @@ public class LevelManager : MonoBehaviour
             string levelName = Path.GetFileNameWithoutExtension(item);
 
             //adding new data to all levels stack - THERE IS A STACK
-            levels.Add(levelName, levelData);
+            premadeLevels.Add(levelName, levelData);
         }
     }
-    */
+    
 
     List<LevelDataItem> levelDataItems = new List<LevelDataItem>();
 
