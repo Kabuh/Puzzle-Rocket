@@ -6,6 +6,7 @@ public class Player : MonoBehaviour
 {
     Block playerBlock;
 
+
     private void Start()                        //starship block
     {
         playerBlock = GetComponent<Block>();

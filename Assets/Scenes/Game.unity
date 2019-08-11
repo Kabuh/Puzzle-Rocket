@@ -949,6 +949,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 306575829}
   m_CullTransparentMesh: 0
+--- !u!114 &318540790 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8023342222629558523, guid: aabab2930f8725e41b11822863b95310,
+    type: 3}
+  m_PrefabInstance: {fileID: 428908587}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4a9fbc845f3b74346bbace400de4ba0a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &321417744
 GameObject:
   m_ObjectHideFlags: 0
@@ -1121,6 +1133,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 8368974732652246154, guid: aabab2930f8725e41b11822863b95310,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7805734050501792192, guid: aabab2930f8725e41b11822863b95310,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1175,6 +1192,21 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8913146469171535909, guid: aabab2930f8725e41b11822863b95310,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8913146469171535909, guid: aabab2930f8725e41b11822863b95310,
+        type: 3}
+      propertyPath: m_Name
+      value: playerElement
+      objectReference: {fileID: 0}
+    - target: {fileID: 9002154684071436571, guid: aabab2930f8725e41b11822863b95310,
+        type: 3}
+      propertyPath: m_Name
+      value: playerSprite
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: aabab2930f8725e41b11822863b95310, type: 3}
@@ -2154,6 +2186,7 @@ MonoBehaviour:
   - {fileID: 8370872954291148963, guid: e7331c5218242df4db926c7a1266dd89, type: 3}
   cameraScript: {fileID: 519420033}
   player: {fileID: 1549049977}
+  playerElement: {fileID: 318540790}
   isDesigner: 0
   isTestMode: 0
 --- !u!4 &1155832399
@@ -3569,7 +3602,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1651406679
 Transform:
   m_ObjectHideFlags: 0
@@ -4191,7 +4224,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2056661096
 Transform:
   m_ObjectHideFlags: 0

@@ -7,8 +7,9 @@ using UnityEngine.UI;
 public class LevelManager : MonoBehaviour
 {
     [SerializeField] private string levelName;
+    private int levelCounter;
 
-    public Dictionary<string, LevelData> levels { get; private set; }
+    public Dictionary<int, LevelData> levels { get; private set; }
 
     public Dictionary<string, LevelData> premadeLevels { get; private set; }
 
@@ -18,7 +19,7 @@ public class LevelManager : MonoBehaviour
     int[] sizeChancesIfOne = { 45, 20, 10, 15, 10 };
     int[] sizeChancesIfNone = { 65, 25, 10 };
     int[] typeChances = { 30, 10, 60 };
-
+    GridClass CreatorGrid;
     public static string ArrayToString(int[] arr)
     {
         List<object> lst = new List<object>();
@@ -31,6 +32,8 @@ public class LevelManager : MonoBehaviour
 
     private void Awake()
     {
+        levelCounter = 1;
+
         #region Singleton
 
         if (Instance == null)
@@ -41,7 +44,7 @@ public class LevelManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
-        #endregion
+        #endregion        
 
         Game.CreateData += CreateNewLevel;
         LoadLevels();
@@ -110,25 +113,29 @@ public class LevelManager : MonoBehaviour
     List<LevelDataItem> levelDataItems = new List<LevelDataItem>();
 
     void CreateNewLevel() {
-        if (levels?.Count > 0) {
-            //levels.Clear();
-        }
-        levels = new Dictionary<string, LevelData>();
+        CreatorGrid = new GridClass(Game.Instance.CombinedGrid.width, Game.Instance.CombinedGrid.halfHeight, Game.Instance.CombinedGrid.step, "CreatorGrid");
+        
         levelName = "1";
 
+        ClearGrid(CreatorGrid);
         RandomLevelCreator();
 
         LevelData levelData = new LevelData();
         levelData.items = levelDataItems.ToArray();
 
-        levels.Add(levelName, levelData);
+        levels = new Dictionary<int, LevelData>();
 
-        Debug.Log("level 1 created with key" + levelName);
+        levels.Add(levelCounter, levelData);
+
+        Debug.Log("level 1 created with key " + levelCounter);
+        levelDataItems.Clear();
+        levelCounter++;
     }
 
     public void LevelDestroyer() {
         levelDataItems.Clear();
         levels.Clear();
+        levelCounter = 1;
     }
 
     /// ////////////////////////////////////////
@@ -185,7 +192,7 @@ public class LevelManager : MonoBehaviour
         NullCheckerEqual(Parser(testerUIprompts[2]), sizeChancesIfNone);
         NullCheckerEqual(Parser(testerUIprompts[3]), typeChances);
 
-        testField.text = "New chances are " + ArrayToString(typeChances) + "|" + ArrayToString(sizeChancesIftwo) + "|" + ArrayToString(sizeChancesIfOne) + "|" + ArrayToString(sizeChancesIfNone);
+        testField.text = "New chances are: \n " + ArrayToString(typeChances) + "| \n" + ArrayToString(sizeChancesIftwo) + "| /n" + ArrayToString(sizeChancesIfOne) + "| /n" + ArrayToString(sizeChancesIfNone);
     }
 
     void NullCheckerEqual(int[] newData, int[]dataSlot) {
@@ -226,7 +233,7 @@ public class LevelManager : MonoBehaviour
 
     
     public void TestIsEmpty() {
-        foreach (var cell in Game.Instance.CombinedGrid.cells) {
+        foreach (var cell in CreatorGrid.cells) {
             if (cell.IsEmpty)
             {
                 testField.text += "0 ";
@@ -239,16 +246,16 @@ public class LevelManager : MonoBehaviour
 
     public void RandomLevelCreator() {
         int x, y;
-        for (y = 0; y < Game.Instance.CombinedGrid.height; y++) {
-            for (x = 0; x < Game.Instance.CombinedGrid.width; x++) {
+        for (y = 0; y < CreatorGrid.height; y++) {
+            for (x = 0; x < CreatorGrid.width; x++) {
 
                 int[] Offset = new int[2];
 
-                if (Game.Instance.CombinedGrid.cells[x, y].IsEmpty)
+                if (CreatorGrid.cells[x, y].IsEmpty)
                 {
-                    if (x <= 3 && Game.Instance.CombinedGrid.cells[x + 1, y].IsEmpty)
+                    if (x <= 3 && CreatorGrid.cells[x + 1, y].IsEmpty)
                     {
-                        if (x <= 2 && Game.Instance.CombinedGrid.cells[x + 2, y].IsEmpty)
+                        if (x <= 2 && CreatorGrid.cells[x + 2, y].IsEmpty)
                         {
                             CasingType(x, y, ComplexRando(sizeChancesIftwo), ComplexRando(typeChances), out Offset);
                         }
@@ -269,18 +276,18 @@ public class LevelManager : MonoBehaviour
                             for (int l = 0; l <= Offset[0]; l++)
                             {
                                 if (k == 0 && l == 0) {
-                                    continue;
+                                    
                                 }
                                 else
                                 {
                                     int newX = x + l;
                                     int newY = y + k;
-                                    if (newY >= Game.Instance.CombinedGrid.height)
+                                    if (newY >= CreatorGrid.height)
                                     {
-                                        continue;
+                                        
                                     }
                                     else {
-                                        Game.Instance.CombinedGrid.cells[x + l, y + k].IsEmpty = false;
+                                        CreatorGrid.cells[x + l, y + k].IsEmpty = false;
                                     }
                                 }
                             }
@@ -367,9 +374,7 @@ public class LevelManager : MonoBehaviour
     void GenerateEmpty  () { testField.text += "[_"; }
 
     void GenerateBlock(string name, int x, int y) {
-        float totalX = Game.Instance.CombinedGrid.origin.x + x * Game.Instance.CombinedGrid.step;
-        float totalY = Game.Instance.CombinedGrid.origin.y + y * Game.Instance.CombinedGrid.step;
-        levelDataItems.Add(new LevelDataItem(name, totalX, totalY));
+        levelDataItems.Add(new LevelDataItem(name, x, y));
     }
 
     /*
@@ -429,7 +434,7 @@ public class LevelManager : MonoBehaviour
                 break;
             case 6:
                 GenerateTriple(isImmovable, x, y, Directions.Horizontal);
-                CellOffset = new int[] { 0, 2 };
+                CellOffset = new int[] { 2, 0 };
                 break;
             default:
                 Debug.Log("Unknown Rando case");
@@ -452,5 +457,9 @@ public class LevelManager : MonoBehaviour
             }
         }
         return -1;
+    }
+
+    void ClearGrid(GridClass grid) {
+        grid.ResetGrid();
     }
 }
