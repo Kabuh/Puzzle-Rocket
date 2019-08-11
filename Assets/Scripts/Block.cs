@@ -26,6 +26,13 @@ public class Block : MonoBehaviour
 
     bool setInCell = true;
 
+    private void Awake()
+    {
+        foreach (var item in elements) {
+            item.myBlock = this;
+        }
+    }
+
     public void SetInstantLocation(Vector3 cursorLoc, Directions dir) {
         CleanOriginalElements(elements);
         DoCheck(dir);
@@ -66,6 +73,10 @@ public class Block : MonoBehaviour
         }
         StartCoroutine(Moving(destination));
         SetNewElementsLocations(elements, destination);
+        foreach (Cell cellitem in Game.Instance.CombinedGrid.cells)
+        {
+            Debug.Log(cellitem.XPos + " " + cellitem.YPos + " " + cellitem.IsEmpty);
+        }
     }
 
 
@@ -202,7 +213,7 @@ public class Block : MonoBehaviour
     private void CleanOriginalElements(Element[] elem) {
         foreach (var item in elem)
         {
-            item.Cell.IsEmpty = true;
+            item.myCell.IsEmpty = true;
         }
     }
 
@@ -223,7 +234,7 @@ public class Block : MonoBehaviour
     {   
         foreach(var item in elementsFree)
         {
-            item.Cell.IsEmpty = true;
+            item.myCell.IsEmpty = true;
         }
 
         foreach(var item in elementsFill)
@@ -240,15 +251,23 @@ public class Block : MonoBehaviour
         }
     }
 
+
     public bool ShouldBeDestroyed()
     {
         foreach(Element e in elements)
         {
-            if (e.Cell.YPos <= 7) {
+            if (e.myCell.YPos <= 7) {
                 return true;
             } 
         }
         return false;
+    }
+
+    public void SelfDestroy() {
+        foreach (var item in elements) {
+            item.myCell.IsEmpty = true;
+        }
+        Destroy(this.gameObject);
     }
 
     // якщо в блоці хоча б один елемент лишається, то не записуємо його у список на видалення

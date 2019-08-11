@@ -2,34 +2,44 @@
 
 public class Element : MonoBehaviour
 {
-    public Cell Cell { get; set; }
+    public Cell myCell;
 
     private GridClass gridClass;
 
     public Vector2 vectorData;
     public bool isempty;
 
+    public Block myBlock;
+
     private void Start()
     {
-        gridClass = Game.Instance.CombinedGrid;
-        SetCell();
+        //gridClass = Game.Instance.CombinedGrid;
+        //SetCell();
     }    
 
     public void SetCell()
     {
-        try
+        gridClass = Game.Instance.CombinedGrid;
+        if (gridClass != null)
         {
-            Cell = gridClass.WorldPosToCell(transform.position);
-            Cell.Element = this;
-            Cell.IsEmpty = false;
-            vectorData = new Vector2(Cell.XPos, Cell.YPos);
-            isempty = Cell.IsEmpty;
-
+            myCell = gridClass.WorldPosToCell(transform.position);
+            myCell.Element = this;
+            myCell.IsEmpty = false;
+            vectorData = new Vector2(myCell.XPos, myCell.YPos);
+            isempty = myCell.IsEmpty;
+            try
+            {
+                
+            }
+            catch (System.IndexOutOfRangeException)
+            {
+                Debug.Log(transform.position);
+            }
         }
-        catch (System.IndexOutOfRangeException)
-        {
-            //Debug.Log(transform.position);
+        else {
+            Debug.Log("lost grid");
         }
+        
     }
     
     /*
@@ -40,14 +50,14 @@ public class Element : MonoBehaviour
     */
 
     public void ShiftCellByPos(Vector2 cellPos) {           //teleport properties
-        Cell = Cell.GridClass.WorldPosToCell(cellPos);
+        myCell = myCell.GridClass.WorldPosToCell(cellPos);
     }
 
     //read proposed destination data
     public Cell GetNeighbourCell(Directions dir)            
     {
-        for (int jump = 1; jump <= Cell.GridClass.width; jump++) {
-            Cell cell = Cell.GridClass.GetNeighbour(dir, Cell, jump);
+        for (int jump = 1; jump <= myCell.GridClass.width; jump++) {
+            Cell cell = myCell.GridClass.GetNeighbour(dir, myCell, jump);
             if (cell != null) {
                 if (!cell.IsEmpty)
                 {
@@ -68,13 +78,13 @@ public class Element : MonoBehaviour
     }
 
     public Cell WorldPosToCell(Vector2 worldPos) {
-        return Cell.GridClass.WorldPosToCell(worldPos);
+        return myCell.GridClass.WorldPosToCell(worldPos);
     }
 
     public void ChangeCellLevel()                           //something about seamless level switch???
     {
-        Cell = gridClass.cells[Cell.XPos, Cell.YPos - 8];
-        Cell.IsEmpty = false;
+        myCell = gridClass.cells[myCell.XPos, myCell.YPos - 8];
+        myCell.IsEmpty = false;
     }
 
 }

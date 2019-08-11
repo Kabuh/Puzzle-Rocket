@@ -100,7 +100,7 @@ PrefabInstance:
     - target: {fileID: 6605231575393362941, guid: ce43c448ac1f11f4b999e1648575aab4,
         type: 3}
       propertyPath: m_Name
-      value: Triple Horizontal
+      value: Tri Hor
       objectReference: {fileID: 0}
     - target: {fileID: 6456652765619972239, guid: ce43c448ac1f11f4b999e1648575aab4,
         type: 3}
@@ -162,6 +162,21 @@ PrefabInstance:
       propertyPath: elements.Array.size
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 2462019847139971086, guid: ce43c448ac1f11f4b999e1648575aab4,
+        type: 3}
+      propertyPath: elements.Array.data[0]
+      value: 
+      objectReference: {fileID: 5681025374091599279}
+    - target: {fileID: 2462019847139971086, guid: ce43c448ac1f11f4b999e1648575aab4,
+        type: 3}
+      propertyPath: elements.Array.data[1]
+      value: 
+      objectReference: {fileID: 8658427268510000040}
+    - target: {fileID: 2462019847139971086, guid: ce43c448ac1f11f4b999e1648575aab4,
+        type: 3}
+      propertyPath: elements.Array.data[2]
+      value: 
+      objectReference: {fileID: 1129262533382467059}
     - target: {fileID: 3360843191516176872, guid: ce43c448ac1f11f4b999e1648575aab4,
         type: 3}
       propertyPath: m_LocalPosition.y
@@ -186,3 +201,15 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 4865568390066478773}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &5681025374091599279 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 960101071563113242, guid: ce43c448ac1f11f4b999e1648575aab4,
+    type: 3}
+  m_PrefabInstance: {fileID: 4865568390066478773}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4a9fbc845f3b74346bbace400de4ba0a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

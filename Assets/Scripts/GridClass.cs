@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class GridClass
 {
+    public string name;
     public Cell[,] cells;
     public int width;
     public int height;
@@ -13,8 +14,9 @@ public class GridClass
 
     public int halfHeight;
 
-    public GridClass(int width, int height, float step)
+    public GridClass(int width, int height, float step, string name)
     {
+        this.name = name;
         this.width = width;
         this.height = height;
         this.step = step;

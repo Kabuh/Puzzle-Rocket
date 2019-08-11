@@ -10,8 +10,9 @@ public class Game : MonoBehaviour
 
     public CameraS cameraScript;
     public Player player;
+    public Element playerElement;
 
-    public GridClass CombinedGrid { get; set; }
+    public GridClass CombinedGrid;
 
     public bool isDesigner;
 
@@ -39,15 +40,13 @@ public class Game : MonoBehaviour
         }
         #endregion        
 
-        CombinedGrid = new GridClass(5, 16, 1);
+        CombinedGrid = new GridClass(5, 16, 1, "GameGrid");
 
         PopulatePrefabs();
         
 
         designer = FindObjectOfType<Designer>();
         designer?.ClearLevel();
-
-
     }
 
     private void PopulatePrefabs()
@@ -72,15 +71,18 @@ public class Game : MonoBehaviour
 
     private void NewGameSetup()
     {
-        CreateData();
         SpawnFirstLevel();
         //SpawnSecondLevel();
     }
 
     private void SpawnFirstLevel()
     {
+        //player.enabled = true;
         if (!isDesigner) {
-            SpawnLevel(0f, LevelManager.Instance.levels["1"]);
+            CreateData();
+            SpawnLevel(0f, LevelManager.Instance.levels[1]);
+            PreparePlayerStart();
+
         }
         
         count++;        
@@ -90,12 +92,13 @@ public class Game : MonoBehaviour
     {
         if (isDesigner)
         {
-            SpawnLevel(CombinedGrid.halfHeight * count, LevelManager.Instance.levels[designer.currentLevelName]);
+            //SpawnLevel(CombinedGrid.halfHeight * count, LevelManager.Instance.levels[designer.currentLevelName]);
         }
         else
         {
             // тут має братись насправді другий рівень
-            SpawnLevel(CombinedGrid.halfHeight * count, LevelManager.Instance.levels["1"]);
+            CreateData();
+            SpawnLevel(CombinedGrid.halfHeight * count, LevelManager.Instance.levels[2]);
         }
         
         count++;
@@ -103,18 +106,19 @@ public class Game : MonoBehaviour
 
     public void SpawnNewLevel(int count)
     {
+        CreateData();
         DestroyLowerBlocks();
         CombinedGrid.AddOffsetToOrigin();
         CombinedGrid.ShiftGrid();
         ReassignCells();
         if (isDesigner)
         {
-            SpawnLevel(CombinedGrid.halfHeight * count, LevelManager.Instance.levels[designer.currentLevelName]);
+            //SpawnLevel(CombinedGrid.halfHeight * count, LevelManager.Instance.levels[designer.currentLevelName]);
         }
         else
         {
             // тут має братись насправді НАСТУПНИЙ рівень
-            SpawnLevel(count * CombinedGrid.halfHeight, LevelManager.Instance.levels["1"]);
+            SpawnLevel(count * CombinedGrid.halfHeight, LevelManager.Instance.levels[3]);
         }
         count++;        
     }
@@ -123,8 +127,16 @@ public class Game : MonoBehaviour
     {
         foreach (LevelDataItem item in levelData.items)
         {
-            Block block = Instantiate(prefabs[item.prefabName], new Vector3(item.xPos, item.yPos + offset, 0f), Quaternion.identity).GetComponent<Block>();
+            float XPos, YPos;
+            XPos = CombinedGrid.origin.x + item.xPos * CombinedGrid.step;
+            YPos = CombinedGrid.origin.y + item.yPos * CombinedGrid.step;
+            Block block = Instantiate(prefabs[item.prefabName], new Vector3(XPos, YPos + offset, 0f), Quaternion.identity).GetComponent<Block>();
             blocks.Add(block);
+            foreach (var blk in blocks) {
+                foreach (Element element in blk.elements) {
+                    element.SetCell();
+                }
+            }
         }
     }
 
@@ -192,5 +204,20 @@ public class Game : MonoBehaviour
         ResetCamera();
     }
 
+    void PreparePlayerStart() {
+        Debug.Log(CombinedGrid.cells[2, 3].IsEmpty);
+        Cell cell = CombinedGrid.cells[2, 3];
+        Debug.Log(cell.IsEmpty);
 
+        if (cell.Element != null)
+        {
+            Debug.Log(cell.Element.myBlock.name);
+            cell.Element.myBlock.SelfDestroy();
+        }
+        else
+        {
+            Debug.Log("cell has no gameobject");
+        }
+        playerElement.SetCell();
+    }
 }
