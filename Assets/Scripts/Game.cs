@@ -205,13 +205,11 @@ public class Game : MonoBehaviour
     }
 
     void PreparePlayerStart() {
-        Debug.Log(CombinedGrid.cells[2, 3].IsEmpty);
         Cell cell = CombinedGrid.cells[2, 3];
-        Debug.Log(cell.IsEmpty);
 
         if (cell.Element != null)
         {
-            Debug.Log(cell.Element.myBlock.name);
+            Debug.Log(cell.Element.myBlock.name + " under player got destroyed");
             cell.Element.myBlock.SelfDestroy();
         }
         else
