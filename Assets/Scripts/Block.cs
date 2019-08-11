@@ -73,10 +73,6 @@ public class Block : MonoBehaviour
         }
         StartCoroutine(Moving(destination));
         SetNewElementsLocations(elements, destination);
-        foreach (Cell cellitem in Game.Instance.CombinedGrid.cells)
-        {
-            Debug.Log(cellitem.XPos + " " + cellitem.YPos + " " + cellitem.IsEmpty);
-        }
     }
 
 
