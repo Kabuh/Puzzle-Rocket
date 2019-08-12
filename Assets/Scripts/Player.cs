@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    Block playerBlock;
+    public Block playerBlock;
 
 
     private void Start()                        //starship block

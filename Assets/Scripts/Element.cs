@@ -83,8 +83,7 @@ public class Element : MonoBehaviour
 
     public void ChangeCellLevel()                           //something about seamless level switch???
     {
-        myCell = gridClass.cells[myCell.XPos, myCell.YPos - 8];
-        myCell.IsEmpty = false;
+            myCell = gridClass.cells[myCell.XPos, myCell.YPos - 8];
+            myCell.IsEmpty = false;
     }
-
 }

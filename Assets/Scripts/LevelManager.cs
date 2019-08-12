@@ -16,7 +16,7 @@ public class LevelManager : MonoBehaviour
     int[] sizeChancesIftwo = { 45, 15, 10, 15, 5, 10 };
     int[] sizeChancesIfOne = { 45, 20, 10, 15, 10 };
     int[] sizeChancesIfNone = { 65, 25, 10 };
-    int[] typeChances = { 30, 10, 60 };
+    int[] typeChances = { 30, 69, 1 };
     GridClass CreatorGrid;
     public static string ArrayToString(int[] arr)
     {
@@ -257,6 +257,7 @@ public class LevelManager : MonoBehaviour
                     {
                         if (x <= 2 && CreatorGrid.cells[x + 2, y].IsEmpty)
                         {
+                            
                             CasingType(x, y, ComplexRando(sizeChancesIftwo), ComplexRando(typeChances), out Offset);
                         }
                         else
@@ -377,27 +378,35 @@ public class LevelManager : MonoBehaviour
         levelDataItems.Add(new LevelDataItem(name, x, y));
     }
 
-    /*
-    bool Rando(int percentage) {
-        float x = Random.Range(0, 100);
-        if (x < percentage)
-        {
-            return true;
+    int CeilingSwitch(int freeLines, int casing) {
+        if (freeLines == 1) {
+            if (casing == 3) {
+                Debug.Log("3 substituded by 2");
+                return 2;
+            }
         }
-        else {
-            return false;
+        if (freeLines == 0) {
+            if (casing == 3 || casing == 2)
+            {
+                Debug.Log("3 or 2 substituded by 1");
+                return 1;
+            }
+            else if (casing == 5) {
+                Debug.Log("Cube substituded by Di Hor");
+                return 4;
+            }
         }
+        return casing;
     }
-    */
 
     void CasingType(int x, int y, int Size, int Type, out int[] CellOffsetI) {
         int[] OffsetArray = new int[2];
         switch (Type) {
             case 1:
-                CasingFigure(x, y ,Size, false, out OffsetArray);
+                CasingFigure(x, y ,CeilingSwitch(CreatorGrid.height - y - 1 , Size), false, out OffsetArray);
                 break;
             case 2:
-                CasingFigure(x, y, Size, true, out OffsetArray);
+                CasingFigure(x, y, CeilingSwitch(CreatorGrid.height - y - 1, Size), true, out OffsetArray);
                 break;
             case 3:
                 GenerateEmpty();
@@ -462,4 +471,6 @@ public class LevelManager : MonoBehaviour
     void ClearGrid(GridClass grid) {
         grid.ResetGrid();
     }
+
+    
 }
