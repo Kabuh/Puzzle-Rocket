@@ -43,8 +43,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4a9fbc845f3b74346bbace400de4ba0a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  vectorData: {x: 0, y: 0}
-  isempty: 0
+  myBlock: {fileID: 0}
 --- !u!1 &8511811462568482924
 GameObject:
   m_ObjectHideFlags: 0
@@ -88,8 +87,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4a9fbc845f3b74346bbace400de4ba0a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  vectorData: {x: 0, y: 0}
-  isempty: 0
+  myBlock: {fileID: 0}
 --- !u!1001 &4865568390066478773
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -101,6 +99,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Tri Hor
+      objectReference: {fileID: 0}
+    - target: {fileID: 5658244220096766854, guid: ce43c448ac1f11f4b999e1648575aab4,
+        type: 3}
+      propertyPath: m_Size.x
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5658244220096766854, guid: ce43c448ac1f11f4b999e1648575aab4,
+        type: 3}
+      propertyPath: m_Offset.x
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6456652765619972239, guid: ce43c448ac1f11f4b999e1648575aab4,
         type: 3}
@@ -164,6 +172,26 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2462019847139971086, guid: ce43c448ac1f11f4b999e1648575aab4,
         type: 3}
+      propertyPath: uElements.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2462019847139971086, guid: ce43c448ac1f11f4b999e1648575aab4,
+        type: 3}
+      propertyPath: lElements.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2462019847139971086, guid: ce43c448ac1f11f4b999e1648575aab4,
+        type: 3}
+      propertyPath: rElements.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2462019847139971086, guid: ce43c448ac1f11f4b999e1648575aab4,
+        type: 3}
+      propertyPath: dElements.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2462019847139971086, guid: ce43c448ac1f11f4b999e1648575aab4,
+        type: 3}
       propertyPath: elements.Array.data[0]
       value: 
       objectReference: {fileID: 5681025374091599279}
@@ -175,6 +203,46 @@ PrefabInstance:
     - target: {fileID: 2462019847139971086, guid: ce43c448ac1f11f4b999e1648575aab4,
         type: 3}
       propertyPath: elements.Array.data[2]
+      value: 
+      objectReference: {fileID: 1129262533382467059}
+    - target: {fileID: 2462019847139971086, guid: ce43c448ac1f11f4b999e1648575aab4,
+        type: 3}
+      propertyPath: uElements.Array.data[0]
+      value: 
+      objectReference: {fileID: 5681025374091599279}
+    - target: {fileID: 2462019847139971086, guid: ce43c448ac1f11f4b999e1648575aab4,
+        type: 3}
+      propertyPath: uElements.Array.data[1]
+      value: 
+      objectReference: {fileID: 8658427268510000040}
+    - target: {fileID: 2462019847139971086, guid: ce43c448ac1f11f4b999e1648575aab4,
+        type: 3}
+      propertyPath: uElements.Array.data[2]
+      value: 
+      objectReference: {fileID: 1129262533382467059}
+    - target: {fileID: 2462019847139971086, guid: ce43c448ac1f11f4b999e1648575aab4,
+        type: 3}
+      propertyPath: lElements.Array.data[0]
+      value: 
+      objectReference: {fileID: 5681025374091599279}
+    - target: {fileID: 2462019847139971086, guid: ce43c448ac1f11f4b999e1648575aab4,
+        type: 3}
+      propertyPath: rElements.Array.data[0]
+      value: 
+      objectReference: {fileID: 1129262533382467059}
+    - target: {fileID: 2462019847139971086, guid: ce43c448ac1f11f4b999e1648575aab4,
+        type: 3}
+      propertyPath: dElements.Array.data[0]
+      value: 
+      objectReference: {fileID: 5681025374091599279}
+    - target: {fileID: 2462019847139971086, guid: ce43c448ac1f11f4b999e1648575aab4,
+        type: 3}
+      propertyPath: dElements.Array.data[1]
+      value: 
+      objectReference: {fileID: 8658427268510000040}
+    - target: {fileID: 2462019847139971086, guid: ce43c448ac1f11f4b999e1648575aab4,
+        type: 3}
+      propertyPath: dElements.Array.data[2]
       value: 
       objectReference: {fileID: 1129262533382467059}
     - target: {fileID: 3360843191516176872, guid: ce43c448ac1f11f4b999e1648575aab4,

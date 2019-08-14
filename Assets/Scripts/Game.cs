@@ -229,12 +229,13 @@ public class Game : MonoBehaviour
     }
     private void SpawnPremadeLevel()
     {
-        SpawnLevel(0f, LevelManager.Instance.premadeLevels["1"]);
+        SpawnLevel(0f, LevelManager.Instance.premadeLevels["1premade"]);
     }
 
     private void TestGameSetup()
     {
         cameraScript.enabled = false;
+        player.GetComponent<Block>().elements[0].SetCell();
         SpawnPremadeLevel();
     }
 }

@@ -137,6 +137,11 @@ PrefabInstance:
       propertyPath: elements.Array.data[2]
       value: 
       objectReference: {fileID: 97353772246866392}
+    - target: {fileID: 2462019847139971086, guid: ce43c448ac1f11f4b999e1648575aab4,
+        type: 3}
+      propertyPath: uElements.Array.data[1]
+      value: 
+      objectReference: {fileID: 97353772246866392}
     - target: {fileID: 8560703847697949825, guid: ce43c448ac1f11f4b999e1648575aab4,
         type: 3}
       propertyPath: m_Sprite

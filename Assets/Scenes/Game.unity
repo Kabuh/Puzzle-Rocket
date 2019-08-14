@@ -1208,6 +1208,46 @@ PrefabInstance:
       propertyPath: m_Name
       value: playerSprite
       objectReference: {fileID: 0}
+    - target: {fileID: 7687232700949175388, guid: aabab2930f8725e41b11822863b95310,
+        type: 3}
+      propertyPath: uElements.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7687232700949175388, guid: aabab2930f8725e41b11822863b95310,
+        type: 3}
+      propertyPath: lElements.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7687232700949175388, guid: aabab2930f8725e41b11822863b95310,
+        type: 3}
+      propertyPath: rElements.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7687232700949175388, guid: aabab2930f8725e41b11822863b95310,
+        type: 3}
+      propertyPath: dElements.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7687232700949175388, guid: aabab2930f8725e41b11822863b95310,
+        type: 3}
+      propertyPath: uElements.Array.data[0]
+      value: 
+      objectReference: {fileID: 318540790}
+    - target: {fileID: 7687232700949175388, guid: aabab2930f8725e41b11822863b95310,
+        type: 3}
+      propertyPath: lElements.Array.data[0]
+      value: 
+      objectReference: {fileID: 318540790}
+    - target: {fileID: 7687232700949175388, guid: aabab2930f8725e41b11822863b95310,
+        type: 3}
+      propertyPath: rElements.Array.data[0]
+      value: 
+      objectReference: {fileID: 318540790}
+    - target: {fileID: 7687232700949175388, guid: aabab2930f8725e41b11822863b95310,
+        type: 3}
+      propertyPath: dElements.Array.data[0]
+      value: 
+      objectReference: {fileID: 318540790}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: aabab2930f8725e41b11822863b95310, type: 3}
 --- !u!1 &493004440
@@ -1640,7 +1680,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 96f759e387e88a847a2a6ee67306771c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minSwipeDistance: 0.1
+  minSwipeDistance: 0.2
   canvas: {fileID: 1384154275}
 --- !u!4 &611112656
 Transform:
