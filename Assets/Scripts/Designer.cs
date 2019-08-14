@@ -59,6 +59,7 @@ public class Designer : MonoBehaviour
         foreach (LevelDataItem item in levelData.items)
         {
             Block block = Instantiate(prefabs[item.prefabName], new Vector3(item.xPos, item.yPos, 0f), Quaternion.identity,tileMap.transform).GetComponent<Block>();
+            block.name = item.prefabName;
         }
     }
 
@@ -69,12 +70,18 @@ public class Designer : MonoBehaviour
         Block[] blocks = FindObjectsOfType<Block>();
         foreach (Block b in blocks)
         {
-            levelDataItems.Add(new LevelDataItem(b.gameObject.name, b.transform.position.x, b.transform.position.y));
+            Vector2 relativePosition = PositionToIndex(b.transform.position);
+            levelDataItems.Add(new LevelDataItem(b.gameObject.name, relativePosition.x, relativePosition.y));
         }
 
         levelData = new LevelData
         {
             items = levelDataItems.ToArray()
         };
+    }
+
+    private Vector2 PositionToIndex(Vector2 position)
+    {
+        return new Vector2(position.x + 2f, position.y + 3.5f);
     }
 }

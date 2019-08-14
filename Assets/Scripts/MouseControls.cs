@@ -7,44 +7,33 @@ public class MouseControls : MonoBehaviour
     public float minSwipeDistance;
 
     public GameObject canvas;
-    Block gameCube;
+    Block block;
 
-    bool GlueAtivate = false;
-    Vector3 CursorLoc;
+    private Vector3 startTouchPos;
+    private Vector3 endTouchPos;
 
-
-    Vector3 startTouchPos;
-    Vector3 currenTouchPos;
-    Vector3 endTouchPos;
+    bool isBlockReadyToBeMoved;
 
     float swipeAngle;
-    Directions swipeDir;
 
     private void LateUpdate()
     {
         //initiation of swipe
         if (Input.GetMouseButtonDown(0)) 
         {
-            startTouchPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-
-            gameCube = TryTouchBlock(startTouchPos);
-
-            GlueAtivate = true;
-
+            OnTouchStart(Camera.main.ScreenToWorldPoint(Input.mousePosition));
         }
 
         //duration of swipe
         if (Input.GetMouseButton(0)) 
         {
-            currenTouchPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            OnTouchContinue(Camera.main.ScreenToWorldPoint(Input.mousePosition));
         }
 
         //end of swipe
         if (Input.GetMouseButtonUp(0) ) 
         {
-            GlueAtivate = false;
-            endTouchPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            gameCube?.SetDestinationLocation();
+            OnTouchEnd(Camera.main.ScreenToWorldPoint(Input.mousePosition));
         }
 
         //cheat enable
@@ -55,95 +44,10 @@ public class MouseControls : MonoBehaviour
                 canvas.SetActive(true);
             }
         }
-
-        
-
-        //do this each frame if glue active
-        if (gameCube != null && MinSwipeReached() && GlueAtivate) {
-
-            TouchGlue();
-        }
-    }
-
-    bool MinSwipeReached() {
-        if (Vector3.Distance(currenTouchPos, startTouchPos) >= minSwipeDistance)
-        {
-            RealSwipeDir();
-            return true;
-        }
-        return false;
-    }
-
-    void TouchGlue()
-    {
-        CursorLoc = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        CursorLoc.z = 0;
-        if (CursorLoc != null && gameCube != null)
-        {
-            gameCube.SetInstantLocation(CursorLoc, swipeDir);
-        }
-    }
-
-    //getting swipe dirrection
-    void RealSwipeDir() {
-        {
-            Vector3 diff = currenTouchPos - startTouchPos;
-
-            swipeAngle = Vector3.SignedAngle(new Vector3(1f, 1f, 0f), diff, Vector3.forward);       // direction check
-            
-
-            if (swipeAngle >= 0)
-            {                                                                  // half-check
-                if (swipeAngle >= 90)
-                {
-                    swipeDir = Directions.Horizontal;
-                }
-                else
-                {
-                    swipeDir = Directions.Vertical;
-                }
-            }
-            else
-            {
-                if (swipeAngle <= -90)
-                {
-                    swipeDir = Directions.Vertical;
-                }
-                else
-                {
-                    swipeDir = Directions.Horizontal;
-                }
-            }
-        }
-
-
-
-        /*
-        void OnSwipe()
-        {
-            Vector3 diff = endTouchPos - startTouchPos;
-
-            swipeAngle = Vector3.SignedAngle(new Vector3(1f,1f,0f),diff,Vector3.forward);       // direction check
-
-            if (swipeAngle>=0){                                                                  // half-check
-                if(swipeAngle>=90){                                                             // quarter-checks
-                    TryTouchBlock(startTouchPos)?.Move(Directions.Left); 
-                }else{
-                    TryTouchBlock(startTouchPos)?.Move(Directions.Up);
-                }
-            }else{
-                if(swipeAngle<-90){
-                    TryTouchBlock(startTouchPos)?.Move(Directions.Down);
-                }else{
-                    TryTouchBlock(startTouchPos)?.Move(Directions.Right);
-                }
-            }
-        }
-            */
-    }
+    }   
 
     //pick block from level
-    public Block TryTouchBlock(Vector3 pos)                                   
+    private Block TryTouchBlock(Vector3 pos)                                   
     {
         RaycastHit2D raycastHit2D = Physics2D.Raycast(pos, Vector2.zero);
         if(raycastHit2D)
@@ -152,4 +56,79 @@ public class MouseControls : MonoBehaviour
         }
         return null;
     }
+
+    private void OnTouchStart(Vector3 input)
+    {
+        block = TryTouchBlock(input);
+        startTouchPos = input;
+        block?.CalculateInputAndPivotDiff(startTouchPos);
+    }
+
+    private void OnTouchContinue(Vector3 input)
+    {
+        if(block!=null)
+        {
+            if (isBlockReadyToBeMoved)
+            {
+                // then move (along axis) with input and update cells
+                block.UpdatePosition(input);
+            }
+            else
+            {
+                float swipeDistance = Vector3.Distance(input, startTouchPos);
+                if (swipeDistance >= minSwipeDistance)
+                {
+                    // get block ready to be moved
+                    Axis axis = CalculateAxis(startTouchPos, input);
+                    block.SetAxis(axis);
+                    block.CalculateMovementConstraints();
+                    isBlockReadyToBeMoved = true;
+                }
+            }
+        }        
+    }
+
+    private void OnTouchEnd(Vector3 input)
+    {
+        // trigger snappping
+        if (block != null)
+        {
+            block.UpdatePosition(input);
+            block.SnapToClosestCell();
+            // loose block
+            block = null;
+            isBlockReadyToBeMoved = false;
+        }        
+    }
+
+    private Axis CalculateAxis(Vector3 start, Vector3 end)
+    {
+        Vector3 diff = end - start;
+
+        float angle = Vector3.SignedAngle(new Vector3(1f, 1f, 0f), diff, Vector3.forward);
+
+        if (angle >= 0)
+        {
+            if (angle >= 90)
+            {
+                return Axis.Horizontal;
+            }
+            else
+            {
+                return Axis.Vertical;
+            }
+        }
+        else
+        {
+            if (angle < -90)
+            {
+                return Axis.Vertical;
+            }
+            else
+            {
+                return Axis.Horizontal;
+            }
+        }
+    }
+
 }

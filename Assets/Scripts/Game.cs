@@ -15,6 +15,7 @@ public class Game : MonoBehaviour
     public GridClass CombinedGrid;
 
     public bool isDesigner;
+    public bool isTestMode;
 
     private Dictionary<string, GameObject> prefabs = new Dictionary<string, GameObject>();
     private List<Block> blocks = new List<Block>();
@@ -66,7 +67,14 @@ public class Game : MonoBehaviour
             designer.background.SetActive(false);
         }
 
-        NewGameSetup();
+        if(isTestMode)
+        {
+            TestGameSetup();
+        }
+        else
+        {
+            NewGameSetup();
+        }
     }
 
     private void NewGameSetup()
@@ -204,9 +212,10 @@ public class Game : MonoBehaviour
         ResetCamera();
     }
 
-    void PreparePlayerStart() {
+    void PreparePlayerStart() 
+    {
         Cell cell = CombinedGrid.cells[2, 3];
-
+    
         if (cell.Element != null)
         {
             Debug.Log(cell.Element.myBlock.name + " under player got destroyed");
@@ -217,5 +226,16 @@ public class Game : MonoBehaviour
             Debug.Log("cell has no gameobject");
         }
         playerElement.SetCell();
+    }
+    private void SpawnPremadeLevel()
+    {
+        SpawnLevel(0f, LevelManager.Instance.premadeLevels["1premade"]);
+    }
+
+    private void TestGameSetup()
+    {
+        cameraScript.enabled = false;
+        player.GetComponent<Block>().elements[0].SetCell();
+        SpawnPremadeLevel();
     }
 }

@@ -43,6 +43,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4a9fbc845f3b74346bbace400de4ba0a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  myBlock: {fileID: 0}
 --- !u!1001 &3819685471187836967
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -53,7 +54,7 @@ PrefabInstance:
     - target: {fileID: 6605231575393362941, guid: ce43c448ac1f11f4b999e1648575aab4,
         type: 3}
       propertyPath: m_Name
-      value: Double Vertical
+      value: Di Ver
       objectReference: {fileID: 0}
     - target: {fileID: 5658244220096766854, guid: ce43c448ac1f11f4b999e1648575aab4,
         type: 3}

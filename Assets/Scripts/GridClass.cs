@@ -70,16 +70,23 @@ public class GridClass
     public Cell WorldPosToCell(Vector2 worldPos)    //read cell by vector2
     {
         Vector2 diff = worldPos - origin;
-        int x = (int)(diff.x / step);
-        int y = (int)(diff.y / step);
+        int x = Mathf.RoundToInt(diff.x / step);
+        int y = Mathf.RoundToInt(diff.y / step);
         return cells[x, y];
     }
 
-    public Vector2 CellCoordToVect(int x, int y) {
-        Vector2 holder;
-        holder.x = x * step + origin.x;
-        holder.y = y * step + origin.y;
-        return holder;
+    public Vector2 GetCellWorldPosition(Cell cell) {
+        Vector2 cellWorldPosition;
+        cellWorldPosition.x = cell.XPos * step + origin.x;
+        cellWorldPosition.y = cell.YPos * step + origin.y;
+        return cellWorldPosition;
+    }
+
+    public Vector3 GetClosestCellWorldPosition(Vector3 position)
+    {
+        Cell cell = WorldPosToCell(position);
+        Vector3 cellWP = GetCellWorldPosition(cell);
+        return cellWP;
     }
 
     public void ResetGrid()                         //rebuild grid with same paste data
