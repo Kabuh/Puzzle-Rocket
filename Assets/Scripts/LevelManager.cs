@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
-using UnityEngine.UI;
+
 
 public class LevelManager : MonoBehaviour
 {
@@ -13,20 +13,15 @@ public class LevelManager : MonoBehaviour
 
     public static LevelManager Instance { get; private set; }
 
-    int[] sizeChancesIftwo = { 45, 15, 10, 15, 5, 10 };
-    int[] sizeChancesIfOne = { 45, 20, 10, 15, 10 };
-    int[] sizeChancesIfNone = { 65, 25, 10 };
-    int[] typeChances = { 30, 69, 1 };
+    public int[] sizeChancesIftwo = { 45, 15, 10, 15, 5, 10 };
+    public int[] sizeChancesIfOne = { 45, 20, 10, 15, 10 };
+    public int[] sizeChancesIfNone = { 65, 25, 10 };
+    public int[] typeChances = { 30, 10, 60 };
     GridClass CreatorGrid;
-    public static string ArrayToString(int[] arr)
-    {
-        List<object> lst = new List<object>();
-        object[] obj = new object[arr.Length];
-        System.Array.Copy(arr, obj, arr.Length);
 
-        lst.AddRange(obj);
-        return string.Join(",", lst.ToArray());
-    }
+
+
+
 
     private void Awake()
     {
@@ -45,11 +40,229 @@ public class LevelManager : MonoBehaviour
         #endregion        
 
         Game.CreateData += CreateNewLevel;
-
-
-        //LoadLevels();
     }
 
+    List<LevelDataItem> levelDataItems = new List<LevelDataItem>();
+
+    void CreateNewLevel() {
+        CreatorGrid = new GridClass(Game.Instance.CombinedGrid.width, Game.Instance.CombinedGrid.halfHeight, Game.Instance.CombinedGrid.step, "CreatorGrid");
+
+        levelName = "1";
+
+        ClearGrid(CreatorGrid);
+        RandomLevelCreator();
+
+        LevelData levelData = new LevelData();
+        levelData.items = levelDataItems.ToArray();
+
+        levels = new Dictionary<int, LevelData>();
+
+        levels.Add(levelCounter, levelData);
+        levelDataItems.Clear();
+        levelCounter++;
+    }
+
+    public void LevelDestroyer() {
+        levelDataItems.Clear();
+        levels.Clear();
+        levelCounter = 1;
+    }
+
+    /// ////////////////////////////////////////
+
+
+    public void RandomLevelCreator() {
+        int x, y;
+        for (y = 0; y < CreatorGrid.height; y++) {
+            for (x = 0; x < CreatorGrid.width; x++) {
+
+                int[] Offset = new int[2];
+
+                if (CreatorGrid.cells[x, y].IsEmpty)
+                {
+                    if (x <= 3 && CreatorGrid.cells[x + 1, y].IsEmpty)
+                    {
+                        if (x <= 2 && CreatorGrid.cells[x + 2, y].IsEmpty)
+                        {
+
+                            CasingType(x, y, ComplexRando(sizeChancesIftwo), ComplexRando(typeChances), out Offset);
+                        }
+                        else
+                        {
+                            CasingType(x, y, ComplexRando(sizeChancesIfOne), ComplexRando(typeChances), out Offset);
+                        }
+                    }
+                    else
+                    {
+                        CasingType(x, y, ComplexRando(sizeChancesIfNone), ComplexRando(typeChances), out Offset);
+                    }
+
+                    OffsetMaker(x, y, Offset);
+                }
+            }
+        }
+    }
+
+    private void OffsetMaker(int x, int y, int[] Offset)
+    {
+        if (Offset != null)
+        {
+            for (int k = 0; k <= Offset[1]; k++)
+            {
+                for (int l = 0; l <= Offset[0]; l++)
+                {
+                    if (k > 0 || l > 0)
+                    {
+                        int newX = x + l;
+                        int newY = y + k;
+                        if (newY >= CreatorGrid.height)
+                        {
+
+                        }
+                        else
+                        {
+                            CreatorGrid.cells[x + l, y + k].IsEmpty = false;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    Dictionary<int, string> FigureType = new Dictionary<int, string>
+        {
+            { 110, "Single" },
+            { 120, "Di Ver" },
+            { 130, "Tri Ver" },
+            { 210, "Di Hor" },
+            { 220, "Cube" },
+            { 310, "Tri Hor" },
+            
+
+            { 111, "Immovable" },
+            { 121, "IM_Di Ver" },
+            { 131, "IM_Tri Ver" },
+            { 211, "IM_Di Hor" },
+            { 221, "IM_Cube" },
+            { 311, "IM_Tri Hor" }
+            
+        };
+
+
+
+
+    void GenerateFigure(int type, bool isImmovable, int currentIndexX, int currentIndexY) {
+        if (isImmovable) {
+            type++;
+        }
+
+        GenerateBlock(FigureType[type], currentIndexX, currentIndexY);
+    }
+
+    void GenerateBlock(string name, int x, int y) {
+        levelDataItems.Add(new LevelDataItem(name, x, y));
+    }
+
+    int CeilingSwitch(int freeLines, int casing) {
+        if (freeLines == 1) {
+            if (casing == 3) {
+                return 2;
+            }
+        }
+        if (freeLines == 0) {
+            if (casing == 3 || casing == 2)
+            {
+                return 1;
+            }
+            else if (casing == 5) {
+                return 4;
+            }
+        }
+        return casing;
+    }
+
+    void CasingType(int x, int y, int Size, int Type, out int[] CellOffsetI) {
+        int[] OffsetArray = new int[2];
+        switch (Type) {
+            case 1:
+                CasingFigure(x, y ,CeilingSwitch(CreatorGrid.height - y - 1 , Size), false, out OffsetArray);
+                break;
+            case 2:
+                CasingFigure(x, y, CeilingSwitch(CreatorGrid.height - y - 1, Size), true, out OffsetArray);
+                break;
+            case 3:
+                break;
+            default:
+                Debug.Log("Unknown Rando case");
+                OffsetArray = new int[] { 0, 0 };
+                break;
+        }
+        CellOffsetI = OffsetArray;
+    }
+
+    void CasingFigure(int x, int y, int RandoResult, bool isImmovable ,out int[] CellOffset) {
+        int typeIndex;
+
+        switch (RandoResult) {
+            case 1:
+                typeIndex = 110;
+                //GenerateSingle(isImmovable, x, y);
+                CellOffset = new int[] { 0, 0 };
+                break;
+            case 2:
+                typeIndex = 120;
+                //GenerateDouble(isImmovable, x, y, Directions.Vertical);
+                CellOffset = new int[] { 0, 1 };
+                break;
+            case 3:
+                typeIndex = 130;
+                //GenerateTriple(isImmovable, x, y, Directions.Vertical);
+                CellOffset = new int[] { 0, 2 };
+                break;
+            case 4:
+                typeIndex = 210;
+                //GenerateDouble(isImmovable, x, y, Directions.Horizontal);
+                CellOffset = new int[] { 1, 0 };
+                break;
+            case 5:
+                typeIndex = 220;
+                //GenerateCube(isImmovable, x, y);
+                CellOffset = new int[] { 1, 1 };
+                break;
+            case 6:
+                typeIndex = 310;
+                //GenerateTriple(isImmovable, x, y, Directions.Horizontal);
+                CellOffset = new int[] { 2, 0 };
+                break;
+            default:
+                typeIndex = 110;
+                Debug.Log("Unknown Rando case");
+                CellOffset = new int[] { 0, 0 };
+                break;
+        }
+
+        GenerateFigure(typeIndex, isImmovable, x, y);
+    }
+
+    int ComplexRando(int[] valueLib) {
+        float x = Random.Range(0, 100);
+        int sum = 0;
+        for (int i = 0; i < valueLib.Length; i++) {
+            sum += valueLib[i];
+            if (sum > 100 || sum < 0) {
+                return -1;
+            }
+            if (x < sum)
+            {
+                return ++i;
+            }
+        }
+        return -1;
+    }
+
+    void ClearGrid(GridClass grid) {
+        grid.ResetGrid();
+    }
 
 
     //private void Update()
@@ -110,199 +323,8 @@ public class LevelManager : MonoBehaviour
     }
     */
 
-    List<LevelDataItem> levelDataItems = new List<LevelDataItem>();
 
-    void CreateNewLevel() {
-        CreatorGrid = new GridClass(Game.Instance.CombinedGrid.width, Game.Instance.CombinedGrid.halfHeight, Game.Instance.CombinedGrid.step, "CreatorGrid");
-        
-        levelName = "1";
-
-        ClearGrid(CreatorGrid);
-        RandomLevelCreator();
-
-        LevelData levelData = new LevelData();
-        levelData.items = levelDataItems.ToArray();
-
-        levels = new Dictionary<int, LevelData>();
-
-        levels.Add(levelCounter, levelData);
-
-        Debug.Log("level 1 created with key " + levelCounter);
-        levelDataItems.Clear();
-        levelCounter++;
-    }
-
-    public void LevelDestroyer() {
-        levelDataItems.Clear();
-        levels.Clear();
-        levelCounter = 1;
-    }
-
-    /// ////////////////////////////////////////
-
-    public List<Text> testerUIprompts = new List<Text>();
-    public List<Text> testerUIcheckSums = new List<Text>();
-    public Text ConsoleUI;
-
-
-    //public Text promptOne;
-    //public Text CheckSum;
-
-    int[] Parser(Text prompt)
-    {
-        string textLine = prompt.text;
-        string holderString = "";
-        int currentIndex = 0;
-        List<int> chanceNumbers = new List<int>();
-        for (int i = 0; i < textLine.Length; i++) {
-            string k = textLine[i].ToString();
-            if (k == " ")
-            {
-                currentIndex = 0;
-
-                chanceNumbers.Add(int.Parse(holderString));
-                holderString = "";
-            }
-            else {
-                holderString = holderString.Insert(currentIndex, k);
-                currentIndex++;
-            }
-        }
-
-        return chanceNumbers.ToArray();
-    }
-
-    void CheckSumCheck(Text prompt, Text CheckSum) {
-        CheckSum.text = "CheckSum:" + Sum(Parser(prompt));
-    }
-
-    int Sum(int[] array) {
-        int total = 0;
-        foreach (int num in array) {
-            total += num;
-        }
-        return total;
-    }
-
-
-
-    public void MakeNewChances() {
-        NullCheckerEqual(Parser(testerUIprompts[0]), sizeChancesIftwo);
-        NullCheckerEqual(Parser(testerUIprompts[1]), sizeChancesIfOne);
-        NullCheckerEqual(Parser(testerUIprompts[2]), sizeChancesIfNone);
-        NullCheckerEqual(Parser(testerUIprompts[3]), typeChances);
-
-        testField.text = "New chances are: \n " + ArrayToString(typeChances) + "| \n" + ArrayToString(sizeChancesIftwo) + "| /n" + ArrayToString(sizeChancesIfOne) + "| /n" + ArrayToString(sizeChancesIfNone);
-    }
-
-    void NullCheckerEqual(int[] newData, int[]dataSlot) {
-        if (newData != null )
-        { //&& newData.Length == dataSlot.Length
-            if (newData.Length == dataSlot.Length)
-            {
-                System.Array.Copy(newData, dataSlot, newData.Length);
-                ConsoleUI.text += "\n chances created succesfuly ";
-            }
-            else {
-                ConsoleUI.text += "\n check array length";
-            }
-            
-        }
-    }
-
-
-
-
-    public Text testField;
-
-    private void Update()
-    {
-        if (Input.GetKeyDown("g")) {
-            testField.text = "";
-            CreateNewLevel(); ;
-        }
-        for (int i = 0; i < testerUIprompts.Count; i++)
-        {
-            if (testerUIprompts[i].text.Length > 0)
-            {
-                CheckSumCheck(testerUIprompts[i], testerUIcheckSums[i]);
-            }
-        }
-        
-    }
-
-    
-    public void TestIsEmpty() {
-        foreach (var cell in CreatorGrid.cells) {
-            if (cell.IsEmpty)
-            {
-                testField.text += "0 ";
-            }
-            else {
-                testField.text += "1 ";
-            } 
-        }
-    }
-
-    public void RandomLevelCreator() {
-        int x, y;
-        for (y = 0; y < CreatorGrid.height; y++) {
-            for (x = 0; x < CreatorGrid.width; x++) {
-
-                int[] Offset = new int[2];
-
-                if (CreatorGrid.cells[x, y].IsEmpty)
-                {
-                    if (x <= 3 && CreatorGrid.cells[x + 1, y].IsEmpty)
-                    {
-                        if (x <= 2 && CreatorGrid.cells[x + 2, y].IsEmpty)
-                        {
-                            
-                            CasingType(x, y, ComplexRando(sizeChancesIftwo), ComplexRando(typeChances), out Offset);
-                        }
-                        else
-                        {
-                            CasingType(x, y, ComplexRando(sizeChancesIfOne), ComplexRando(typeChances), out Offset);
-                        }
-                    }
-                    else
-                    {
-                        CasingType(x, y, ComplexRando(sizeChancesIfNone), ComplexRando(typeChances), out Offset);
-                    }
-
-                    if (Offset != null)
-                    {
-                        for (int k = 0; k <= Offset[1]; k++)
-                        {
-                            for (int l = 0; l <= Offset[0]; l++)
-                            {
-                                if (k == 0 && l == 0) {
-                                    
-                                }
-                                else
-                                {
-                                    int newX = x + l;
-                                    int newY = y + k;
-                                    if (newY >= CreatorGrid.height)
-                                    {
-                                        
-                                    }
-                                    else {
-                                        CreatorGrid.cells[x + l, y + k].IsEmpty = false;
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-                else {
-                    testField.text += "T_";
-                }   
-            }
-            testField.text += "\n";
-        }
-    }
-
+    /*
     void GenerateTriple (bool isImmovable, int currentIndexX, int currentIndexY, Directions dir) {
         if (isImmovable)
         {
@@ -325,9 +347,8 @@ public class LevelManager : MonoBehaviour
                 GenerateBlock("Tri Ver", currentIndexX, currentIndexY);
             }
         }
-        
-        
-        testField.text += "3_";   }
+    }
+
     void GenerateDouble (bool isImmovable, int currentIndexX, int currentIndexY, Directions dir) {
         if (isImmovable)
         {
@@ -350,9 +371,7 @@ public class LevelManager : MonoBehaviour
                 GenerateBlock("Di Ver", currentIndexX, currentIndexY);
             }
         }
-        
-        testField.text += "2_";
-        }
+    }
     void GenerateCube   (bool isImmovable, int currentIndexX, int currentIndexY) {
         if (isImmovable)
         {
@@ -361,7 +380,7 @@ public class LevelManager : MonoBehaviour
         else {
             GenerateBlock("Cube", currentIndexX, currentIndexY);
         }
-        testField.text += "C_"; }
+    }
     void GenerateSingle (bool isImmovable, int currentIndexX, int currentIndexY) {
         if (isImmovable)
         {
@@ -369,108 +388,7 @@ public class LevelManager : MonoBehaviour
         }
         else {
             GenerateBlock("Single", currentIndexX, currentIndexY);
-        }
-        
-        testField.text += "1_"; }
-    void GenerateEmpty  () { testField.text += "[_"; }
-
-    void GenerateBlock(string name, int x, int y) {
-        levelDataItems.Add(new LevelDataItem(name, x, y));
+        }    
     }
-
-    int CeilingSwitch(int freeLines, int casing) {
-        if (freeLines == 1) {
-            if (casing == 3) {
-                Debug.Log("3 substituded by 2");
-                return 2;
-            }
-        }
-        if (freeLines == 0) {
-            if (casing == 3 || casing == 2)
-            {
-                Debug.Log("3 or 2 substituded by 1");
-                return 1;
-            }
-            else if (casing == 5) {
-                Debug.Log("Cube substituded by Di Hor");
-                return 4;
-            }
-        }
-        return casing;
-    }
-
-    void CasingType(int x, int y, int Size, int Type, out int[] CellOffsetI) {
-        int[] OffsetArray = new int[2];
-        switch (Type) {
-            case 1:
-                CasingFigure(x, y ,CeilingSwitch(CreatorGrid.height - y - 1 , Size), false, out OffsetArray);
-                break;
-            case 2:
-                CasingFigure(x, y, CeilingSwitch(CreatorGrid.height - y - 1, Size), true, out OffsetArray);
-                break;
-            case 3:
-                GenerateEmpty();
-                break;
-            default:
-                Debug.Log("Unknown Rando case");
-                OffsetArray = new int[] { 0, 0 };
-                break;
-        }
-        CellOffsetI = OffsetArray;
-    }
-
-    void CasingFigure(int x, int y, int RandoResult, bool isImmovable ,out int[] CellOffset) {
-        switch (RandoResult) {
-            case 1:
-                GenerateSingle(isImmovable, x, y);
-                CellOffset = new int[] { 0, 0 };
-                break;
-            case 2:
-                GenerateDouble(isImmovable, x, y, Directions.Vertical);
-                CellOffset = new int[] { 0, 1 };
-                break;
-            case 3:
-                GenerateTriple(isImmovable, x, y, Directions.Vertical);
-                CellOffset = new int[] { 0, 2 };
-                break;
-            case 4:
-                GenerateDouble(isImmovable, x, y, Directions.Horizontal);
-                CellOffset = new int[] { 1, 0 };
-                break;
-            case 5:
-                GenerateCube(isImmovable, x, y);
-                CellOffset = new int[] { 1, 1 };
-                break;
-            case 6:
-                GenerateTriple(isImmovable, x, y, Directions.Horizontal);
-                CellOffset = new int[] { 2, 0 };
-                break;
-            default:
-                Debug.Log("Unknown Rando case");
-                CellOffset = new int[] { 0, 0 };
-                break;
-        } 
-    }
-
-    int ComplexRando(int[] valueLib) {
-        float x = Random.Range(0, 100);
-        int sum = 0;
-        for (int i = 0; i < valueLib.Length; i++) {
-            sum += valueLib[i];
-            if (sum > 100 || sum < 0) {
-                return -1;
-            }
-            if (x < sum)
-            {
-                return ++i;
-            }
-        }
-        return -1;
-    }
-
-    void ClearGrid(GridClass grid) {
-        grid.ResetGrid();
-    }
-
-    
+    */
 }

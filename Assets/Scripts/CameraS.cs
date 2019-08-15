@@ -11,11 +11,16 @@ public class CameraS : MonoBehaviour
     int currentLevel = 1;
     int gridHeight;
     bool camCheat = false;
+    Vector2 origin;
+
+    public delegate void CameraEvents();
+    public static event CameraEvents CreateLevel;
 
     private void Start()
     {
-         speed = defaultSpeed;
+        speed = defaultSpeed;
         gridHeight = Game.Instance.CombinedGrid.halfHeight;
+        origin = Game.Instance.CombinedGrid.origin;
     }
 
     private void Update()
@@ -23,7 +28,8 @@ public class CameraS : MonoBehaviour
         transform.Translate(0f, speed * Time.deltaTime, 0f);
         if (transform.position.y >= currentLevel * gridHeight)
         {
-            Game.Instance.SpawnNewLevel();
+            CreateLevel();
+            currentLevel++;
         }
     }
 

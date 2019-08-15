@@ -23,8 +23,8 @@ public class Game : MonoBehaviour
 
     public int count = 1;
 
-    public delegate void StartEvent();
-    public static event StartEvent CreateData;
+    public delegate void GameScriptEvents();
+    public static event GameScriptEvents CreateData;
 
     private void Awake()
     {
@@ -64,7 +64,10 @@ public class Game : MonoBehaviour
             designer.ClearLevel();
             player.gameObject.SetActive(true);
             designer.background.SetActive(false);
+
+            
         }
+        CameraS.CreateLevel += SpawnNewLevel;
 
         NewGameSetup();
     }
@@ -77,7 +80,6 @@ public class Game : MonoBehaviour
 
     private void SpawnFirstLevel()
     {
-        //player.enabled = true;
         if (!isDesigner) {
             CreateData();
             SpawnLevel(0f, LevelManager.Instance.levels[count]);
@@ -119,7 +121,7 @@ public class Game : MonoBehaviour
             // тут має братись насправді НАСТУПНИЙ рівень
             try
             {
-                SpawnLevel(count * CombinedGrid.halfHeight, LevelManager.Instance.levels[count]);
+                SpawnLevel(CombinedGrid.halfHeight, LevelManager.Instance.levels[count]);
             }
             finally {
                 Debug.Log("Level spawn with key "+ count);
@@ -137,15 +139,10 @@ public class Game : MonoBehaviour
             YPos = CombinedGrid.origin.y + item.yPos * CombinedGrid.step;
             Block block = Instantiate(prefabs[item.prefabName], new Vector3(XPos, YPos + offset, 0f), Quaternion.identity).GetComponent<Block>();
             blocks.Add(block);
-            foreach (var blk in blocks) {
-                if (count < 3) {
-                    foreach (Element element in blk.elements)
+                    foreach (Element element in block.elements)
                     {
                         element.SetCell();
                     }
-                }
-                
-            }
         }
     }
 
