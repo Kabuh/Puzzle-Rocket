@@ -2256,6 +2256,7 @@ MonoBehaviour:
   playerElement: {fileID: 318540790}
   isDesigner: 0
   isTestMode: 0
+  count: 1
 --- !u!4 &1155832399
 Transform:
   m_ObjectHideFlags: 0
@@ -3123,7 +3124,7 @@ GameObject:
   - component: {fileID: 1386135900}
   - component: {fileID: 1386135901}
   - component: {fileID: 1386135902}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Border
   m_TagString: Untagged
   m_Icon: {fileID: 0}
