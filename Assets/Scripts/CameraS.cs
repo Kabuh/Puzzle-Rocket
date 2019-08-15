@@ -4,15 +4,32 @@ using UnityEngine;
 
 public class CameraS : MonoBehaviour
 {
-    public float speed = 0.5f;
+    public float defaultSpeed = 0.5f;
+    float stopSpeed = 0;
+    float speed;
+
     int currentLevel = 1;
+    int gridHeight;
+    bool camCheat = false;
+    Vector2 origin;
+
+    public delegate void CameraEvents();
+    public static event CameraEvents CreateLevel;
+
+    private void Start()
+    {
+        speed = defaultSpeed;
+        gridHeight = Game.Instance.CombinedGrid.halfHeight;
+        origin = Game.Instance.CombinedGrid.origin;
+    }
 
     private void Update()
     {
         transform.Translate(0f, speed * Time.deltaTime, 0f);
-        if (transform.position.y >= currentLevel * 8f)
+        if (transform.position.y >= currentLevel * gridHeight)
         {
-            Game.Instance.SpawnNewLevel(++currentLevel);
+            CreateLevel();
+            currentLevel++;
         }
     }
 
@@ -23,6 +40,14 @@ public class CameraS : MonoBehaviour
     }
 
     public void StopSpeed() {
-        speed = 0;
+        if (!camCheat)
+        {
+            speed = stopSpeed;
+            camCheat = true;
+        }
+        else {
+            speed = defaultSpeed;
+            camCheat = false;
+        }
     }
 }

@@ -22,10 +22,10 @@ public class Game : MonoBehaviour
 
     private Designer designer;
 
-    private int count = 0;
+    public int count = 1;
 
-    public delegate void StartEvent();
-    public static event StartEvent CreateData;
+    public delegate void GameScriptEvents();
+    public static event GameScriptEvents CreateData;
 
     private void Awake()
     {
@@ -65,7 +65,10 @@ public class Game : MonoBehaviour
             designer.ClearLevel();
             player.gameObject.SetActive(true);
             designer.background.SetActive(false);
+
+            
         }
+        CameraS.CreateLevel += SpawnNewLevel;
 
         if(isTestMode)
         {
@@ -80,17 +83,15 @@ public class Game : MonoBehaviour
     private void NewGameSetup()
     {
         SpawnFirstLevel();
-        //SpawnSecondLevel();
+        SpawnSecondLevel();
     }
 
     private void SpawnFirstLevel()
     {
-        //player.enabled = true;
         if (!isDesigner) {
             CreateData();
-            SpawnLevel(0f, LevelManager.Instance.levels[1]);
+            SpawnLevel(0f, LevelManager.Instance.levels[count]);
             PreparePlayerStart();
-
         }
         
         count++;        
@@ -106,13 +107,13 @@ public class Game : MonoBehaviour
         {
             // тут має братись насправді другий рівень
             CreateData();
-            SpawnLevel(CombinedGrid.halfHeight * count, LevelManager.Instance.levels[2]);
+            SpawnLevel(CombinedGrid.halfHeight, LevelManager.Instance.levels[count]);
         }
         
         count++;
     }
 
-    public void SpawnNewLevel(int count)
+    public void SpawnNewLevel()
     {
         CreateData();
         DestroyLowerBlocks();
@@ -126,7 +127,13 @@ public class Game : MonoBehaviour
         else
         {
             // тут має братись насправді НАСТУПНИЙ рівень
-            SpawnLevel(count * CombinedGrid.halfHeight, LevelManager.Instance.levels[3]);
+            try
+            {
+                SpawnLevel(CombinedGrid.halfHeight, LevelManager.Instance.levels[count]);
+            }
+            finally {
+                Debug.Log("Level spawn with key "+ count);
+            }
         }
         count++;        
     }
@@ -140,10 +147,9 @@ public class Game : MonoBehaviour
             YPos = CombinedGrid.origin.y + item.yPos * CombinedGrid.step;
             Block block = Instantiate(prefabs[item.prefabName], new Vector3(XPos, YPos + offset, 0f), Quaternion.identity).GetComponent<Block>();
             blocks.Add(block);
-            foreach (var blk in blocks) {
-                foreach (Element element in blk.elements) {
-                    element.SetCell();
-                }
+            foreach (Element element in block.elements)
+            {
+                element.SetCell();
             }
         }
     }
@@ -162,7 +168,7 @@ public class Game : MonoBehaviour
     {
         foreach(var item in blocks)
         {
-            Destroy(item.gameObject);
+            Destroy(item?.gameObject);
         }
         blocks.Clear();
         LevelManager.Instance.LevelDestroyer();
@@ -184,7 +190,7 @@ public class Game : MonoBehaviour
         foreach (var item in blockToDestroy)
         {
             blocks.Remove(item);
-            Destroy(item.gameObject);
+            item.SelfDestroy();
         }
     }
 
@@ -204,7 +210,7 @@ public class Game : MonoBehaviour
 
     public void GameOver()
     {
-        count = 0;
+        count = 1;
         DestroyAllBlocks();
         ResetGrid();
         ResetPlayer();
@@ -212,14 +218,20 @@ public class Game : MonoBehaviour
         ResetCamera();
     }
 
-    void PreparePlayerStart() 
-    {
-        Cell cell = CombinedGrid.cells[2, 3];
-    
+    void PreparePlayerStart() {
+        Cell cell = CombinedGrid.WorldPosToCell(player.transform.position);
+        
+
         if (cell.Element != null)
         {
-            Debug.Log(cell.Element.myBlock.name + " under player got destroyed");
-            cell.Element.myBlock.SelfDestroy();
+            Block ObstructingBlock = cell.Element.myBlock;
+            
+            if (ObstructingBlock != player.playerBlock) {
+                ObstructingBlock.SelfDestroy();
+                Debug.Log(ObstructingBlock.name + " under player got destroyed");
+                blocks.Remove(ObstructingBlock);
+            }
+            
         }
         else
         {
