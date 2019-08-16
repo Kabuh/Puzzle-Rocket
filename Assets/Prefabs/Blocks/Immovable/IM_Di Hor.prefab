@@ -85,23 +85,23 @@ PrefabInstance:
     - target: {fileID: 912233221265383587, guid: cfaa6822767fed74790da8463456faa1,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.7071068
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 912233221265383587, guid: cfaa6822767fed74790da8463456faa1,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.7071068
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 912233221265383587, guid: cfaa6822767fed74790da8463456faa1,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 90
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6107233563027105226, guid: cfaa6822767fed74790da8463456faa1,
         type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: 71db95b77427af24784a6be3c574787d,
+      objectReference: {fileID: 21300000, guid: a56bf5821d7ce984392b2ef77749959b,
         type: 3}
     m_RemovedComponents:
     - {fileID: 7821316007088071373, guid: cfaa6822767fed74790da8463456faa1, type: 3}
