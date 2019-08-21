@@ -26,6 +26,8 @@ public class Game : MonoBehaviour
 
     public delegate void GameScriptEvents();
     public static event GameScriptEvents CreateData;
+    public static event GameScriptEvents LevelSpawnFinished;
+    public static event GameScriptEvents PlayerDead;
 
     private void Awake()
     {
@@ -135,6 +137,7 @@ public class Game : MonoBehaviour
                 Debug.Log("Level spawn with key "+ count);
             }
         }
+        LevelSpawnFinished();
         count++;        
     }
 
@@ -210,6 +213,7 @@ public class Game : MonoBehaviour
 
     public void GameOver()
     {
+        PlayerDead();
         count = 1;
         DestroyAllBlocks();
         ResetGrid();

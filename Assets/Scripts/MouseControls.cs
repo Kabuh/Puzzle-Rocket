@@ -16,6 +16,12 @@ public class MouseControls : MonoBehaviour
 
     float swipeAngle;
 
+    private void Start()
+    {
+        Game.LevelSpawnFinished += RecalculateBlock;
+        Game.PlayerDead += DiscardBlock;
+    }
+
     private void LateUpdate()
     {
         //initiation of swipe
@@ -47,7 +53,7 @@ public class MouseControls : MonoBehaviour
     }   
 
     //pick block from level
-    private Block TryTouchBlock(Vector3 pos)                                   
+    private Block TryTouchBlock(Vector3 pos)
     {
         RaycastHit2D raycastHit2D = Physics2D.Raycast(pos, Vector2.zero);
         if(raycastHit2D)
@@ -129,6 +135,16 @@ public class MouseControls : MonoBehaviour
                 return Axis.Horizontal;
             }
         }
+    }
+
+    private void DiscardBlock()
+    {
+        block = null;
+    }
+
+    private void RecalculateBlock()
+    {
+        block?.CalculateMovementConstraints();
     }
 
 }

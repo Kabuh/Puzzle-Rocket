@@ -25,14 +25,20 @@ public class Block : MonoBehaviour
     private float maxXposition;
     private Element[] currentElementsGroup;
 
-    Vector3 ClampedVector;
-    Vector2 currentLocation;
+    private Vector3 closestCellPosition;
 
     private void Awake()
     {
         foreach (var item in elements) {
             item.myBlock = this;
         }        
+    }
+
+    private void Start()
+    {
+        // we don't need to calculate it for the first time because block is already
+        // spawned on its closest cell
+        closestCellPosition = transform.position;
     }
 
     public void CalculateInputAndPivotDiff(Vector3 input)
@@ -77,8 +83,7 @@ public class Block : MonoBehaviour
 
     public void SnapToClosestCell()
     {
-        Vector3 destination = Game.Instance.CombinedGrid.GetClosestCellWorldPosition(transform.position);
-        StartCoroutine(Moving(destination));
+        StartCoroutine(Moving(closestCellPosition));
     }
     
     public void ResetElementsCells()
@@ -119,8 +124,10 @@ public class Block : MonoBehaviour
         return false;
     }
 
-    public void SelfDestroy() {
-        foreach (var item in elements) {
+    public void SelfDestroy()
+    {
+        foreach (var item in elements)
+        {
             item.myCell.IsEmpty = true;
         }
         Destroy(this.gameObject);
@@ -179,8 +186,8 @@ public class Block : MonoBehaviour
         int freeLeftLinesCount = GetFreeLinesCount(Directions.Left);
         int freeRightLinesCount = GetFreeLinesCount(Directions.Right);
 
-        minXposition = transform.position.x - Game.Instance.CombinedGrid.step * freeLeftLinesCount;
-        maxXposition = transform.position.x + Game.Instance.CombinedGrid.step * freeRightLinesCount;
+        minXposition = closestCellPosition.x - Game.Instance.CombinedGrid.step * freeLeftLinesCount;
+        maxXposition = closestCellPosition.x + Game.Instance.CombinedGrid.step * freeRightLinesCount;
     }
 
     private void CalculateVerticalConstraints()
@@ -188,17 +195,18 @@ public class Block : MonoBehaviour
         int freeUpLinesCount = GetFreeLinesCount(Directions.Up);
         int freeDownLinesCount = GetFreeLinesCount(Directions.Down);
 
-        minYposition = transform.position.y - Game.Instance.CombinedGrid.step * freeDownLinesCount;
-        maxYposition = transform.position.y + Game.Instance.CombinedGrid.step * freeUpLinesCount;        
+        minYposition = closestCellPosition.y - Game.Instance.CombinedGrid.step * freeDownLinesCount;
+        maxYposition = closestCellPosition.y + Game.Instance.CombinedGrid.step * freeUpLinesCount;        
     }
 
     private void ReassignCells()
     {
+        closestCellPosition = Game.Instance.CombinedGrid.GetClosestCellWorldPosition(transform.position);
         foreach (var item in elements)
         {
             item.ReassignCell();
         }
-    }
+    }     
     
     // якщо в блоці хоча б один елемент лишається, то не записуємо його у список на видалення
 }
