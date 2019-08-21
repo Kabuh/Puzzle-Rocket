@@ -19,6 +19,8 @@ public class LevelManager : MonoBehaviour
     public int[] sizeChancesIfOne = { 45, 20, 10, 15, 10 };
     public int[] sizeChancesIfNone = { 65, 25, 10 };
     public int[] typeChances = { 30, 10, 60 };
+
+    public float boosterSpawnChance;
     GridClass CreatorGrid;
 
 
@@ -131,6 +133,11 @@ public class LevelManager : MonoBehaviour
                     }
 
                     OffsetMaker(x, y, Offset);
+                }
+
+                if (SimpleRando(boosterSpawnChance))
+                {
+                    levelDataItems.Add(new LevelDataItem("master_booster", x, y));
                 }
             }
         }
@@ -275,6 +282,19 @@ public class LevelManager : MonoBehaviour
         }
 
         GenerateFigure(typeIndex, isImmovable, x, y);
+    }
+
+    bool SimpleRando(float chance)
+    {
+        float x = Random.Range(0, 100);
+        if (x <= chance)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
 
     int ComplexRando(int[] valueLib) {

@@ -637,6 +637,7 @@ MonoBehaviour:
   sizeChancesIfOne: 2d000000140000000a0000000f0000000a000000
   sizeChancesIfNone: 41000000190000000a000000
   typeChances: 1e0000000a0000003c000000
+  boosterSpawnChance: 20
 --- !u!4 &211944909
 Transform:
   m_ObjectHideFlags: 0
@@ -2251,6 +2252,7 @@ MonoBehaviour:
   - {fileID: 453434801688592368, guid: fa9285f016949924c8ba153679192973, type: 3}
   - {fileID: 7517658477880504804, guid: 65436c6b9745d5c44835dda66933458b, type: 3}
   - {fileID: 8370872954291148963, guid: e7331c5218242df4db926c7a1266dd89, type: 3}
+  - {fileID: 4757560856191970650, guid: 53fc56f3c2466064e9afc8eb06b69b5c, type: 3}
   cameraScript: {fileID: 519420033}
   player: {fileID: 1549049977}
   playerElement: {fileID: 318540790}

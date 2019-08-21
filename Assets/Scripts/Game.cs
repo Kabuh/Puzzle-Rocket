@@ -19,6 +19,7 @@ public class Game : MonoBehaviour
 
     private Dictionary<string, GameObject> prefabs = new Dictionary<string, GameObject>();
     private List<Block> blocks = new List<Block>();
+    private List<Booster> boosters = new List<Booster>();
 
     private Designer designer;
 
@@ -107,7 +108,6 @@ public class Game : MonoBehaviour
         }
         else
         {
-            // тут має братись насправді другий рівень
             CreateData();
             SpawnLevel(CombinedGrid.halfHeight, LevelManager.Instance.levels[count]);
         }
@@ -128,7 +128,6 @@ public class Game : MonoBehaviour
         }
         else
         {
-            // тут має братись насправді НАСТУПНИЙ рівень
             try
             {
                 SpawnLevel(CombinedGrid.halfHeight, LevelManager.Instance.levels[count]);
@@ -148,11 +147,21 @@ public class Game : MonoBehaviour
             float XPos, YPos;
             XPos = CombinedGrid.origin.x + item.xPos * CombinedGrid.step;
             YPos = CombinedGrid.origin.y + item.yPos * CombinedGrid.step;
-            Block block = Instantiate(prefabs[item.prefabName], new Vector3(XPos, YPos + offset, 0f), Quaternion.identity).GetComponent<Block>();
-            blocks.Add(block);
-            foreach (Element element in block.elements)
+
+            if (item.prefabName != "master_booster")
             {
-                element.SetCell();
+                Block block = Instantiate(prefabs[item.prefabName], new Vector3(XPos, YPos + offset, 0f), Quaternion.identity).GetComponent<Block>();
+                blocks.Add(block);
+                foreach (Element element in block.elements)
+                {
+                    element.SetCell();
+                }
+            }
+            else
+            {
+                Booster booster = Instantiate(prefabs[item.prefabName], new Vector3(XPos, YPos + offset, 0f), Quaternion.identity).GetComponent<Booster>();
+                boosters.Add(booster);
+                booster.SetCell();
             }
         }
     }
@@ -171,9 +180,14 @@ public class Game : MonoBehaviour
     {
         foreach(var item in blocks)
         {
-            Destroy(item?.gameObject);
+            item?.SelfDestroy();
+        }
+        foreach (var item in boosters)
+        {
+            item?.SelfDestroy();
         }
         blocks.Clear();
+        boosters.Clear();
         LevelManager.Instance.LevelDestroyer();
     }
 
@@ -236,10 +250,6 @@ public class Game : MonoBehaviour
                 blocks.Remove(ObstructingBlock);
             }
             
-        }
-        else
-        {
-            Debug.Log("cell has no gameobject");
         }
         playerElement.SetCell();
     }
