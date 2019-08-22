@@ -1385,6 +1385,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   slotsCount: 3
+  slotCosts: 000000003200000064000000
   slotTexts:
   - {fileID: 894716095}
   - {fileID: 1970049860}

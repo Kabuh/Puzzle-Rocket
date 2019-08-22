@@ -7,9 +7,13 @@ public class Inventory : MonoBehaviour
 
     [SerializeField] private int slotsCount = 3;
 
+    [SerializeField] private int[] slotCosts;
+
     [SerializeField] private Text[] slotTexts;
 
     private Slot[] slots;
+
+    private int coinsCount;
 
     private void Awake()
     {
@@ -25,7 +29,11 @@ public class Inventory : MonoBehaviour
         }
         #endregion
 
-        slots = new Slot[slotsCount];        
+        slots = new Slot[slotsCount];
+        for (int i = 0; i < slots.Length; i++)
+        {
+            slots[i] = new Slot();
+        }
     }
 
 
@@ -57,13 +65,26 @@ public class Inventory : MonoBehaviour
                 slots[slotIndex].boosterType.Activate();
             }
         }
+        else
+        {
+            UnlockSlot(slotIndex);
+        }
     }
 
     public void UnlockSlot(int slotIndex)
     {
-        slots[slotIndex].isUnlocked = true;
-        // visual changes
-        slotTexts[slotIndex].text = "_";
+        if (coinsCount >= slotCosts[slotIndex])
+        {
+            slots[slotIndex].isUnlocked = true;
+            coinsCount -= slotCosts[slotIndex];
+            // visual changes
+            slotTexts[slotIndex].text = "_";
+        }
+    }
+
+    public void AddCoins(int amount)
+    {
+        coinsCount += amount;
     }
 
     public void TryAddBooster(IBooster booster)
