@@ -9,9 +9,7 @@ public class Inventory : MonoBehaviour
 
     [SerializeField] private Text[] slotTexts;
 
-    private IBooster[] boosterSlots;
-    private bool[] openSlots;
-    private int emptySlotsCount;
+    private Slot[] slots;
 
     private void Awake()
     {
@@ -27,8 +25,7 @@ public class Inventory : MonoBehaviour
         }
         #endregion
 
-        boosterSlots = new IBooster[slotsCount];
-        openSlots = new bool[slotsCount];
+        slots = new Slot[slotsCount];        
     }
 
 
@@ -51,34 +48,48 @@ public class Inventory : MonoBehaviour
         }
     }
 
-    private void OnSlotTouch(int slot)
-    {
-        if (!openSlots[slot])
+    private void OnSlotTouch(int slotIndex)
+    {   
+        if(slots[slotIndex].isUnlocked)
         {
-            UnlockSlot(slot);
-        }
-        else
-        {
-            if (boosterSlots[slot] != null)
+            if(slots[slotIndex].boosterType!=null)
             {
-                boosterSlots[slot].Activate();
+                slots[slotIndex].boosterType.Activate();
             }
         }
     }
 
     public void UnlockSlot(int slotIndex)
     {
-        openSlots[slotIndex] = true;
-        emptySlotsCount++;
+        slots[slotIndex].isUnlocked = true;
         // visual changes
         slotTexts[slotIndex].text = "_";
     }
 
     public void TryAddBooster(IBooster booster)
     {
-        if(emptySlotsCount>0)
+        Slot emptySlot = null;
+
+        for (int i = 0; i < slots.Length; i++)
         {
-            AddBooster(booster);
+            if(slots[i].isUnlocked)
+            {
+                if (slots[i].boosterType == booster)
+                {
+                    AddToSlot(slots[i]);
+                    return;
+                }
+
+                if (emptySlot==null && slots[i].boosterType==null)
+                {
+                    emptySlot = slots[i];
+                }                
+            }
+        }
+
+        if (emptySlot != null)
+        {
+            FillSlot(emptySlot, booster);
         }
         else
         {
@@ -86,41 +97,39 @@ public class Inventory : MonoBehaviour
         }
     }
 
-    public void UseBooster(int slot)
+    public void UseBooster(int slotIndex)
     {
-        if (openSlots[slot])
-        {
-            if (boosterSlots != null)
-            {
-                boosterSlots[slot].Activate();
-                ClearSlot(slot);
-            }
-        }
-    }
+        Slot slot = slots[slotIndex];
 
-    private void AddBooster(IBooster booster)
-    {
-        for (int i = 0; i < openSlots.Length; i++)
+        if (slot.isUnlocked)
         {
-            if(openSlots[i])
+            if (slot.boosterType != null)
             {
-                if(boosterSlots[i]==null)
+                slot.boosterType.Activate();
+                slot.boostersCount--;
+                if (slot.boostersCount == 0)
                 {
-                    FillSlot(i, booster);
+                    ClearSlot(slot);
                 }
             }
         }
+    }    
+
+    private void FillSlot(Slot slot, IBooster booster)
+    {
+        slot.boosterType = booster;
+        slot.boostersCount++;
     }
 
-    private void FillSlot(int slot, IBooster booster)
+    private void AddToSlot(Slot slot)
     {
-        boosterSlots[slot] = booster;
+        slot.boostersCount++;        
         // + visual changes or fire event listened by ui
     }
 
-    private void ClearSlot(int slot)
+    private void ClearSlot(Slot slot)
     {
-        boosterSlots[slot] = null;
+        slot.boosterType = null;
         // + visual changes or fire event listened by ui
     }
 }
