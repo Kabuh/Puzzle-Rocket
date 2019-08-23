@@ -26,7 +26,6 @@ public class Game : MonoBehaviour
     public int count = 1;
 
     public delegate void GameScriptEvents();
-    public static event GameScriptEvents CreateData;
     public static event GameScriptEvents LevelSpawnFinished;
     public static event GameScriptEvents PlayerDead;
 
@@ -92,8 +91,7 @@ public class Game : MonoBehaviour
     private void SpawnFirstLevel()
     {
         if (!isDesigner) {
-            CreateData();
-            SpawnLevel(0f, LevelManager.Instance.levels[count]);
+            SpawnLevel(0f, LevelManager.Instance.CreateNewLevel());
             PreparePlayerStart();
         }
         
@@ -108,8 +106,7 @@ public class Game : MonoBehaviour
         }
         else
         {
-            CreateData();
-            SpawnLevel(CombinedGrid.halfHeight, LevelManager.Instance.levels[count]);
+            SpawnLevel(CombinedGrid.halfHeight, LevelManager.Instance.CreateNewLevel());
         }
         
         count++;
@@ -117,7 +114,6 @@ public class Game : MonoBehaviour
 
     public void SpawnNewLevel()
     {
-        CreateData();
         DestroyLowerBlocks();
         CombinedGrid.AddOffsetToOrigin();
         CombinedGrid.ShiftGrid();
@@ -130,7 +126,7 @@ public class Game : MonoBehaviour
         {
             try
             {
-                SpawnLevel(CombinedGrid.halfHeight, LevelManager.Instance.levels[count]);
+                SpawnLevel(CombinedGrid.halfHeight, LevelManager.Instance.CreateNewLevel());
             }
             finally {
                 Debug.Log("Level spawn with key "+ count);
@@ -148,7 +144,7 @@ public class Game : MonoBehaviour
             XPos = CombinedGrid.origin.x + item.xPos * CombinedGrid.step;
             YPos = CombinedGrid.origin.y + item.yPos * CombinedGrid.step;
 
-            if (item.prefabName != "master_booster")
+            if (item.type == "block")
             {
                 Block block = Instantiate(prefabs[item.prefabName], new Vector3(XPos, YPos + offset, 0f), Quaternion.identity).GetComponent<Block>();
                 blocks.Add(block);
@@ -188,7 +184,6 @@ public class Game : MonoBehaviour
         }
         blocks.Clear();
         boosters.Clear();
-        LevelManager.Instance.LevelDestroyer();
     }
 
     private void DestroyLowerBlocks()
@@ -206,8 +201,10 @@ public class Game : MonoBehaviour
 
         foreach (var item in blockToDestroy)
         {
-            blocks.Remove(item);
-            item.SelfDestroy();
+            blocks?.Remove(item);
+            if (item != null) {
+                item.SelfDestroy();
+            }
         }
     }
 

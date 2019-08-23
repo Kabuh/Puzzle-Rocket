@@ -71,7 +71,7 @@ public class Designer : MonoBehaviour
         foreach (Block b in blocks)
         {
             Vector2 relativePosition = PositionToIndex(b.transform.position);
-            levelDataItems.Add(new LevelDataItem(b.gameObject.name, relativePosition.x, relativePosition.y));
+            levelDataItems.Add(new LevelDataItem(b.gameObject.name, relativePosition.x, relativePosition.y, "block"));
         }
 
         levelData = new LevelData

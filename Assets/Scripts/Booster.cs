@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class Booster : MonoBehaviour
 {
-    public int x;
-    public int y;
+    public int xIndex;
+    public int yIndex;
     public Vector2 position;
     public Cell myCell;
     
@@ -13,8 +13,8 @@ public class Booster : MonoBehaviour
     public void SetCell() {
         position = transform.position;
         myCell = myCell = Game.Instance.CombinedGrid.WorldPosToCell(transform.position);
-        x = myCell.XPos;
-        y = myCell.YPos;
+        xIndex = myCell.XPos;
+        yIndex = myCell.YPos;
     }
 
     public Cell GetCell() {
