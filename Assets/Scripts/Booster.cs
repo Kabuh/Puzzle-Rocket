@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Booster : MonoBehaviour
+public abstract class Booster : MonoBehaviour
 {
     public int xIndex;
     public int yIndex;

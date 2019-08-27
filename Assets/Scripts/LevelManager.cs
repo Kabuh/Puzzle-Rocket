@@ -6,7 +6,7 @@ using System.IO;
 
 public class LevelManager : MonoBehaviour
 {
-    [SerializeField] private string levelName;
+    [SerializeField]
 
     public Dictionary<string, LevelData> premadeLevels { get; private set; }
 
@@ -69,8 +69,6 @@ public class LevelManager : MonoBehaviour
 
     public LevelData CreateNewLevel() {
         CreatorGrid = new GridClass(Game.Instance.CombinedGrid.width, Game.Instance.CombinedGrid.halfHeight, Game.Instance.CombinedGrid.step, "CreatorGrid");
-
-        levelName = "1";
 
         ClearGrid(CreatorGrid);
         RandomLevelCreator();
