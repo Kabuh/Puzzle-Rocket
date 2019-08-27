@@ -1,33 +1,11 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-public abstract class Booster : MonoBehaviour
+﻿public abstract class Booster : IBooster
 {
-    public int xIndex;
-    public int yIndex;
-    public Vector2 position;
-    public Cell myCell;
-    
+    protected Block playerBlock;
 
-    public void SetCell() {
-        position = transform.position;
-        myCell = myCell = Game.Instance.CombinedGrid.WorldPosToCell(transform.position);
-        xIndex = myCell.XPos;
-        yIndex = myCell.YPos;
-    }
-
-    public Cell GetCell() {
-        return this.myCell;
-    }
-
-    public void SelfDestroy()
+    public Booster(Block playerBlock)
     {
-        Destroy(this.gameObject);
+        this.playerBlock = playerBlock;
     }
 
-
-
-
-
+    public abstract void Activate(Cell cell);
 }

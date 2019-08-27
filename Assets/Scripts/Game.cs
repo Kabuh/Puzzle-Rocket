@@ -19,7 +19,7 @@ public class Game : MonoBehaviour
 
     private Dictionary<string, GameObject> prefabs = new Dictionary<string, GameObject>();
     private List<Block> blocks = new List<Block>();
-    private List<Booster> boosters = new List<Booster>();
+    private List<BoosterObject> boosters = new List<BoosterObject>();
 
     private Designer designer;
 
@@ -155,7 +155,7 @@ public class Game : MonoBehaviour
             }
             else
             {
-                Booster booster = Instantiate(prefabs[item.prefabName], new Vector3(XPos, YPos + offset, 0f), Quaternion.identity).GetComponent<Booster>();
+                BoosterObject booster = Instantiate(prefabs[item.prefabName], new Vector3(XPos, YPos + offset, 0f), Quaternion.identity).GetComponent<BoosterObject>();
                 boosters.Add(booster);
                 booster.SetCell();
             }

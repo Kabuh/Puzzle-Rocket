@@ -4,25 +4,27 @@ using UnityEngine;
 
 public class Bomb : Booster
 {
-    List<Block> BlocksToDestroy = new List<Block>();
-    Block playerBlock;
+    List<Block> BlocksToDestroy = new List<Block>();    
 
     bool ExplosionOnPickUp = true;
 
-    void BombActivate(int newExplosionOriginX, int newExplosionOriginY) {
-        if (ExplosionOnPickUp)
-        {
-            GetSurroundingBlocks(xIndex, yIndex);
-        }
-        else {
-            GetSurroundingBlocks(newExplosionOriginX, newExplosionOriginY);
-        }
+    public Bomb(Block playerBlock):base(playerBlock)
+    {
+    }
+
+    public override void Activate(Cell cell)
+    {       
+        GetSurroundingBlocks(cell);
         BlocksToDestroy.Remove(playerBlock);
         Explode();
     }
 
     //get blocks pull
-    void GetSurroundingBlocks(int OriginX, int OriginY) {
+    void GetSurroundingBlocks(Cell myCell)
+    {
+        int OriginX = myCell.XPos;
+        int OriginY = myCell.YPos;
+
         for (int x = -1; x < 2; x++) {
             for (int y = -1; y < 2; y++) {
                 if ((x == 0 && y == 0) == false) {
@@ -44,19 +46,6 @@ public class Bomb : Booster
         }
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        playerBlock = collision.gameObject.GetComponent<Block>();
-        if (playerBlock != null) {
-            if (ExplosionOnPickUp)
-            {
-                GetSurroundingBlocks(xIndex, yIndex);
-            }
-            BlocksToDestroy.Remove(playerBlock);
-            Explode();
-            SelfDestroy();
-        }
-        
-    }
+    
 
 }

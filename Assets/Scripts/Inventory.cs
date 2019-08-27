@@ -3,7 +3,7 @@ using UnityEngine.UI;
 
 public class Inventory : MonoBehaviour
 {
-    public Inventory Instance { get; private set; }
+    public static Inventory Instance { get; private set; }
 
     [SerializeField] private int slotsCount = 3;
 
@@ -14,6 +14,8 @@ public class Inventory : MonoBehaviour
     private Slot[] slots;
 
     private int coinsCount;
+
+    private Block playerBlock;
 
     private void Awake()
     {
@@ -36,6 +38,11 @@ public class Inventory : MonoBehaviour
         }
     }
 
+    private void Start()
+    {
+        playerBlock = Game.Instance.player.GetComponent<Block>();
+    }
+
 
     // TEMP!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     private void LateUpdate()
@@ -56,13 +63,16 @@ public class Inventory : MonoBehaviour
         }
     }
 
+    // make available only if player is standing
     private void OnSlotTouch(int slotIndex)
     {   
         if(slots[slotIndex].isUnlocked)
         {
             if(slots[slotIndex].boosterType!=null)
             {
-                slots[slotIndex].boosterType.Activate();
+                UseBooster(slotIndex);
+
+                //slots[slotIndex].boosterType.Activate(playerBlock.elements[0].myCell);
             }
         }
         else
@@ -87,7 +97,7 @@ public class Inventory : MonoBehaviour
         coinsCount += amount;
     }
 
-    public void TryAddBooster(IBooster booster)
+    public void TryAddBooster(IBooster booster, Cell boosterCell)
     {
         Slot emptySlot = null;
 
@@ -114,7 +124,7 @@ public class Inventory : MonoBehaviour
         }
         else
         {
-            booster.Activate();
+            booster.Activate(boosterCell);
         }
     }
 
@@ -126,7 +136,7 @@ public class Inventory : MonoBehaviour
         {
             if (slot.boosterType != null)
             {
-                slot.boosterType.Activate();
+                slot.boosterType.Activate(playerBlock.elements[0].myCell);
                 slot.boostersCount--;
                 if (slot.boostersCount == 0)
                 {
