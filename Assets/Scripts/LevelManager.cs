@@ -6,10 +6,7 @@ using System.IO;
 
 public class LevelManager : MonoBehaviour
 {
-    [SerializeField] private string levelName;
-    private int levelCounter;
-
-    public Dictionary<int, LevelData> levels { get; private set; }
+    [SerializeField]
 
     public Dictionary<string, LevelData> premadeLevels { get; private set; }
 
@@ -19,6 +16,8 @@ public class LevelManager : MonoBehaviour
     public int[] sizeChancesIfOne = { 45, 20, 10, 15, 10 };
     public int[] sizeChancesIfNone = { 65, 25, 10 };
     public int[] typeChances = { 30, 10, 60 };
+
+    public float boosterSpawnChance;
     GridClass CreatorGrid;
 
 
@@ -27,7 +26,6 @@ public class LevelManager : MonoBehaviour
 
     private void Awake()
     {
-        levelCounter = 1;
 
         #region Singleton
 
@@ -41,46 +39,36 @@ public class LevelManager : MonoBehaviour
         }
         #endregion        
 
-        Game.CreateData += CreateNewLevel;
         LoadLevels();
     }
 
-    public void LoadLevels() // level reader
+    public void LoadLevels()
     {
         premadeLevels = new Dictionary<string, LevelData>();
 
-        //generating levels layout save directory
         string[] files = Directory.GetFiles(Path.Combine(Application.streamingAssetsPath, "Levels"));
 
         if (files == null) {
             return;
         }
 
-        //parser
         foreach (var item in files)
         {
-            //file extension checker?
             if (Path.GetExtension(item) != ".json") {
                 continue;
             }
-
-            //level data class creating new object - what is lavel data class?
             LevelData levelData = JsonUtility.FromJson<LevelData>(File.ReadAllText(item));
 
-            //just a level name, no fuss
             string levelName = Path.GetFileNameWithoutExtension(item);
 
-            //adding new data to all levels stack - THERE IS A STACK
             premadeLevels.Add(levelName, levelData);
         }
     }
 
     List<LevelDataItem> levelDataItems = new List<LevelDataItem>();
 
-    void CreateNewLevel() {
+    public LevelData CreateNewLevel() {
         CreatorGrid = new GridClass(Game.Instance.CombinedGrid.width, Game.Instance.CombinedGrid.halfHeight, Game.Instance.CombinedGrid.step, "CreatorGrid");
-
-        levelName = "1";
 
         ClearGrid(CreatorGrid);
         RandomLevelCreator();
@@ -88,22 +76,15 @@ public class LevelManager : MonoBehaviour
         LevelData levelData = new LevelData();
         levelData.items = levelDataItems.ToArray();
 
-        levels = new Dictionary<int, LevelData>();
-
-        levels.Add(levelCounter, levelData);
         levelDataItems.Clear();
-        levelCounter++;
+
+        return levelData;
     }
 
-    public void LevelDestroyer() {
-        levelDataItems.Clear();
-        levels.Clear();
-        levelCounter = 1;
-    }
 
     /// ////////////////////////////////////////
 
-
+    //main logic body
     public void RandomLevelCreator() {
         int x, y;
         for (y = 0; y < CreatorGrid.height; y++) {
@@ -132,10 +113,18 @@ public class LevelManager : MonoBehaviour
 
                     OffsetMaker(x, y, Offset);
                 }
+
+                if ((Game.Instance.count == 1 && x == 2 && y == 3) == false) {
+                    if (SimpleRando(boosterSpawnChance))
+                    {
+                        levelDataItems.Add(new LevelDataItem("bomb_booster", x, y, "booster"));
+                    }
+                }
             }
         }
     }
 
+    //create free space for big blocks
     private void OffsetMaker(int x, int y, int[] Offset)
     {
         if (Offset != null)
@@ -162,6 +151,7 @@ public class LevelManager : MonoBehaviour
         }
     }
 
+    //creation of easy to use block indexes
     Dictionary<int, string> FigureType = new Dictionary<int, string>
         {
             { 110, "Single" },
@@ -171,19 +161,15 @@ public class LevelManager : MonoBehaviour
             { 220, "Cube" },
             { 310, "Tri Hor" },
             
-
             { 111, "Immovable" },
             { 121, "IM_Di Ver" },
             { 131, "IM_Tri Ver" },
             { 211, "IM_Di Hor" },
             { 221, "IM_Cube" },
             { 311, "IM_Tri Hor" }
-            
         };
 
-
-
-
+    //choosing a block figure
     void GenerateFigure(int type, bool isImmovable, int currentIndexX, int currentIndexY) {
         if (isImmovable) {
             type++;
@@ -192,10 +178,12 @@ public class LevelManager : MonoBehaviour
         GenerateBlock(FigureType[type], currentIndexX, currentIndexY);
     }
 
+    //adding block type to level data
     void GenerateBlock(string name, int x, int y) {
-        levelDataItems.Add(new LevelDataItem(name, x, y));
+        levelDataItems.Add(new LevelDataItem(name, x, y, "block"));
     }
 
+    //no big blocks should protrude trough the grid
     int CeilingSwitch(int freeLines, int casing) {
         if (freeLines == 1) {
             if (casing == 3) {
@@ -214,6 +202,7 @@ public class LevelManager : MonoBehaviour
         return casing;
     }
 
+    //interpreting chance calculation into block type
     void CasingType(int x, int y, int Size, int Type, out int[] CellOffsetI) {
         int[] OffsetArray = new int[2];
         switch (Type) {
@@ -233,38 +222,33 @@ public class LevelManager : MonoBehaviour
         CellOffsetI = OffsetArray;
     }
 
+    //interpreting chance calculation into block shape
     void CasingFigure(int x, int y, int RandoResult, bool isImmovable ,out int[] CellOffset) {
         int typeIndex;
 
         switch (RandoResult) {
             case 1:
                 typeIndex = 110;
-                //GenerateSingle(isImmovable, x, y);
                 CellOffset = new int[] { 0, 0 };
                 break;
             case 2:
                 typeIndex = 120;
-                //GenerateDouble(isImmovable, x, y, Directions.Vertical);
                 CellOffset = new int[] { 0, 1 };
                 break;
             case 3:
                 typeIndex = 130;
-                //GenerateTriple(isImmovable, x, y, Directions.Vertical);
                 CellOffset = new int[] { 0, 2 };
                 break;
             case 4:
                 typeIndex = 210;
-                //GenerateDouble(isImmovable, x, y, Directions.Horizontal);
                 CellOffset = new int[] { 1, 0 };
                 break;
             case 5:
                 typeIndex = 220;
-                //GenerateCube(isImmovable, x, y);
                 CellOffset = new int[] { 1, 1 };
                 break;
             case 6:
                 typeIndex = 310;
-                //GenerateTriple(isImmovable, x, y, Directions.Horizontal);
                 CellOffset = new int[] { 2, 0 };
                 break;
             default:
@@ -277,6 +261,21 @@ public class LevelManager : MonoBehaviour
         GenerateFigure(typeIndex, isImmovable, x, y);
     }
 
+    //creating a random answer from binary pool
+    bool SimpleRando(float chance)
+    {
+        float x = Random.Range(0, 100);
+        if (x <= chance)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    //creating a random answer from multi-answer pool
     int ComplexRando(int[] valueLib) {
         float x = Random.Range(0, 100);
         int sum = 0;
@@ -296,72 +295,4 @@ public class LevelManager : MonoBehaviour
     void ClearGrid(GridClass grid) {
         grid.ResetGrid();
     }
-
-    /*
-    void GenerateTriple (bool isImmovable, int currentIndexX, int currentIndexY, Directions dir) {
-        if (isImmovable)
-        {
-            if (dir == Directions.Horizontal)
-            {
-                GenerateBlock("IM_Tri Hor", currentIndexX, currentIndexY);
-            }
-            if (dir == Directions.Vertical)
-            {
-                GenerateBlock("IM_Tri Ver", currentIndexX, currentIndexY);
-            }
-        }
-        else {
-            if (dir == Directions.Horizontal)
-            {
-                GenerateBlock("Tri Hor", currentIndexX, currentIndexY);
-            }
-            if (dir == Directions.Vertical)
-            {
-                GenerateBlock("Tri Ver", currentIndexX, currentIndexY);
-            }
-        }
-    }
-
-    void GenerateDouble (bool isImmovable, int currentIndexX, int currentIndexY, Directions dir) {
-        if (isImmovable)
-        {
-            if (dir == Directions.Horizontal)
-            {
-                GenerateBlock("IM_Di Hor", currentIndexX, currentIndexY);
-            }
-            if (dir == Directions.Vertical)
-            {
-                GenerateBlock("IM_Di Ver", currentIndexX, currentIndexY);
-            }
-        }
-        else {
-            if (dir == Directions.Horizontal)
-            {
-                GenerateBlock("Di Hor", currentIndexX, currentIndexY);
-            }
-            if (dir == Directions.Vertical)
-            {
-                GenerateBlock("Di Ver", currentIndexX, currentIndexY);
-            }
-        }
-    }
-    void GenerateCube   (bool isImmovable, int currentIndexX, int currentIndexY) {
-        if (isImmovable)
-        {
-            GenerateBlock("IM_Cube", currentIndexX, currentIndexY);
-        }
-        else {
-            GenerateBlock("Cube", currentIndexX, currentIndexY);
-        }
-    }
-    void GenerateSingle (bool isImmovable, int currentIndexX, int currentIndexY) {
-        if (isImmovable)
-        {
-            GenerateBlock("Immovable", currentIndexX, currentIndexY);
-        }
-        else {
-            GenerateBlock("Single", currentIndexX, currentIndexY);
-        }    
-    }
-    */
 }

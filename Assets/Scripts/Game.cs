@@ -19,13 +19,13 @@ public class Game : MonoBehaviour
 
     private Dictionary<string, GameObject> prefabs = new Dictionary<string, GameObject>();
     private List<Block> blocks = new List<Block>();
+    private List<BoosterObject> boosters = new List<BoosterObject>();
 
     private Designer designer;
 
     public int count = 1;
 
     public delegate void GameScriptEvents();
-    public static event GameScriptEvents CreateData;
     public static event GameScriptEvents LevelSpawnFinished;
     public static event GameScriptEvents PlayerDead;
 
@@ -91,8 +91,7 @@ public class Game : MonoBehaviour
     private void SpawnFirstLevel()
     {
         if (!isDesigner) {
-            CreateData();
-            SpawnLevel(0f, LevelManager.Instance.levels[count]);
+            SpawnLevel(0f, LevelManager.Instance.CreateNewLevel());
             PreparePlayerStart();
         }
         
@@ -107,9 +106,7 @@ public class Game : MonoBehaviour
         }
         else
         {
-            // тут має братись насправді другий рівень
-            CreateData();
-            SpawnLevel(CombinedGrid.halfHeight, LevelManager.Instance.levels[count]);
+            SpawnLevel(CombinedGrid.halfHeight, LevelManager.Instance.CreateNewLevel());
         }
         
         count++;
@@ -117,7 +114,6 @@ public class Game : MonoBehaviour
 
     public void SpawnNewLevel()
     {
-        CreateData();
         DestroyLowerBlocks();
         CombinedGrid.AddOffsetToOrigin();
         CombinedGrid.ShiftGrid();
@@ -128,10 +124,9 @@ public class Game : MonoBehaviour
         }
         else
         {
-            // тут має братись насправді НАСТУПНИЙ рівень
             try
             {
-                SpawnLevel(CombinedGrid.halfHeight, LevelManager.Instance.levels[count]);
+                SpawnLevel(CombinedGrid.halfHeight, LevelManager.Instance.CreateNewLevel());
             }
             finally {
                 Debug.Log("Level spawn with key "+ count);
@@ -148,11 +143,21 @@ public class Game : MonoBehaviour
             float XPos, YPos;
             XPos = CombinedGrid.origin.x + item.xPos * CombinedGrid.step;
             YPos = CombinedGrid.origin.y + item.yPos * CombinedGrid.step;
-            Block block = Instantiate(prefabs[item.prefabName], new Vector3(XPos, YPos + offset, 0f), Quaternion.identity).GetComponent<Block>();
-            blocks.Add(block);
-            foreach (Element element in block.elements)
+
+            if (item.type == "block")
             {
-                element.SetCell();
+                Block block = Instantiate(prefabs[item.prefabName], new Vector3(XPos, YPos + offset, 0f), Quaternion.identity).GetComponent<Block>();
+                blocks.Add(block);
+                foreach (Element element in block.elements)
+                {
+                    element.SetCell();
+                }
+            }
+            else
+            {
+                BoosterObject booster = Instantiate(prefabs[item.prefabName], new Vector3(XPos, YPos + offset, 0f), Quaternion.identity).GetComponent<BoosterObject>();
+                boosters.Add(booster);
+                booster.SetCell();
             }
         }
     }
@@ -171,10 +176,14 @@ public class Game : MonoBehaviour
     {
         foreach(var item in blocks)
         {
-            Destroy(item?.gameObject);
+            item?.SelfDestroy();
+        }
+        foreach (var item in boosters)
+        {
+            item?.SelfDestroy();
         }
         blocks.Clear();
-        LevelManager.Instance.LevelDestroyer();
+        boosters.Clear();
     }
 
     private void DestroyLowerBlocks()
@@ -192,8 +201,10 @@ public class Game : MonoBehaviour
 
         foreach (var item in blockToDestroy)
         {
-            blocks.Remove(item);
-            item.SelfDestroy();
+            blocks?.Remove(item);
+            if (item != null) {
+                item.SelfDestroy();
+            }
         }
     }
 
@@ -236,10 +247,6 @@ public class Game : MonoBehaviour
                 blocks.Remove(ObstructingBlock);
             }
             
-        }
-        else
-        {
-            Debug.Log("cell has no gameobject");
         }
         playerElement.SetCell();
     }

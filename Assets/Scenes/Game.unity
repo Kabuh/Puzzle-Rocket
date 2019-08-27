@@ -184,7 +184,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &63905552
 GameObject:
@@ -632,11 +632,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c5bd3ea28460a34b9778429dac0c659, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  levelName: 
   sizeChancesIftwo: 2d0000000f0000000a0000000f000000050000000a000000
   sizeChancesIfOne: 2d000000140000000a0000000f0000000a000000
   sizeChancesIfNone: 41000000190000000a000000
   typeChances: 1e0000000a0000003c000000
+  boosterSpawnChance: 20
 --- !u!4 &211944909
 Transform:
   m_ObjectHideFlags: 0
@@ -649,7 +649,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &211944910
 MonoBehaviour:
@@ -1276,7 +1276,7 @@ PrefabInstance:
     - target: {fileID: 7805734050501792192, guid: aabab2930f8725e41b11822863b95310,
         type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 7805734050501792192, guid: aabab2930f8725e41b11822863b95310,
         type: 3}
@@ -1566,7 +1566,7 @@ Transform:
   m_Children:
   - {fileID: 1386135900}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &519420033
 MonoBehaviour:
@@ -1848,7 +1848,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &631612785
 GameObject:
@@ -2536,6 +2536,8 @@ MonoBehaviour:
   - {fileID: 453434801688592368, guid: fa9285f016949924c8ba153679192973, type: 3}
   - {fileID: 7517658477880504804, guid: 65436c6b9745d5c44835dda66933458b, type: 3}
   - {fileID: 8370872954291148963, guid: e7331c5218242df4db926c7a1266dd89, type: 3}
+  - {fileID: 4757560856191970650, guid: 53fc56f3c2466064e9afc8eb06b69b5c, type: 3}
+  - {fileID: 7821493591131146893, guid: 8e8318ff37c67db449ec02fbe2a3a4b6, type: 3}
   cameraScript: {fileID: 519420033}
   player: {fileID: 1549049977}
   playerElement: {fileID: 318540790}
@@ -2554,7 +2556,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1155832400
 MonoBehaviour:
@@ -3392,7 +3394,7 @@ RectTransform:
   - {fileID: 1484960677}
   - {fileID: 290121372}
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -4721,6 +4723,49 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &2139700241
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2139700243}
+  - component: {fileID: 2139700242}
+  m_Layer: 0
+  m_Name: BoosterManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &2139700242
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2139700241}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0307e8cde256e4445a967c88a5d559b7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &2139700243
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2139700241}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: -5.5, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 9
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2141232575
 GameObject:
   m_ObjectHideFlags: 0

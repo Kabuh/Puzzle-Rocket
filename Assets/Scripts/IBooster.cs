@@ -1,4 +1,4 @@
 ﻿public interface IBooster
 {
-    void Activate();
+    void Activate(Cell cell);
 }
