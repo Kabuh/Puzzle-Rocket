@@ -192,16 +192,19 @@ public class Game : MonoBehaviour
 
         for (int i = 0; i < blocks.Count; i++)
         {
-            if(blocks[i].ShouldBeDestroyed())
+            if (blocks[i] != null)
             {
-                Block block = blocks[i];
-                blockToDestroy.Add(block);
+                if (blocks[i].ShouldBeDestroyed())
+                {
+                    Block block = blocks[i];
+                    blockToDestroy.Add(block);
+                }
             }
         }
 
         foreach (var item in blockToDestroy)
         {
-            blocks?.Remove(item);
+            blocks.Remove(item);
             if (item != null) {
                 item.SelfDestroy();
             }
@@ -212,7 +215,8 @@ public class Game : MonoBehaviour
     {
         foreach(Block b in blocks)
         {
-            b.ResetElementsCells();
+            if(b!=null)
+                b.ResetElementsCells();
         }
         player.ReassignPlayerElement();
     }
