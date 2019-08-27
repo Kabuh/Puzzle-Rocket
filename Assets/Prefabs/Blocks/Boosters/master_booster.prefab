@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4498297852570939312}
   - component: {fileID: 7284411506365973117}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: booster_image
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -89,7 +89,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6896786362761206036}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: master_booster
   m_TagString: Untagged
   m_Icon: {fileID: 0}

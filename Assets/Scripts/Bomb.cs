@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Bomb : Booster
 {
-    List<Block> BlocksToDestroy = new List<Block>();    
+    List<Block> BlocksToDestroy;
 
     bool ExplosionOnPickUp = true;
 
@@ -22,6 +22,8 @@ public class Bomb : Booster
     //get blocks pull
     void GetSurroundingBlocks(Cell myCell)
     {
+        BlocksToDestroy = new List<Block>();
+
         int OriginX = myCell.XPos;
         int OriginY = myCell.YPos;
 

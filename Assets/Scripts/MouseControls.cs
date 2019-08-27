@@ -16,6 +16,8 @@ public class MouseControls : MonoBehaviour
 
     float swipeAngle;
 
+    private LayerMask nonBoosterMask = 513; // ПОКИ ЩО НЕ ІСНУЄ ІНШИХ
+
     private void Start()
     {
         Game.LevelSpawnFinished += RecalculateBlock;
@@ -55,7 +57,7 @@ public class MouseControls : MonoBehaviour
     //pick block from level
     private Block TryTouchBlock(Vector3 pos)
     {
-        RaycastHit2D raycastHit2D = Physics2D.Raycast(pos, Vector2.zero);
+        RaycastHit2D raycastHit2D = Physics2D.Raycast(pos, Vector2.zero, Mathf.Infinity, nonBoosterMask);
         if(raycastHit2D)
         {
             return raycastHit2D.collider.GetComponent<Block>();
