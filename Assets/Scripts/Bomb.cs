@@ -6,7 +6,8 @@ public class Bomb : Booster
 {
     List<Block> BlocksToDestroy;
 
-    bool ExplosionOnPickUp = true;
+    public override string BoosterName => "Small Bomb";
+    public override int MaxInInventory => 3;
 
     public Bomb(Block playerBlock):base(playerBlock)
     {

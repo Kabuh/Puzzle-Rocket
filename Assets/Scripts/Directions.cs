@@ -3,7 +3,5 @@
     Up,
     Down,
     Right,
-    Left,
-    Horizontal,
-    Vertical
+    Left    
 }
