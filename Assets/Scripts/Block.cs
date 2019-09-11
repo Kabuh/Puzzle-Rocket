@@ -157,11 +157,6 @@ public class Block : MonoBehaviour, ISpawnable
         Destroy(gameObject);
     }
 
-    private void OnDestroy()
-    {
-               
-    }
-
     // NEW METHODS BELOW
 
     private int GetFreeLinesCount(Directions direction)

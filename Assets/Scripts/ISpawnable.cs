@@ -1,6 +1,4 @@
-﻿using UnityEngine;
-
-public interface ISpawnable
+﻿public interface ISpawnable
 {
     void SelfDestroy();
     void DestroyIfLower();

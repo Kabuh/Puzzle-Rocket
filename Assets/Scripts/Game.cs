@@ -16,11 +16,7 @@ public class Game : MonoBehaviour
     public bool isDesigner;
     public bool isTestMode;
 
-    private Dictionary<string, GameObject> prefabs = new Dictionary<string, GameObject>();
-
-    public List<Block> blocks = new List<Block>();
-
-    //private List<BoosterObject> boosters = new List<BoosterObject>();
+    private Dictionary<string, GameObject> prefabs = new Dictionary<string, GameObject>();    
 
     private Designer designer;
 
@@ -156,30 +152,17 @@ public class Game : MonoBehaviour
             XPos = CombinedGrid.origin.x + item.xPos * CombinedGrid.step;
             YPos = CombinedGrid.origin.y + item.yPos * CombinedGrid.step;
 
-            ISpawnable spawnedObject = Instantiate(prefabs[item.prefabName], new Vector3(XPos, YPos + offset, 0f), Quaternion.identity).GetComponent<ISpawnable>();
-            
-            //foreach (Element element in block.elements)
-            //{
-            //    element.SetCell();
-            //}
-            
-            
-            //BoosterObject booster = Instantiate(prefabs[item.prefabName], new Vector3(XPos, YPos + offset, 0f), Quaternion.identity).GetComponent<BoosterObject>();
-            //boosters.Add(booster);
-            //booster.SetCell();
-            
+            ISpawnable spawnedObject = Instantiate
+                (prefabs[item.prefabName], 
+                new Vector3(XPos, YPos + offset, 0f), 
+                Quaternion.identity).GetComponent<ISpawnable>();
         }
     }
 
     private void ResetCamera()
     {
         cameraScript.ResetCamera();
-    }
-
-    private void ResetPlayer()
-    {
-        Player.ResetPlayer();
-    }    
+    }      
 
     private void ResetGrid()
     {
@@ -192,7 +175,6 @@ public class Game : MonoBehaviour
         count = 1;
         AllDestruction();
         ResetGrid();
-        //ResetPlayer();
         NewGameSetup();
         ResetCamera();
     }
