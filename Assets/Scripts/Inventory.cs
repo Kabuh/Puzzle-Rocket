@@ -7,15 +7,13 @@ public class Inventory : MonoBehaviour
 
     [SerializeField] private int slotsCount = 4;
 
-    [SerializeField] private int[] slotCosts;
+    [SerializeField] private int[] slotCosts = null;
 
-    [SerializeField] private Text[] slotTexts;
+    [SerializeField] private Text[] slotTexts = null;
 
     private Slot[] slots;
 
     private int coinsCount;
-
-    private Block playerBlock;
 
     private void Awake()
     {
@@ -40,13 +38,7 @@ public class Inventory : MonoBehaviour
 
         // FIRST SLOT IS UNLOCKED FROM THE START
         slots[0].isUnlocked = true;
-    }
-
-    private void Start()
-    {
-        playerBlock = Game.Instance.player.GetComponent<Block>();
-    }
-
+    } 
 
     // TEMP!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     private void LateUpdate()
@@ -152,7 +144,7 @@ public class Inventory : MonoBehaviour
         {
             if (slot.boosterType != null)
             {
-                slot.boosterType.Activate(playerBlock.elements[0].myCell);
+                slot.boosterType.Activate(Game.Instance.Player.playerBlock.elements[0].myCell);
                 slot.boostersCount--;
                 slot.UpdateSlotText();
                 if (slot.boostersCount == 0)

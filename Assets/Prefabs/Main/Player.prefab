@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 7687232700949175388}
   - component: {fileID: 2595943335178814013}
   - component: {fileID: 5239698887774887071}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -98,6 +98,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 11f9435b5d7ac1544a132ddc57c44e97, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerBlock: {fileID: 0}
 --- !u!50 &5239698887774887071
 Rigidbody2D:
   serializedVersion: 4
@@ -129,8 +130,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1554481604846938411}
   - component: {fileID: 8023342222629558523}
-  m_Layer: 0
-  m_Name: Element
+  m_Layer: 9
+  m_Name: playerElement
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -162,6 +163,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4a9fbc845f3b74346bbace400de4ba0a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  myBlock: {fileID: 0}
 --- !u!1 &9002154684071436571
 GameObject:
   m_ObjectHideFlags: 0
@@ -173,7 +175,7 @@ GameObject:
   - component: {fileID: 6884670791073008762}
   - component: {fileID: 3249226534436930641}
   m_Layer: 0
-  m_Name: Sprite
+  m_Name: playerSprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -218,6 +220,7 @@ SpriteRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0

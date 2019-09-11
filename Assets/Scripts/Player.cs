@@ -7,15 +7,11 @@ public class Player : MonoBehaviour
     public Block playerBlock;
 
 
-    private void Start()                        //starship block
+    private void Awake()                        //starship block
     {
         playerBlock = GetComponent<Block>();
-    }
-
-    public void ReassignPlayerElement()         //reassign player to another ship
-    {
-        playerBlock.ResetElementsCells();
-    }
+        playerBlock.IsPlayer = true;
+    }    
 
     public void ResetPlayer()                   //set player block to start location
     {

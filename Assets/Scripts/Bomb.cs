@@ -48,7 +48,4 @@ public class Bomb : Booster
             item?.SelfDestroy();
         }
     }
-
-    
-
 }
