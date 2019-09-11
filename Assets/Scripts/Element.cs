@@ -29,6 +29,7 @@ public class Element : MonoBehaviour
     public void ChangeCellLevel()                           //something about seamless level switch???
     {
         myCell = Game.Instance.CombinedGrid.cells[myCell.XPos, myCell.YPos - 8];
+        myCell.Element = this;
         myCell.IsEmpty = false;
     }
 }

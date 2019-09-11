@@ -9,8 +9,7 @@ public class Game : MonoBehaviour
     public GameObject[] blockPrefabs;
 
     public CameraS cameraScript;
-    public Player player;
-    public Element playerElement;
+    public Player Player { get; set; }    
 
     public GridClass CombinedGrid;
 
@@ -18,8 +17,10 @@ public class Game : MonoBehaviour
     public bool isTestMode;
 
     private Dictionary<string, GameObject> prefabs = new Dictionary<string, GameObject>();
-    private List<Block> blocks = new List<Block>();
-    private List<BoosterObject> boosters = new List<BoosterObject>();
+
+    public List<Block> blocks = new List<Block>();
+
+    //private List<BoosterObject> boosters = new List<BoosterObject>();
 
     private Designer designer;
 
@@ -28,6 +29,10 @@ public class Game : MonoBehaviour
     public delegate void GameScriptEvents();
     public static event GameScriptEvents LevelSpawnFinished;
     public static event GameScriptEvents PlayerDead;
+
+    public static event GameScriptEvents AllDestruction;
+    public static event GameScriptEvents LowerDestruction;
+    public static event GameScriptEvents CellLevelShift;
 
     private void Awake()
     {
@@ -65,7 +70,7 @@ public class Game : MonoBehaviour
         if (isDesigner)
         {
             designer.ClearLevel();
-            player.gameObject.SetActive(true);
+            Player.gameObject.SetActive(true);
             designer.background.SetActive(false);
 
             
@@ -84,8 +89,15 @@ public class Game : MonoBehaviour
 
     private void NewGameSetup()
     {
+        SpawnPlayer();
         SpawnFirstLevel();
         SpawnSecondLevel();
+    }
+
+    private void SpawnPlayer()
+    {
+        Player p = Instantiate(prefabs["Player"], new Vector3(0f,-0.5f), Quaternion.identity).GetComponent<Player>();
+        Player = p;
     }
 
     private void SpawnFirstLevel()
@@ -114,10 +126,10 @@ public class Game : MonoBehaviour
 
     public void SpawnNewLevel()
     {
-        DestroyLowerBlocks();
+        LowerDestruction();
         CombinedGrid.AddOffsetToOrigin();
         CombinedGrid.ShiftGrid();
-        ReassignCells();
+        CellLevelShift();
         if (isDesigner)
         {
             //SpawnLevel(CombinedGrid.halfHeight * count, LevelManager.Instance.levels[designer.currentLevelName]);
@@ -144,21 +156,18 @@ public class Game : MonoBehaviour
             XPos = CombinedGrid.origin.x + item.xPos * CombinedGrid.step;
             YPos = CombinedGrid.origin.y + item.yPos * CombinedGrid.step;
 
-            if (item.type == "block")
-            {
-                Block block = Instantiate(prefabs[item.prefabName], new Vector3(XPos, YPos + offset, 0f), Quaternion.identity).GetComponent<Block>();
-                blocks.Add(block);
-                foreach (Element element in block.elements)
-                {
-                    element.SetCell();
-                }
-            }
-            else
-            {
-                BoosterObject booster = Instantiate(prefabs[item.prefabName], new Vector3(XPos, YPos + offset, 0f), Quaternion.identity).GetComponent<BoosterObject>();
-                boosters.Add(booster);
-                booster.SetCell();
-            }
+            ISpawnable spawnedObject = Instantiate(prefabs[item.prefabName], new Vector3(XPos, YPos + offset, 0f), Quaternion.identity).GetComponent<ISpawnable>();
+            
+            //foreach (Element element in block.elements)
+            //{
+            //    element.SetCell();
+            //}
+            
+            
+            //BoosterObject booster = Instantiate(prefabs[item.prefabName], new Vector3(XPos, YPos + offset, 0f), Quaternion.identity).GetComponent<BoosterObject>();
+            //boosters.Add(booster);
+            //booster.SetCell();
+            
         }
     }
 
@@ -169,57 +178,8 @@ public class Game : MonoBehaviour
 
     private void ResetPlayer()
     {
-        player.ResetPlayer();
+        Player.ResetPlayer();
     }    
-
-    private void DestroyAllBlocks()
-    {
-        foreach(var item in blocks)
-        {
-            item?.SelfDestroy();
-        }
-        foreach (var item in boosters)
-        {
-            item?.SelfDestroy();
-        }
-        blocks.Clear();
-        boosters.Clear();
-    }
-
-    private void DestroyLowerBlocks()
-    {
-        List<Block> blockToDestroy = new List<Block>();
-
-        for (int i = 0; i < blocks.Count; i++)
-        {
-            if (blocks[i] != null)
-            {
-                if (blocks[i].ShouldBeDestroyed())
-                {
-                    Block block = blocks[i];
-                    blockToDestroy.Add(block);
-                }
-            }
-        }
-
-        foreach (var item in blockToDestroy)
-        {
-            blocks.Remove(item);
-            if (item != null) {
-                item.SelfDestroy();
-            }
-        }
-    }
-
-    private void ReassignCells()
-    {
-        foreach(Block b in blocks)
-        {
-            if(b!=null)
-                b.ResetElementsCells();
-        }
-        player.ReassignPlayerElement();
-    }
 
     private void ResetGrid()
     {
@@ -230,30 +190,32 @@ public class Game : MonoBehaviour
     {
         PlayerDead();
         count = 1;
-        DestroyAllBlocks();
+        AllDestruction();
         ResetGrid();
-        ResetPlayer();
+        //ResetPlayer();
         NewGameSetup();
         ResetCamera();
     }
 
-    void PreparePlayerStart() {
-        Cell cell = CombinedGrid.WorldPosToCell(player.transform.position);
-        
+    private void PreparePlayerStart()
+    {
+
+        Cell cell = CombinedGrid.WorldPosToCell(Player.transform.position);        
 
         if (cell.Element != null)
         {
-            Block ObstructingBlock = cell.Element.myBlock;
+            Block obstructingBlock = cell.Element.myBlock;
             
-            if (ObstructingBlock != player.playerBlock) {
-                ObstructingBlock.SelfDestroy();
-                Debug.Log(ObstructingBlock.name + " under player got destroyed");
-                blocks.Remove(ObstructingBlock);
+            if (obstructingBlock != Player.playerBlock)
+            {                
+                obstructingBlock.SelfDestroy();                
+                Debug.Log(obstructingBlock.name + " under player got destroyed");                
             }
             
         }
-        playerElement.SetCell();
+        Player.playerBlock.elements[0].SetCell();
     }
+
     private void SpawnPremadeLevel()
     {
         SpawnLevel(0f, LevelManager.Instance.premadeLevels["1premade"]);
@@ -262,7 +224,7 @@ public class Game : MonoBehaviour
     private void TestGameSetup()
     {
         cameraScript.enabled = false;
-        player.GetComponent<Block>().elements[0].SetCell();
+        Player.GetComponent<Block>().elements[0].SetCell();
         SpawnPremadeLevel();
     }
 }

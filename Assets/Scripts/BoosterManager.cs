@@ -28,7 +28,7 @@ public class BoosterManager : MonoBehaviour
 
     private void Start()
     {
-        playerBlock = Game.Instance.player.GetComponent<Block>();
+        playerBlock = Game.Instance.Player.GetComponent<Block>();
         boosters.Add(BoosterType.Bomb, new Bomb(playerBlock));
     }
 }

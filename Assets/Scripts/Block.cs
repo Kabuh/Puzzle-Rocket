@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using UnityEngine;
 
-public class Block : MonoBehaviour
+public class Block : MonoBehaviour, ISpawnable
 {
     public float moveSpeed;    
     [Header("Gameplay parameters")]
@@ -16,6 +16,7 @@ public class Block : MonoBehaviour
     private Vector3 destination;
     private Vector3 inputAndPivotdiff;
 
+    public bool IsPlayer { get; set; }
     private bool isMoving;
 
     private Axis currentAxis;
@@ -29,9 +30,18 @@ public class Block : MonoBehaviour
 
     private void Awake()
     {
-        foreach (var item in elements) {
+        foreach (Element element in elements)
+        {
+            element.SetCell();
+        }
+        foreach (var item in elements)
+        {
             item.myBlock = this;
-        }        
+        }
+
+        Game.AllDestruction += SelfDestroy;
+        Game.LowerDestruction += DestroyIfLower;
+        Game.CellLevelShift += ChangeCellsLevel;
     }
 
     private void Start()
@@ -86,7 +96,7 @@ public class Block : MonoBehaviour
         StartCoroutine(Moving(closestCellPosition));
     }
     
-    public void ResetElementsCells()
+    public void ChangeCellsLevel()
     {
         foreach (var item in elements)
         {
@@ -124,13 +134,32 @@ public class Block : MonoBehaviour
         return false;
     }
 
+    public void DestroyIfLower()
+    {
+        if(ShouldBeDestroyed() && !IsPlayer)
+        {
+            SelfDestroy();
+        }
+    }
+
     public void SelfDestroy()
     {
         foreach (var item in elements)
         {
             item.myCell.IsEmpty = true;
+            item.myCell.Element = null;
         }
-        Destroy(this.gameObject);
+
+        Game.AllDestruction -= SelfDestroy;
+        Game.LowerDestruction -= DestroyIfLower;
+        Game.CellLevelShift -= ChangeCellsLevel;
+
+        Destroy(gameObject);
+    }
+
+    private void OnDestroy()
+    {
+               
     }
 
     // NEW METHODS BELOW
