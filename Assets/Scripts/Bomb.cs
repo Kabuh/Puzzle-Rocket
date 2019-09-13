@@ -7,12 +7,11 @@ public class Bomb : Booster
     public override string BoosterName => "Small Bomb";
     public override int MaxInInventory => 3;
 
-    public Bomb(Block playerBlock):base(playerBlock)
-    {
-    }
-
+    private Block playerBlock;
+    
     public override void Activate(Cell cell)
-    {       
+    {
+        playerBlock = Game.Instance.Player.playerBlock;
         GetSurroundingBlocks(cell);
         BlocksToDestroy.Remove(playerBlock);
         Explode();
