@@ -2635,9 +2635,8 @@ MonoBehaviour:
   - {fileID: 4757560856191970650, guid: 53fc56f3c2466064e9afc8eb06b69b5c, type: 3}
   - {fileID: 7821493591131146893, guid: 8e8318ff37c67db449ec02fbe2a3a4b6, type: 3}
   - {fileID: 8368974732652246154, guid: aabab2930f8725e41b11822863b95310, type: 3}
+  - {fileID: 7761964851871117104, guid: fe5d769e5144d2c48adbedf3f639f7f8, type: 3}
   cameraScript: {fileID: 519420033}
-  player: {fileID: 0}
-  playerElement: {fileID: 0}
   isDesigner: 0
   isTestMode: 0
   count: 1

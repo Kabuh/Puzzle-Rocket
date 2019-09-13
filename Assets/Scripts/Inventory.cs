@@ -13,6 +13,8 @@ public class Inventory : MonoBehaviour
 
     private Slot[] slots;
 
+    private Slot nextSlotToUnlock;
+
     private int coinsCount;
 
     private void Awake()
@@ -33,11 +35,15 @@ public class Inventory : MonoBehaviour
         for (int i = 0; i < slots.Length; i++)
         {
             slots[i] = new Slot();
+            slots[i].index = i;
             slots[i].slotText = slotTexts[i];
+            slots[i].coinsToUnlock = slotCosts[i];
+            nextSlotToUnlock = slots[1];
+            slots[i].UpdateSlotText();
         }
 
         // FIRST SLOT IS UNLOCKED FROM THE START
-        slots[0].isUnlocked = true;
+        slots[0].isUnlocked = true;        
     } 
 
     // TEMP!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -62,6 +68,11 @@ public class Inventory : MonoBehaviour
         {
             OnSlotTouch(3);
         }
+
+        if (Input.GetKeyDown(KeyCode.Alpha5))
+        {
+            AddCoins(1);
+        }
     }
 
     // make available only if player is standing
@@ -78,24 +89,38 @@ public class Inventory : MonoBehaviour
         }
         else
         {
-            UnlockSlot(slotIndex);
+            UnlockSlot(slots[slotIndex]);
         }
     }
 
-    public void UnlockSlot(int slotIndex)
+    public void UnlockSlot(Slot slot)
     {
-        if (coinsCount >= slotCosts[slotIndex])
-        {
-            slots[slotIndex].isUnlocked = true;
-            coinsCount -= slotCosts[slotIndex];
-            // visual changes
-            slots[slotIndex].UpdateSlotText();
-        }
+        //if (coinsCount >= slotCosts[slotIndex])
+        //{
+        //    slots[slotIndex].isUnlocked = true;
+        //    coinsCount -= slotCosts[slotIndex];
+        //    // visual changes
+        //    slots[slotIndex].UpdateSlotText();
+        //}
+
+        slot.isUnlocked = true;        
+        // visual changes
+        slot.UpdateSlotText();
     }
 
     public void AddCoins(int amount)
     {
-        coinsCount += amount;
+        //coinsCount += amount;
+        nextSlotToUnlock.coinsToUnlock -= amount;
+        nextSlotToUnlock.UpdateSlotText();
+        if(nextSlotToUnlock.coinsToUnlock<=0)
+        {
+            UnlockSlot(nextSlotToUnlock);
+            if (nextSlotToUnlock.index < slots.Length - 1)
+            {
+                nextSlotToUnlock = slots[nextSlotToUnlock.index + 1];
+            }
+        }
     }
 
     public void TryAddBooster(IBooster booster, Cell boosterCell)

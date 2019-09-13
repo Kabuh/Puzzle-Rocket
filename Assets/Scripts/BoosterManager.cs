@@ -8,8 +8,6 @@ public class BoosterManager : MonoBehaviour
 
     public Dictionary<BoosterType, IBooster> boosters = new Dictionary<BoosterType, IBooster>();
 
-    private Block playerBlock;
-
     private void Awake()
     {
         #region Singleton
@@ -27,8 +25,7 @@ public class BoosterManager : MonoBehaviour
     }
 
     private void Start()
-    {
-        playerBlock = Game.Instance.Player.GetComponent<Block>();
-        boosters.Add(BoosterType.Bomb, new Bomb(playerBlock));
+    {        
+        boosters.Add(BoosterType.Bomb, new Bomb());
     }
 }
