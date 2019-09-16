@@ -1,8 +1,10 @@
 ﻿using System.Collections.Generic;
 
+
 public class Bomb : Booster
 {
-    List<Block> BlocksToDestroy;
+    protected List<Block> BlocksToDestroy;
+    public GameObject explosion;
 
     public override string BoosterName => "Small Bomb";
     public override int MaxInInventory => 3;
@@ -12,27 +14,25 @@ public class Bomb : Booster
     public override void Activate(Cell cell)
     {
         playerBlock = Game.Instance.Player.playerBlock;
-        GetSurroundingBlocks(cell);
+        GetSurroundingBlocks(cell,3);
         BlocksToDestroy.Remove(playerBlock);
         Explode();
     }
 
     //get blocks pull
-    void GetSurroundingBlocks(Cell myCell)
+    protected void GetSurroundingBlocks(Cell myCell, int Range)
     {
         BlocksToDestroy = new List<Block>();
+
+        int halfRange = (Range - 1) / 2;
 
         int OriginX = myCell.XPos;
         int OriginY = myCell.YPos;
 
-        for (int x = -1; x < 2; x++)
-        {
-            for (int y = -1; y < 2; y++)
-            {
-                if ((x == 0 && y == 0) == false)
-                {
-                    if ((OriginX + x >= 0 && OriginX + x < myCell.GridClass.width) && (OriginY + y >= 0 && OriginY + y < myCell.GridClass.height))
-                    {
+        for (int x = -1 * halfRange; x <= halfRange; x++) {
+            for (int y = -1 * halfRange; y <= halfRange; y++) {
+                if ((x == 0 && y == 0) == false) {
+                    if ((OriginX + x >= 0 && OriginX + x < myCell.GridClass.width) && (OriginY + y >= 0 && OriginY + y < myCell.GridClass.height)) {
                         Cell cell = myCell.GridClass.cells[OriginX + x, OriginY + y];
                         Block block = cell.Element?.myBlock;
                         if (block)
@@ -46,10 +46,9 @@ public class Bomb : Booster
     }
 
     //destroy if they are not destoyed by level already
-    void Explode()
-    {
-        foreach (Block item in BlocksToDestroy)
-        {
+    protected void Explode() {
+        foreach (Block item in BlocksToDestroy) {
+            AnimationFX.Instance.PlayExplosionFx(item.gameObject.transform.position);
             item?.SelfDestroy();
         }
     }

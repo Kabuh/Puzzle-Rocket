@@ -5,4 +5,5 @@
     public abstract int MaxInInventory { get; }
 
     public abstract void Activate(Cell cell);
+
 }

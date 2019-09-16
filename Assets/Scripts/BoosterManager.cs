@@ -6,7 +6,7 @@ public class BoosterManager : MonoBehaviour
 {
     public static BoosterManager Instance { get; private set; }
 
-    public Dictionary<BoosterType, IBooster> boosters = new Dictionary<BoosterType, IBooster>();
+    public Dictionary<BoosterType, Booster> boosters = new Dictionary<BoosterType, Booster>();
 
     private void Awake()
     {
@@ -25,7 +25,11 @@ public class BoosterManager : MonoBehaviour
     }
 
     private void Start()
-    {        
-        boosters.Add(BoosterType.Bomb, new Bomb());
+    {
+        boosters.Add(BoosterType.Bomb, new Bomb(playerBlock));
+        boosters.Add(BoosterType.BigBomb, new BigBomb(playerBlock));
+    }
+
+    void Activate() {
     }
 }
