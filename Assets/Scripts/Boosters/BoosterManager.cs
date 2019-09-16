@@ -6,7 +6,7 @@ public class BoosterManager : MonoBehaviour
 {
     public static BoosterManager Instance { get; private set; }
 
-    public Dictionary<BoosterType, IBooster> boosters = new Dictionary<BoosterType, IBooster>();
+    public Dictionary<BoosterType, Booster> boosters = new Dictionary<BoosterType, Booster>();
 
     private Block playerBlock;
 
@@ -30,5 +30,9 @@ public class BoosterManager : MonoBehaviour
     {
         playerBlock = Game.Instance.player.GetComponent<Block>();
         boosters.Add(BoosterType.Bomb, new Bomb(playerBlock));
+        boosters.Add(BoosterType.BigBomb, new BigBomb(playerBlock));
+    }
+
+    void Activate() {
     }
 }

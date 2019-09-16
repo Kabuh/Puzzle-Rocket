@@ -8,4 +8,5 @@
     }
 
     public abstract void Activate(Cell cell);
+
 }

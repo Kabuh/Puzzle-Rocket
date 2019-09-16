@@ -97,10 +97,11 @@ public class Inventory : MonoBehaviour
         coinsCount += amount;
     }
 
-    public void TryAddBooster(IBooster booster, Cell boosterCell)
+    public void TryAddBooster(Booster booster, Cell boosterCell)
     {
         Slot emptySlot = null;
 
+        /*
         for (int i = 0; i < slots.Length; i++)
         {
             if(slots[i].isUnlocked)
@@ -117,6 +118,7 @@ public class Inventory : MonoBehaviour
                 }                
             }
         }
+        */
 
         if (emptySlot != null)
         {

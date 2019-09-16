@@ -2,11 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class Bomb : Booster
 {
-    List<Block> BlocksToDestroy;
+    protected List<Block> BlocksToDestroy;
+    public GameObject explosion;
 
     bool ExplosionOnPickUp = true;
+
+    
 
     public Bomb(Block playerBlock):base(playerBlock)
     {
@@ -14,21 +18,23 @@ public class Bomb : Booster
 
     public override void Activate(Cell cell)
     {       
-        GetSurroundingBlocks(cell);
+        GetSurroundingBlocks(cell, 3);
         BlocksToDestroy.Remove(playerBlock);
         Explode();
     }
 
     //get blocks pull
-    void GetSurroundingBlocks(Cell myCell)
+    protected void GetSurroundingBlocks(Cell myCell, int Range)
     {
         BlocksToDestroy = new List<Block>();
+
+        int halfRange = (Range - 1) / 2;
 
         int OriginX = myCell.XPos;
         int OriginY = myCell.YPos;
 
-        for (int x = -1; x < 2; x++) {
-            for (int y = -1; y < 2; y++) {
+        for (int x = -1 * halfRange; x <= halfRange; x++) {
+            for (int y = -1 * halfRange; y <= halfRange; y++) {
                 if ((x == 0 && y == 0) == false) {
                     if ((OriginX + x >= 0 && OriginX + x < myCell.GridClass.width) && (OriginY + y >= 0 && OriginY + y < myCell.GridClass.height)) {
                         Cell cell = myCell.GridClass.cells[OriginX + x, OriginY + y];
@@ -42,12 +48,10 @@ public class Bomb : Booster
     }
 
     //destroy if they are not destoyed by level already
-    void Explode() {
+    protected void Explode() {
         foreach (Block item in BlocksToDestroy) {
+            AnimationFX.Instance.PlayExplosionFx(item.gameObject.transform.position);
             item?.SelfDestroy();
         }
     }
-
-    
-
 }
