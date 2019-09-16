@@ -636,7 +636,7 @@ MonoBehaviour:
   sizeChancesIfOne: 2d000000140000000a0000000f0000000a000000
   sizeChancesIfNone: 41000000190000000a000000
   typeChances: 1e0000000a0000003c000000
-  boostersSpawnChance: 0500000005000000
+  boostersSpawnChance: 0000000064000000
 --- !u!4 &211944909
 Transform:
   m_ObjectHideFlags: 0
@@ -2632,7 +2632,7 @@ MonoBehaviour:
   - {fileID: 453434801688592368, guid: fa9285f016949924c8ba153679192973, type: 3}
   - {fileID: 7517658477880504804, guid: 65436c6b9745d5c44835dda66933458b, type: 3}
   - {fileID: 8370872954291148963, guid: e7331c5218242df4db926c7a1266dd89, type: 3}
-  - {fileID: 4757560856191970650, guid: 53fc56f3c2466064e9afc8eb06b69b5c, type: 3}
+  - {fileID: 2315481355486580467, guid: 2e4eb6a8990e8f7449fd46ec635bd3f9, type: 3}
   - {fileID: 7821493591131146893, guid: 8e8318ff37c67db449ec02fbe2a3a4b6, type: 3}
   - {fileID: 8368974732652246154, guid: aabab2930f8725e41b11822863b95310, type: 3}
   - {fileID: 7761964851871117104, guid: fe5d769e5144d2c48adbedf3f639f7f8, type: 3}
@@ -4532,7 +4532,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 10
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1970049857
 GameObject:

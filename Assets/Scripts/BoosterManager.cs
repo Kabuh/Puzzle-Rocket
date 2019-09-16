@@ -26,8 +26,8 @@ public class BoosterManager : MonoBehaviour
 
     private void Start()
     {
-        boosters.Add(BoosterType.Bomb, new Bomb(playerBlock));
-        boosters.Add(BoosterType.BigBomb, new BigBomb(playerBlock));
+        boosters.Add(BoosterType.Bomb, new Bomb());
+        boosters.Add(BoosterType.BigBomb, new BigBomb());
     }
 
     void Activate() {

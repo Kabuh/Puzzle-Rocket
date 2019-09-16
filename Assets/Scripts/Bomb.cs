@@ -4,12 +4,11 @@
 public class Bomb : Booster
 {
     protected List<Block> BlocksToDestroy;
-    public GameObject explosion;
 
     public override string BoosterName => "Small Bomb";
     public override int MaxInInventory => 3;
 
-    private Block playerBlock;
+    protected Block playerBlock;
     
     public override void Activate(Cell cell)
     {

@@ -127,14 +127,14 @@ public class Inventory : MonoBehaviour
     {
         Slot emptySlot = null;
 
-        /*
+
         for (int i = 0; i < slots.Length; i++)
         {
-            if(slots[i].isUnlocked)
+            if (slots[i].isUnlocked)
             {
                 if (slots[i].boosterType == booster)
                 {
-                    if(slots[i].boostersCount==slots[i].maxBoosters)
+                    if (slots[i].boostersCount == slots[i].maxBoosters)
                     {
                         booster.Activate(boosterCell);
                     }
@@ -145,13 +145,13 @@ public class Inventory : MonoBehaviour
                     return;
                 }
 
-                if (emptySlot==null && slots[i].boosterType==null)
+                if (emptySlot == null && slots[i].boosterType == null)
                 {
                     emptySlot = slots[i];
-                }                
+                }
             }
         }
-        */
+
 
         if (emptySlot != null)
         {
