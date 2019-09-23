@@ -30,6 +30,8 @@ public class Game : MonoBehaviour
     public static event GameScriptEvents LowerDestruction;
     public static event GameScriptEvents CellLevelShift;
 
+    public static event GameScriptEvents ExplosionEnded;
+
     private void Awake()
     {
         #region Singleton
@@ -208,5 +210,10 @@ public class Game : MonoBehaviour
         cameraScript.enabled = false;
         Player.GetComponent<Block>().elements[0].SetCell();
         SpawnPremadeLevel();
+    }
+
+    public void ExplosionEnd()
+    {
+        ExplosionEnded();
     }
 }

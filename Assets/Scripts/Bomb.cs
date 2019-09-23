@@ -53,5 +53,7 @@ public class Bomb : Booster
             AnimationFX.Instance.PlayExplosionFx(item.gameObject.transform.position);
             item?.SelfDestroy();
         }
+
+        Game.Instance.ExplosionEnd();
     }
 }

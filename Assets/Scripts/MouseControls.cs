@@ -21,6 +21,7 @@ public class MouseControls : MonoBehaviour
     private void Start()
     {
         Game.LevelSpawnFinished += RecalculateBlock;
+        Game.ExplosionEnded += RecalculateBlock;
         Game.PlayerDead += DiscardBlock;
     }
 
