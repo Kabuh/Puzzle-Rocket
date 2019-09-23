@@ -2,16 +2,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BigBomb : Bomb
+public class LaserV : LaserH
 {
-    public override string BoosterName => "Big Bomb";
-    public override int MaxInInventory => 1;
+    public override string BoosterName => "Frontal lasers";
+    public override int MaxInInventory => 3;
 
     public override void Activate(Cell cell)
     {
         playerBlock = Game.Instance.Player.playerBlock;
-        GetSurroundingBlocks(cell, 5);
+        GetBlocks(cell, Axis.Vertical);
         BlocksToDestroy.Remove(playerBlock);
-        Explode();
+        Cut(cell, Axis.Vertical);
     }
 }

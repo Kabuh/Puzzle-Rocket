@@ -28,6 +28,8 @@ public class BoosterManager : MonoBehaviour
     {
         boosters.Add(BoosterType.Bomb, new Bomb());
         boosters.Add(BoosterType.BigBomb, new BigBomb());
+        boosters.Add(BoosterType.Laser_H, new LaserH());
+        boosters.Add(BoosterType.Laser_V, new LaserV());
     }
 
     void Activate() {

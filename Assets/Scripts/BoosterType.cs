@@ -1,5 +1,7 @@
 ﻿public enum BoosterType
 {
     Bomb,
-    BigBomb
+    BigBomb,
+    Laser_H,
+    Laser_V
 }

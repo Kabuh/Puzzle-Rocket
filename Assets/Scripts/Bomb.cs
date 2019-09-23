@@ -34,7 +34,7 @@ public class Bomb : Booster
                     if ((OriginX + x >= 0 && OriginX + x < myCell.GridClass.width) && (OriginY + y >= 0 && OriginY + y < myCell.GridClass.height)) {
                         Cell cell = myCell.GridClass.cells[OriginX + x, OriginY + y];
                         Block block = cell.Element?.myBlock;
-                        if (block)
+                        if (block != null)
                         {
                             BlocksToDestroy.Add(block);
                         }
