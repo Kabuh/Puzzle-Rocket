@@ -14,6 +14,8 @@ public class Bomb : Booster
     {
         playerBlock = Game.Instance.Player.playerBlock;
         GetSurroundingBlocks(cell,3);
+        if (!BlocksToDestroy.Contains(playerBlock))
+            UnityEngine.Debug.Log("No player block in list");
         BlocksToDestroy.Remove(playerBlock);
         Explode();
     }
@@ -36,7 +38,8 @@ public class Bomb : Booster
                         Block block = cell.Element?.myBlock;
                         if (block)
                         {
-                            BlocksToDestroy.Add(block);
+                            if (!BlocksToDestroy.Contains(block))
+                                BlocksToDestroy.Add(block);
                         }
                     }
                 }

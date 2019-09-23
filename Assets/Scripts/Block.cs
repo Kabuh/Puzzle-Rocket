@@ -91,6 +91,13 @@ public class Block : MonoBehaviour, ISpawnable
         ReassignCells();
     }
 
+    public void MoveToPosition(Vector3 pos)
+    {
+        // possibly needs isMoving check
+        transform.position = pos;
+        ReassignCells();
+    }
+
     public void SnapToClosestCell()
     {
         StartCoroutine(Moving(closestCellPosition));

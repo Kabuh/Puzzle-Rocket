@@ -8,6 +8,8 @@ public class BoosterManager : MonoBehaviour
 
     public Dictionary<BoosterType, Booster> boosters = new Dictionary<BoosterType, Booster>();
 
+    public Camera cam;
+
     private void Awake()
     {
         #region Singleton
@@ -28,6 +30,7 @@ public class BoosterManager : MonoBehaviour
     {
         boosters.Add(BoosterType.Bomb, new Bomb());
         boosters.Add(BoosterType.BigBomb, new BigBomb());
+        boosters.Add(BoosterType.Teleport, new Teleport(cam));
     }
 
     void Activate() {

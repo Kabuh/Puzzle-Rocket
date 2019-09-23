@@ -1,5 +1,6 @@
 ﻿public enum BoosterType
 {
     Bomb,
-    BigBomb
+    BigBomb,
+    Teleport
 }

@@ -32,7 +32,7 @@ public class BoosterObject : MonoBehaviour, ISpawnable
 
     public void SetCell()
     {
-        myCell = myCell = Game.Instance.CombinedGrid.WorldPosToCell(transform.position);
+        myCell = Game.Instance.CombinedGrid.WorldPosToCell(transform.position);
         xIndex = myCell.XPos;
         yIndex = myCell.YPos;
     }

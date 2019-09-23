@@ -73,6 +73,11 @@ public class Inventory : MonoBehaviour
         {
             AddCoins(1);
         }
+
+        if(Input.GetKeyDown(KeyCode.T))
+        {
+            TryAddBooster(BoosterManager.Instance.boosters[BoosterType.Teleport], Game.Instance.CombinedGrid.cells[0, 0]);
+        }
     }
 
     // make available only if player is standing
