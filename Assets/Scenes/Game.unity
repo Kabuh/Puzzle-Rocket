@@ -637,7 +637,7 @@ MonoBehaviour:
   sizeChancesIfNone: 41000000190000000a000000
   typeChances: 1e0000000a0000003c000000
   boostersSpawnChance: 50
-  boostersTypesSpawnChance: 05000000050000000a0000000500000005000000
+  boostersTypesSpawnChance: 05000000050000000a00000005000000050000000f000000
 --- !u!4 &211944909
 Transform:
   m_ObjectHideFlags: 0
@@ -2639,6 +2639,7 @@ MonoBehaviour:
   - {fileID: 7761964851871117104, guid: fe5d769e5144d2c48adbedf3f639f7f8, type: 3}
   - {fileID: 1164002787297223877, guid: 6e9e5cc223212b64e817261384981249, type: 3}
   - {fileID: 1678546130956845099, guid: 0072f97926ce7594bb890eff5b282a47, type: 3}
+  - {fileID: 2153704125429311920, guid: dc9db8c6abe87674e8d28ee0f79144b7, type: 3}
   cameraScript: {fileID: 519420033}
   isDesigner: 0
   isTestMode: 0
@@ -4526,8 +4527,10 @@ MonoBehaviour:
   laserHor: {fileID: 866641838781384404, guid: 6a4c54e27f7e4af4ead0a199aebd42e5, type: 3}
   laserVert: {fileID: 7228751992364555445, guid: 1163ffeca72daff47b5c5c0cf6ac1434,
     type: 3}
+  missile: {fileID: 7226022622378754361, guid: 13c208b526210f1448c7c9f16873540e, type: 3}
   explosionPersistance: 0.4
   laserPersistance: 0.15
+  missileSpeed: 0.25
 --- !u!4 &1952897045
 Transform:
   m_ObjectHideFlags: 0

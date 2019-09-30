@@ -3,5 +3,6 @@
     Bomb,
     BigBomb,
     Laser_H,
-    Laser_V
+    Laser_V,
+    Shot
 }

@@ -10,6 +10,7 @@ public class Bomb : Booster
 
     protected Block playerBlock;
     
+    
     public override void Activate(Cell cell)
     {
         playerBlock = Game.Instance.Player.playerBlock;
@@ -21,6 +22,7 @@ public class Bomb : Booster
     //get blocks pull
     protected void GetSurroundingBlocks(Cell myCell, int Range)
     {
+        string playerName = playerBlock.gameObject.name;
         BlocksToDestroy = new List<Block>();
 
         int halfRange = (Range - 1) / 2;
@@ -36,7 +38,9 @@ public class Bomb : Booster
                         Block block = cell.Element?.myBlock;
                         if (block != null)
                         {
-                            BlocksToDestroy.Add(block);
+                            if (block.gameObject.name != playerName) {
+                                BlocksToDestroy.Add(block);
+                            }                            
                         }
                     }
                 }
@@ -47,7 +51,9 @@ public class Bomb : Booster
     //destroy if they are not destoyed by level already
     protected void Explode() {
         foreach (Block item in BlocksToDestroy) {
-            AnimationFX.Instance.PlayExplosionFx(item.gameObject.transform.position);
+            foreach (Element element in item.elements) {
+                AnimationFX.Instance.PlayExplosionFx(element.gameObject.transform.position);
+            }
             item?.SelfDestroy();
         }
     }

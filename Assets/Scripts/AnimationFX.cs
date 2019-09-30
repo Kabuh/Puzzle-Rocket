@@ -7,9 +7,11 @@ public class AnimationFX : MonoBehaviour
     public GameObject explosion;
     public GameObject laserHor;
     public GameObject laserVert;
+    public Missile missile;
 
     public float explosionPersistance;
     public float laserPersistance;
+    public float missileSpeed;
 
     public static AnimationFX Instance { get; private set; }
 
@@ -44,6 +46,21 @@ public class AnimationFX : MonoBehaviour
         StartCoroutine(LaserPersistance(laser, place));
     }
 
+    public void PlayShootingAnimation(Vector2 place, Block victim) {
+        ShootingAnimation(missile, place, victim);
+    }
+
+    public void PlayFakeShooting(Vector2 place) {
+        ShootingAnimation(missile, place, null);
+    }
+
+    void ShootingAnimation(Missile missile, Vector2 spawn, Block victim)
+    {
+        Missile NewMissile = Instantiate(missile, spawn, Quaternion.identity);
+        NewMissile.mySpeed = missileSpeed;
+        NewMissile.victim = victim;
+    }
+
 
     IEnumerator ExplosionPersistance(GameObject explosion, Vector2 place)
     {
@@ -57,4 +74,8 @@ public class AnimationFX : MonoBehaviour
         yield return new WaitForSeconds(laserPersistance);
         Destroy(NewLaser);
     }
+
+    
+
+
 }

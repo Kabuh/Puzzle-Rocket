@@ -143,6 +143,9 @@ public class LevelManager : MonoBehaviour
                 case 5:
                     levelDataItems.Add(new LevelDataItem("laser_V_booster", x, y, "booster"));
                     break;
+                case 6:
+                    levelDataItems.Add(new LevelDataItem("shot_booster", x, y, "booster"));
+                    break;
                 default:
                     break;
             }

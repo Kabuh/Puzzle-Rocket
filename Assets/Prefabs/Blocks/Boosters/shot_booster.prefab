@@ -1,38 +1,21 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &4213405641707099814
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7761964851871117104}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3306591a8d43c2b489cceac8633d6e49, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!1001 &3007922467386180202
+--- !u!1001 &6909997483001234666
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 3630599782737016405, guid: 53fc56f3c2466064e9afc8eb06b69b5c,
+    - target: {fileID: 1585680118513997222, guid: 53fc56f3c2466064e9afc8eb06b69b5c,
         type: 3}
-      propertyPath: m_IsTrigger
-      value: 1
+      propertyPath: boosterType
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 4757560856191970650, guid: 53fc56f3c2466064e9afc8eb06b69b5c,
         type: 3}
       propertyPath: m_Name
-      value: coin
-      objectReference: {fileID: 0}
-    - target: {fileID: 4757560856191970650, guid: 53fc56f3c2466064e9afc8eb06b69b5c,
-        type: 3}
-      propertyPath: m_Layer
-      value: 10
+      value: shot_booster
       objectReference: {fileID: 0}
     - target: {fileID: 6896786362761206036, guid: 53fc56f3c2466064e9afc8eb06b69b5c,
         type: 3}
@@ -89,28 +72,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 925106630918641065, guid: 53fc56f3c2466064e9afc8eb06b69b5c,
-        type: 3}
-      propertyPath: m_Name
-      value: booster_image
-      objectReference: {fileID: 0}
-    - target: {fileID: 925106630918641065, guid: 53fc56f3c2466064e9afc8eb06b69b5c,
-        type: 3}
-      propertyPath: m_Layer
-      value: 10
-      objectReference: {fileID: 0}
     - target: {fileID: 7284411506365973117, guid: 53fc56f3c2466064e9afc8eb06b69b5c,
         type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: d149bef62bf1bb94e84b36206d670240,
+      objectReference: {fileID: 21300000, guid: a1600c563a18a53499c35739d91c709a,
         type: 3}
-    m_RemovedComponents:
-    - {fileID: 1585680118513997222, guid: 53fc56f3c2466064e9afc8eb06b69b5c, type: 3}
+    m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 53fc56f3c2466064e9afc8eb06b69b5c, type: 3}
---- !u!1 &7761964851871117104 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4757560856191970650, guid: 53fc56f3c2466064e9afc8eb06b69b5c,
-    type: 3}
-  m_PrefabInstance: {fileID: 3007922467386180202}
-  m_PrefabAsset: {fileID: 0}
