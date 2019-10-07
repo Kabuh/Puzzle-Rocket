@@ -146,6 +146,9 @@ public class LevelManager : MonoBehaviour
                 case 6:
                     levelDataItems.Add(new LevelDataItem("shot_booster", x, y, "booster"));
                     break;
+                case 7:
+                    levelDataItems.Add(new LevelDataItem("time_stop_booster", x, y, "booster"));
+                    break;
                 default:
                     break;
             }

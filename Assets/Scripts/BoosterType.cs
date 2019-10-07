@@ -4,5 +4,6 @@
     BigBomb,
     Laser_H,
     Laser_V,
-    Shot
+    Shot,
+    TimeStop
 }

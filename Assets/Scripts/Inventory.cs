@@ -153,7 +153,7 @@ public class Inventory : MonoBehaviour
         }
 
 
-        if (emptySlot != null)
+        if (emptySlot != null && booster.MaxInInventory > 0)
         {
             FillSlot(emptySlot, booster);
         }
