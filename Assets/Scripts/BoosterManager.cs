@@ -30,6 +30,10 @@ public class BoosterManager : MonoBehaviour
     {
         boosters.Add(BoosterType.Bomb, new Bomb());
         boosters.Add(BoosterType.BigBomb, new BigBomb());
+        boosters.Add(BoosterType.Laser_H, new LaserH());
+        boosters.Add(BoosterType.Laser_V, new LaserV());
+        boosters.Add(BoosterType.Shot, new Shot());
+        boosters.Add(BoosterType.TimeStop, new TimeStop());
         boosters.Add(BoosterType.Teleport, new Teleport(cam));
     }
 

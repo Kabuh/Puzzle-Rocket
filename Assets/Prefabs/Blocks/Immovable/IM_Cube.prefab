@@ -95,18 +95,18 @@ PrefabInstance:
     - target: {fileID: 7932873300062640616, guid: 891f245c6610e38448449511b0e11be8,
         type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.45
+      value: 4.1
       objectReference: {fileID: 0}
     - target: {fileID: 7932873300062640616, guid: 891f245c6610e38448449511b0e11be8,
         type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.45
+      value: 4.1
       objectReference: {fileID: 0}
     - target: {fileID: 3926749532107152513, guid: 891f245c6610e38448449511b0e11be8,
         type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: cc8fbb33884620341acc907d6ab14e67,
+      objectReference: {fileID: 21300000, guid: 0ab6d3358a28b9d4abe5dc71fc1f998e,
         type: 3}
     m_RemovedComponents:
     - {fileID: 1023786115782466438, guid: 891f245c6610e38448449511b0e11be8, type: 3}

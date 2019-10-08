@@ -10,12 +10,11 @@ public class Bomb : Booster
 
     protected Block playerBlock;
     
+    
     public override void Activate(Cell cell)
     {
         playerBlock = Game.Instance.Player.playerBlock;
         GetSurroundingBlocks(cell,3);
-        if (!BlocksToDestroy.Contains(playerBlock))
-            UnityEngine.Debug.Log("No player block in list");
         BlocksToDestroy.Remove(playerBlock);
         Explode();
     }
@@ -36,7 +35,7 @@ public class Bomb : Booster
                     if ((OriginX + x >= 0 && OriginX + x < myCell.GridClass.width) && (OriginY + y >= 0 && OriginY + y < myCell.GridClass.height)) {
                         Cell cell = myCell.GridClass.cells[OriginX + x, OriginY + y];
                         Block block = cell.Element?.myBlock;
-                        if (block)
+                        if (block != null)
                         {
                             if (!BlocksToDestroy.Contains(block))
                                 BlocksToDestroy.Add(block);
@@ -50,7 +49,9 @@ public class Bomb : Booster
     //destroy if they are not destoyed by level already
     protected void Explode() {
         foreach (Block item in BlocksToDestroy) {
-            AnimationFX.Instance.PlayExplosionFx(item.gameObject.transform.position);
+            foreach (Element element in item.elements) {
+                AnimationFX.Instance.PlayExplosionFx(element.gameObject.transform.position);
+            }
             item?.SelfDestroy();
         }
 

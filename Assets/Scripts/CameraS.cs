@@ -4,9 +4,27 @@ using UnityEngine;
 
 public class CameraS : MonoBehaviour
 {
+    public static CameraS Instance { get; private set; }
+
+    private void Awake()
+    {
+        #region Singleton
+
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+
+        #endregion
+    }
+
     public float defaultSpeed = 0.5f;
     float stopSpeed = 0;
-    float speed;
+    public float speed;
 
     int currentLevel = 1;
     int gridHeight;
@@ -49,5 +67,15 @@ public class CameraS : MonoBehaviour
             speed = defaultSpeed;
             camCheat = false;
         }
+    }
+
+    public void TimeStopBooster(float pause) {
+        StartCoroutine(TemporaryTimeStop(pause));
+    }
+
+    IEnumerator TemporaryTimeStop(float pause) {
+        speed = stopSpeed;
+        yield return new WaitForSeconds(pause);
+        speed = defaultSpeed;
     }
 }

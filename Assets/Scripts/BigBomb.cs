@@ -11,7 +11,6 @@ public class BigBomb : Bomb
     {
         playerBlock = Game.Instance.Player.playerBlock;
         GetSurroundingBlocks(cell, 5);
-        Debug.Log("Line Reached");
         BlocksToDestroy.Remove(playerBlock);
         Explode();
     }

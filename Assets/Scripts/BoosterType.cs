@@ -2,5 +2,9 @@
 {
     Bomb,
     BigBomb,
+    Laser_H,
+    Laser_V,
+    Shot,
+    TimeStop,
     Teleport
 }
