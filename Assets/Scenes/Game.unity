@@ -1254,7 +1254,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &493004440
 GameObject:
@@ -1413,10 +1413,11 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 519420028}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.05, y: 0, z: -10}
+  m_LocalPosition: {x: 0, y: 0, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1386135900}
+  - {fileID: 1520693697}
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2642,6 +2643,7 @@ MonoBehaviour:
   - {fileID: 1678546130956845099, guid: 0072f97926ce7594bb890eff5b282a47, type: 3}
   - {fileID: 2153704125429311920, guid: dc9db8c6abe87674e8d28ee0f79144b7, type: 3}
   - {fileID: 5927111740627587383, guid: b47522465856265498ecd0b1e95357c8, type: 3}
+  - {fileID: 7821493591131146893, guid: 0b0c5f2bbe49dd147b6a07ad8712f603, type: 3}
   cameraScript: {fileID: 519420033}
   isDesigner: 0
   isTestMode: 0
@@ -3745,7 +3747,7 @@ SpriteRenderer:
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
-  m_DrawMode: 2
+  m_DrawMode: 0
   m_Size: {x: 10.8, y: 200}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
@@ -3760,11 +3762,11 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1520693695}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.04, y: 0.4, z: 0}
-  m_LocalScale: {x: 0.48, y: 0.48000002, z: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 10}
+  m_LocalScale: {x: 22, y: 40, z: 1}
   m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_Father: {fileID: 519420032}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1521475821
 GameObject:
@@ -4463,7 +4465,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1970049857
 GameObject:
@@ -4733,6 +4735,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0307e8cde256e4445a967c88a5d559b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cam: {fileID: 519420031}
 --- !u!4 &2139700243
 Transform:
   m_ObjectHideFlags: 0
@@ -4745,7 +4748,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2141232575
 GameObject:
