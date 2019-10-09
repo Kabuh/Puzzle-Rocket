@@ -12,6 +12,7 @@ public class TimeStop : Booster
     public override void Activate(Cell cell)
     {
         CameraS.Instance.TimeStopBooster(timePauseDuration);
+        AnimationFX.Instance.PlayTimeStopAnimation(timePauseDuration);
     }
     
 }

@@ -116,43 +116,49 @@ public class LevelManager : MonoBehaviour
                     OffsetMaker(x, y, Offset);
                 }
 
+                if ((Game.Instance.count == 1 && x == 2 && y == 3) == true)
+                {
+                    continue;
+                }
+
                 if (SimpleRando(boostersSpawnChance)) {
                     RunBoosterChances(x, y);
                 }
             }
         }
     }
+    
 
     void RunBoosterChances(int x, int y) {
-        if ((Game.Instance.count == 1 && x == 2 && y == 3) == false)
-        {
             switch (ComplexRando(boostersTypesSpawnChance))
             {
                 case 1:
-                    levelDataItems.Add(new LevelDataItem("bomb_booster", x, y, "booster"));
+                    levelDataItems.Add(new LevelDataItem("shot_booster", x, y, "booster"));
                     break;
                 case 2:
-                    levelDataItems.Add(new LevelDataItem("bigbomb_booster", x, y, "booster"));
-                    break;
-                case 3:
-                    levelDataItems.Add(new LevelDataItem("coin", x, y, "booster"));
-                    break;
-                case 4:
-                    levelDataItems.Add(new LevelDataItem("laser_H_booster", x, y, "booster"));
-                    break;
-                case 5:
                     levelDataItems.Add(new LevelDataItem("laser_V_booster", x, y, "booster"));
                     break;
+                case 3:
+                    levelDataItems.Add(new LevelDataItem("laser_H_booster", x, y, "booster"));
+                    break;
+                case 4:
+                    levelDataItems.Add(new LevelDataItem("bomb_booster", x, y, "booster"));
+                    break;
+                case 5:
+                    levelDataItems.Add(new LevelDataItem("bigbomb_booster", x, y, "booster"));
+                    break;
                 case 6:
-                    levelDataItems.Add(new LevelDataItem("shot_booster", x, y, "booster"));
+                    levelDataItems.Add(new LevelDataItem("teleport_booster", x, y, "booster"));
                     break;
                 case 7:
                     levelDataItems.Add(new LevelDataItem("time_stop_booster", x, y, "booster"));
                     break;
+                case 8:
+                    levelDataItems.Add(new LevelDataItem("coin", x, y, "booster"));
+                    break;
                 default:
                     break;
             }
-        }
     }
 
     //create free space for big blocks

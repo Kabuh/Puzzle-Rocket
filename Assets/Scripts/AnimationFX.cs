@@ -13,6 +13,9 @@ public class AnimationFX : MonoBehaviour
     public float laserPersistance;
     public float missileSpeed;
 
+    public GameObject mask;
+    public float maskSize;
+
     public static AnimationFX Instance { get; private set; }
 
     private void Start()
@@ -54,6 +57,12 @@ public class AnimationFX : MonoBehaviour
         ShootingAnimation(missile, place, null);
     }
 
+    public void PlayTimeStopAnimation(float waitTime)
+    {
+        StartCoroutine(TimeStop(waitTime));
+    }
+
+
     void ShootingAnimation(Missile missile, Vector2 spawn, Block victim)
     {
         Missile NewMissile = Instantiate(missile, spawn, Quaternion.identity);
@@ -75,6 +84,25 @@ public class AnimationFX : MonoBehaviour
         Destroy(NewLaser);
     }
 
+    IEnumerator TimeStop(float waitTime) {
+        float elapsedTime = 0;
+        float delta;
+
+        mask.SetActive(true);
+        mask.transform.localScale += new Vector3(maskSize, maskSize, 0);
+
+        while (elapsedTime <= waitTime)
+        {
+
+            elapsedTime += Time.deltaTime;
+            delta = maskSize - (maskSize * (elapsedTime / waitTime));
+            mask.transform.position = Game.Instance.Player.playerBlock.gameObject.transform.position;
+            mask.transform.localScale = new Vector3(delta, delta, 0);
+            yield return null;
+        }
+        mask.SetActive(false);
+    }
+    
     
 
 
