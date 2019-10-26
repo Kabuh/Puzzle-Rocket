@@ -7,6 +7,8 @@ public class BoosterObject : MonoBehaviour, ISpawnable
     public int xIndex;
     public int yIndex;
     public Cell myCell;
+    public GameObject artChild;
+    private Sprite sprite;
 
     Block playerBlock;
 
@@ -17,6 +19,7 @@ public class BoosterObject : MonoBehaviour, ISpawnable
         Game.LowerDestruction += DestroyIfLower;
         Game.AllDestruction += SelfDestroy;
         Game.CellLevelShift += ChangeCellsLevel;
+        sprite = artChild.GetComponent<SpriteRenderer>().sprite;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -24,7 +27,7 @@ public class BoosterObject : MonoBehaviour, ISpawnable
         playerBlock = collision.gameObject.GetComponent<Block>();
         if (playerBlock != null)
         {
-            Inventory.Instance.TryAddBooster(BoosterManager.Instance.boosters[boosterType], myCell);
+            Inventory.Instance.TryAddBooster(BoosterManager.Instance.boosters[boosterType], myCell, sprite);
         }
 
         SelfDestroy();

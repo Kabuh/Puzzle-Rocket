@@ -72,6 +72,11 @@ PrefabInstance:
       propertyPath: boosterType
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4074826607973429873, guid: 8e8318ff37c67db449ec02fbe2a3a4b6,
+        type: 3}
+      propertyPath: artChild
+      value: 
+      objectReference: {fileID: 7994696338513262080}
     - target: {fileID: 1216231999029200999, guid: 8e8318ff37c67db449ec02fbe2a3a4b6,
         type: 3}
       propertyPath: m_LocalScale.y
@@ -95,3 +100,9 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8e8318ff37c67db449ec02fbe2a3a4b6, type: 3}
+--- !u!1 &7994696338513262080 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2475683518722503294, guid: 8e8318ff37c67db449ec02fbe2a3a4b6,
+    type: 3}
+  m_PrefabInstance: {fileID: 5524149816685003902}
+  m_PrefabAsset: {fileID: 0}

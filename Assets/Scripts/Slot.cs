@@ -15,7 +15,8 @@ public class Slot
     {
         if (boosterType != null)
         {
-            slotText.text = boosterType.BoosterName + " (" + boostersCount + ")";
+            //slotText.text = boosterType.BoosterName + " (" + boostersCount + ")";
+            slotText.text = "(" + boostersCount + ")";
         }
         else if(coinsToUnlock>0)
         {

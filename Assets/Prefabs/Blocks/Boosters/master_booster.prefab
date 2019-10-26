@@ -154,3 +154,4 @@ MonoBehaviour:
   boosterType: 2
   xIndex: 0
   yIndex: 0
+  artChild: {fileID: 925106630918641065}

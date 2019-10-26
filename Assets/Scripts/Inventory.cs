@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using System.Collections.Generic;
 
 public class Inventory : MonoBehaviour
 {
@@ -11,11 +12,17 @@ public class Inventory : MonoBehaviour
 
     [SerializeField] private Text[] slotTexts = null;
 
+    [SerializeField] private Button[] buttons = null;
+
+    [SerializeField] private Image[] artNotch = new Image[4];
+
     private Slot[] slots;
 
     private Slot nextSlotToUnlock;
+    private Button nextButtonToUnlock;
 
     private int coinsCount;
+    private int buttonCounter;
 
     private void Awake()
     {
@@ -38,18 +45,19 @@ public class Inventory : MonoBehaviour
             slots[i].index = i;
             slots[i].slotText = slotTexts[i];
             slots[i].coinsToUnlock = slotCosts[i];
-            nextSlotToUnlock = slots[1];
             slots[i].UpdateSlotText();
         }
-
+        buttonCounter = 1;
+        nextSlotToUnlock = slots[buttonCounter];
+        nextButtonToUnlock = buttons[buttonCounter];
         // FIRST SLOT IS UNLOCKED FROM THE START
         slots[0].isUnlocked = true;        
-    } 
+    }
 
-    // TEMP!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    //// TEMP!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     private void LateUpdate()
     {
-        if(Input.GetKeyDown(KeyCode.Alpha1))
+        if (Input.GetKeyDown(KeyCode.Alpha1))
         {
             OnSlotTouch(0);
         }
@@ -74,10 +82,26 @@ public class Inventory : MonoBehaviour
             AddCoins(1);
         }
 
-        if(Input.GetKeyDown(KeyCode.T))
-        {
-            TryAddBooster(BoosterManager.Instance.boosters[BoosterType.Teleport], Game.Instance.CombinedGrid.cells[0, 0]);
-        }
+        //if (Input.GetKeyDown(KeyCode.T))
+        //{
+        //    TryAddBooster(BoosterManager.Instance.boosters[BoosterType.Teleport], Game.Instance.CombinedGrid.cells[0, 0], );
+        //}
+    }
+
+    public void ButtonOneActivate() {
+        OnSlotTouch(0);
+    }
+    public void ButtonTwoActivate()
+    {
+        OnSlotTouch(1);
+    }
+    public void ButtonThreeActivate()
+    {
+        OnSlotTouch(2);
+    }
+    public void ButtonFourActivate()
+    {
+        OnSlotTouch(3);
     }
 
     // make available only if player is standing
@@ -121,14 +145,18 @@ public class Inventory : MonoBehaviour
         if(nextSlotToUnlock.coinsToUnlock<=0)
         {
             UnlockSlot(nextSlotToUnlock);
+            nextButtonToUnlock.interactable = true;
             if (nextSlotToUnlock.index < slots.Length - 1)
             {
-                nextSlotToUnlock = slots[nextSlotToUnlock.index + 1];
+                buttonCounter++;
+                nextSlotToUnlock = slots[buttonCounter];
+                nextButtonToUnlock = buttons[buttonCounter];
             }
         }
     }
 
-    public void TryAddBooster(Booster booster, Cell boosterCell)
+    //after collide booster handler
+    public void TryAddBooster(Booster booster, Cell boosterCell, Sprite sprite)
     {
         Slot emptySlot = null;
 
@@ -161,6 +189,10 @@ public class Inventory : MonoBehaviour
         if (emptySlot != null && booster.MaxInInventory > 0)
         {
             FillSlot(emptySlot, booster);
+            artNotch[emptySlot.index].sprite = sprite;
+            Color fillerColor = artNotch[emptySlot.index].color;
+            fillerColor.a = 255;
+            artNotch[emptySlot.index].color = fillerColor;
         }
         else
         {
@@ -182,6 +214,11 @@ public class Inventory : MonoBehaviour
                 if (slot.boostersCount == 0)
                 {
                     ClearSlot(slot);
+                    artNotch[slot.index].sprite = null;
+                    Debug.Log("slot to add opaque - " + slot.index);
+                    Color fillerColor = artNotch[slot.index].color;
+                    fillerColor.a = 100;
+                    artNotch[slot.index].color = fillerColor;
                 }
             }
         }
@@ -189,6 +226,8 @@ public class Inventory : MonoBehaviour
 
     private void FillSlot(Slot slot, IBooster booster)
     {
+
+
         slot.boosterType = booster;
         slot.boostersCount++;
         slot.maxBoosters = booster.MaxInInventory;
@@ -197,7 +236,7 @@ public class Inventory : MonoBehaviour
     }
 
     private void AddToSlot(Slot slot)
-    {        
+    {
         slot.boostersCount++;
         // + visual changes or fire event listened by ui
         slot.UpdateSlotText();        
