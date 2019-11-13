@@ -12,23 +12,114 @@ public class LevelManager : MonoBehaviour
 
     public static LevelManager Instance { get; private set; }
 
-    public int[] sizeChancesIftwo = { 45, 15, 10, 15, 5, 10 };
-    public int[] sizeChancesIfOne = { 45, 20, 10, 15, 10 };
-    public int[] sizeChancesIfNone = { 65, 25, 10 };
-    public int[] typeChances = { 30, 10, 60 };
+    [Header("Cube Chances")]
+    [SerializeField] private float[] defChancesToSpawnDifferentType = { 45, 15, 10, 15, 5, 10 };
+    [SerializeField] private float[] actualChancesToSpawnDifferentType = { 0, 0, 0, 0, 0, 0 };
+    [SerializeField] private float defChanceToSpawnAnything = 60.0f;
+    [SerializeField] private float defChanceToMakeCubeImmovable = 25.0f;
 
-    public float boostersSpawnChance;
-    public int[] boostersTypesSpawnChance;
-    //public float boosterSpawnChance;
-    GridClass CreatorGrid;
+    [Header("Booster Chances")]
+    [SerializeField] private float defBoostersSpawnChance = 20.0f;
+    [SerializeField] private float[] defBoostersTypesSpawnChance = { 15, 5, 10, 5, 5, 5, 5, 50 };
 
+    
+    private float actualChanceToSpawnAnything = -1;
+    private float actualChanceToMakeCubeImmovable = -1;
+    private float actualBoostersSpawnChance = -1;
+    private float[] actualBoostersTypesSpawnChance = null;
 
+    private float[] spawnChanceStrategy = new float[] { 50, 20, 50, 50, 80, 80, 80, 80 };
+    private float[] spawnChanceStrategyBoosters = new float[] { 30, 50, 30, 10, 30, 50, 30, 10 };
 
+    private int[] groupToBoost = new int[] {0, 2, 1, 1, 1, 2, 2, 2};
 
+    [SerializeField] private int lineCounter = 0;
+    [SerializeField] private int strategyStep = 100;
+
+    private float currentGoalSpawnChance;
+    private float currentGoalSpawnChanceBoosters;
+
+    #region Properties
+    private float[] ChancesToSpawnDifferentType {
+        get {
+            if (actualChancesToSpawnDifferentType == null) {
+                return defChancesToSpawnDifferentType;
+            }
+            return actualChancesToSpawnDifferentType;
+        }
+        set
+        {
+            actualChancesToSpawnDifferentType = value;
+        }
+    }
+
+    private float ChanceToSpawnAnything
+    {
+        get
+        {
+            if (actualChanceToSpawnAnything == -1)
+            {
+                return defChanceToSpawnAnything;
+            }
+            return actualChanceToSpawnAnything;
+        }
+        set
+        {
+            actualChanceToSpawnAnything = value;
+        }
+    }
+
+    private float ChanceToMakeCubeImmovable
+    {
+        get
+        {
+            if (actualChanceToMakeCubeImmovable == -1)
+            {
+                return defChanceToMakeCubeImmovable;
+            }
+            return actualChanceToMakeCubeImmovable;
+        }
+        set
+        {
+            actualChanceToMakeCubeImmovable = value;
+        }
+    }
+    private float BoostersSpawnChance
+    {
+        get
+        {
+            if (actualBoostersSpawnChance == -1)
+            {
+                return defBoostersSpawnChance;
+            }
+            return actualBoostersSpawnChance;
+        }
+        set
+        {
+            actualBoostersSpawnChance = value;
+        }
+    }
+    private float[] BoostersTypesSpawnChance
+    {
+        get
+        {
+            if (actualBoostersTypesSpawnChance == null)
+            {
+                return defBoostersTypesSpawnChance;
+            }
+            return actualBoostersTypesSpawnChance;
+        }
+        set
+        {
+            actualBoostersTypesSpawnChance = value;
+        }
+    }
+    #endregion
+
+    private GridClass CreatorGrid;
 
     private void Awake()
     {
-
         #region Singleton
 
         if (Instance == null)
@@ -42,6 +133,20 @@ public class LevelManager : MonoBehaviour
         #endregion        
 
         LoadLevels();
+
+        Game.AllDestruction += GameReset;
+        defChanceToSpawnAnything = spawnChanceStrategy[0];
+        defBoostersSpawnChance = spawnChanceStrategyBoosters[0];
+        currentGoalSpawnChance = spawnChanceStrategy[1];
+        currentGoalSpawnChanceBoosters = spawnChanceStrategyBoosters[1];
+
+        CopyArray(defChancesToSpawnDifferentType, actualChancesToSpawnDifferentType);
+    }
+
+    void CopyArray(float[] arrayDonor, float[] arrayRecepient) {
+        for (int i = 0; i < arrayDonor.Length; i++) {
+            arrayRecepient[i] = arrayDonor[i];
+        }
     }
 
     public void LoadLevels()
@@ -89,31 +194,62 @@ public class LevelManager : MonoBehaviour
     //main logic body
     public void RandomLevelCreator() {
         int x, y;
+        int strategyCounter = 1;
+        int internalCounter = 1;
+        float currentChangePartition = 0f;
+        float valueOne = 0f;
         for (y = 0; y < CreatorGrid.height; y++) {
+            lineCounter++;
+            
+            if (((float)lineCounter / (strategyStep * (float)strategyCounter)) >= (float)strategyCounter) {
+                strategyCounter = Mathf.Min(++strategyCounter, spawnChanceStrategy.Length - 1);
+                currentGoalSpawnChance = spawnChanceStrategy[strategyCounter];
+                currentGoalSpawnChanceBoosters = spawnChanceStrategyBoosters[strategyCounter];
+                if (internalCounter == strategyCounter)
+                {
+                    valueOne = (actualChancesToSpawnDifferentType[groupToBoost[strategyCounter] * 2] + actualChancesToSpawnDifferentType[groupToBoost[strategyCounter] * 2 + 1]);
+                    internalCounter++;
+                }
+            }
+
+            currentChangePartition = ((float)lineCounter - (((float)strategyCounter - 1) * (float)strategyStep)) / (float)strategyStep;
+            ChanceToSpawnAnything = Mathf.Lerp(spawnChanceStrategy[strategyCounter - 1], currentGoalSpawnChance, currentChangePartition);
+            BoostersSpawnChance = Mathf.Lerp(spawnChanceStrategyBoosters[strategyCounter - 1], currentGoalSpawnChanceBoosters, currentChangePartition);
+            
+            float deltaPartOne = Mathf.Lerp(valueOne, 80.0f, currentChangePartition);
+            float deltaPartTwo = (actualChancesToSpawnDifferentType[groupToBoost[strategyCounter] * 2] + actualChancesToSpawnDifferentType[groupToBoost[strategyCounter] * 2 + 1]);
+            float delta = deltaPartOne - deltaPartTwo ;
+            Debug.Log(delta);
+            delta = Mathf.Floor(delta * 100) / 100;
+            //RunChoiseShifting(actualChancesToSpawnDifferentType, groupToBoost[strategyCounter], delta);
+
+            Debug.Log(ChanceToSpawnAnything);
             for (x = 0; x < CreatorGrid.width; x++) {
 
                 int[] Offset = new int[2];
 
                 if (CreatorGrid.cells[x, y].IsEmpty)
                 {
-                    if (x <= 3 && CreatorGrid.cells[x + 1, y].IsEmpty)
+                    if (SpawnerTools.BinaryRandom(ChanceToSpawnAnything))
                     {
-                        if (x <= 2 && CreatorGrid.cells[x + 2, y].IsEmpty)
+                        if (x <= 3 && CreatorGrid.cells[x + 1, y].IsEmpty)
                         {
-
-                            CasingType(x, y, ComplexRando(sizeChancesIftwo), ComplexRando(typeChances), out Offset);
+                            if (x <= 2 && CreatorGrid.cells[x + 2, y].IsEmpty)
+                            {
+                                CasingFigure(x, y, CeilingSwitch(CreatorGrid.height - y - 1, SpawnerTools.ComplexRando(ChancesToSpawnDifferentType, 0)), SpawnerTools.BinaryRandom(ChanceToMakeCubeImmovable), out Offset);
+                            }
+                            else
+                            {
+                                CasingFigure(x, y, CeilingSwitch(CreatorGrid.height - y - 1, SpawnerTools.ComplexRando(ChancesToSpawnDifferentType, 1)), SpawnerTools.BinaryRandom(ChanceToMakeCubeImmovable), out Offset);
+                            }
                         }
                         else
                         {
-                            CasingType(x, y, ComplexRando(sizeChancesIfOne), ComplexRando(typeChances), out Offset);
+                            CasingFigure(x, y, CeilingSwitch(CreatorGrid.height - y - 1, SpawnerTools.ComplexRando(ChancesToSpawnDifferentType, 3)), SpawnerTools.BinaryRandom(ChanceToMakeCubeImmovable), out Offset);
                         }
-                    }
-                    else
-                    {
-                        CasingType(x, y, ComplexRando(sizeChancesIfNone), ComplexRando(typeChances), out Offset);
-                    }
 
-                    OffsetMaker(x, y, Offset);
+                        OffsetMaker(x, y, Offset);
+                    }
                 }
 
                 if ((Game.Instance.count == 1 && x == 2 && y == 3) == true)
@@ -121,16 +257,51 @@ public class LevelManager : MonoBehaviour
                     continue;
                 }
 
-                if (SimpleRando(boostersSpawnChance)) {
+                if (SpawnerTools.BinaryRandom(BoostersSpawnChance)) {
                     RunBoosterChances(x, y);
                 }
             }
         }
     }
-    
+
+    #region Cube Type Adaptive Mechanics
+
+    //ad hoc solution for adaptive random generator(needs rework)
+    //void RunChoiseShifting(float[] array, int groupToBoost, float value)
+    //{
+    //    groupToBoost = groupToBoost * 2;
+    //    float groupRatioOne = SpawnerTools.GetRatio(array[groupToBoost], array[groupToBoost + 1]);
+
+    //    float groupRatioTwo = SpawnerTools.GetRatio(array[GetGroupsThatAreLeft(groupToBoost)[0]], array[GetGroupsThatAreLeft(groupToBoost)[0] + 1]);
+    //    float groupRatioThree = SpawnerTools.GetRatio(array[GetGroupsThatAreLeft(groupToBoost)[1]], array[GetGroupsThatAreLeft(groupToBoost)[1] + 1]);
+
+    //    array[groupToBoost] += value * groupRatioOne;
+    //    array[groupToBoost + 1] += value * (1 - groupRatioOne);
+
+    //    float intrGroupRatio;
+    //    intrGroupRatio = SpawnerTools.GetGroupRatio(array[GetGroupsThatAreLeft(groupToBoost)[0]], array[GetGroupsThatAreLeft(groupToBoost)[0] + 1], array[GetGroupsThatAreLeft(groupToBoost)[1]], array[GetGroupsThatAreLeft(groupToBoost)[1] + 1]);
+
+    //    float valuePartForGroup = value * intrGroupRatio;
+    //    array[GetGroupsThatAreLeft(groupToBoost)[0]] -= valuePartForGroup * groupRatioTwo;
+    //    array[GetGroupsThatAreLeft(groupToBoost)[0]+1] -= valuePartForGroup * (1 - groupRatioTwo);
+    //    array[GetGroupsThatAreLeft(groupToBoost)[1]] -= (value - valuePartForGroup) * groupRatioThree;
+    //    array[GetGroupsThatAreLeft(groupToBoost)[1]+1] -= (value - valuePartForGroup) * (1 - groupRatioTwo);
+    //}
+
+    //int[] GetGroupsThatAreLeft(int chosenGroup) {
+    //    if (chosenGroup == 0) {
+    //        return new int []{2, 4};
+    //    } else if (chosenGroup == 2)
+    //    {
+    //        return new int[] { 0, 4 };
+    //    }
+    //    return new int[] { 0, 2};
+    //}
+    #endregion
+
 
     void RunBoosterChances(int x, int y) {
-            switch (ComplexRando(boostersTypesSpawnChance))
+            switch (SpawnerTools.ComplexRando(BoostersTypesSpawnChance, 0))
             {
                 case 1:
                     levelDataItems.Add(new LevelDataItem("shot_booster", x, y, "booster"));
@@ -174,11 +345,7 @@ public class LevelManager : MonoBehaviour
                     {
                         int newX = x + l;
                         int newY = y + k;
-                        if (newY >= CreatorGrid.height)
-                        {
-
-                        }
-                        else
+                        if (newY < CreatorGrid.height)
                         {
                             CreatorGrid.cells[x + l, y + k].IsEmpty = false;
                         }
@@ -211,7 +378,6 @@ public class LevelManager : MonoBehaviour
         if (isImmovable) {
             type++;
         }
-
         GenerateBlock(FigureType[type], currentIndexX, currentIndexY);
     }
 
@@ -227,6 +393,7 @@ public class LevelManager : MonoBehaviour
                 return 2;
             }
         }
+
         if (freeLines == 0) {
             if (casing == 3 || casing == 2)
             {
@@ -237,26 +404,6 @@ public class LevelManager : MonoBehaviour
             }
         }
         return casing;
-    }
-
-    //interpreting chance calculation into block type
-    void CasingType(int x, int y, int Size, int Type, out int[] CellOffsetI) {
-        int[] OffsetArray = new int[2];
-        switch (Type) {
-            case 1:
-                CasingFigure(x, y ,CeilingSwitch(CreatorGrid.height - y - 1 , Size), false, out OffsetArray);
-                break;
-            case 2:
-                CasingFigure(x, y, CeilingSwitch(CreatorGrid.height - y - 1, Size), true, out OffsetArray);
-                break;
-            case 3:
-                break;
-            default:
-                Debug.Log("Unknown Rando case");
-                OffsetArray = new int[] { 0, 0 };
-                break;
-        }
-        CellOffsetI = OffsetArray;
     }
 
     //interpreting chance calculation into block shape
@@ -290,46 +437,29 @@ public class LevelManager : MonoBehaviour
                 break;
             default:
                 typeIndex = 110;
-                Debug.Log("Unknown Rando case");
+                Debug.LogError("Unknown Rando case");
                 CellOffset = new int[] { 0, 0 };
                 break;
         }
-
         GenerateFigure(typeIndex, isImmovable, x, y);
-    }
-
-    //creating a random answer from binary pool
-    bool SimpleRando(float chance)
-    {
-        float x = Random.Range(0, 100);
-        if (x <= chance)
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
-    }
-
-    //creating a random answer from multi-answer pool
-    int ComplexRando(int[] valueLib) {
-        float x = Random.Range(0, 100);
-        int sum = 0;
-        for (int i = 0; i < valueLib.Length; i++) {
-            sum += valueLib[i];
-            if (sum > 100 || sum < 0) {
-                return -1;
-            }
-            if (x < sum)
-            {
-                return ++i;
-            }
-        }
-        return -1;
     }
 
     void ClearGrid(GridClass grid) {
         grid.ResetGrid();
+        
+    }
+
+    void GameReset() {
+        lineCounter = 0;
+
+        actualChanceToSpawnAnything = -1;
+        actualChanceToMakeCubeImmovable = -1;
+        actualBoostersSpawnChance = -1;
+        actualBoostersTypesSpawnChance = null;
+
+        currentGoalSpawnChance = spawnChanceStrategy[1];
+        currentGoalSpawnChanceBoosters = spawnChanceStrategyBoosters[1];
+
+        CopyArray(defChancesToSpawnDifferentType, actualChancesToSpawnDifferentType);
     }
 }

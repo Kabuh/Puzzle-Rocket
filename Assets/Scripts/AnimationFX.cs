@@ -4,19 +4,22 @@ using UnityEngine;
 
 public class AnimationFX : MonoBehaviour
 {
-    public GameObject explosion;
-    public GameObject laserHor;
-    public GameObject laserVert;
-    public Missile missile;
+    [SerializeField] private GameObject explosion = null;
+    [SerializeField] private GameObject laserHor = null;
+    [SerializeField] private GameObject laserVert = null;
+    [SerializeField] private Missile missile = null;
 
-    public float explosionPersistance;
-    public float laserPersistance;
-    public float missileSpeed;
+    [SerializeField] private float explosionPersistance = 0f;
+    [SerializeField] private float laserPersistance = 0f;
+    [SerializeField] private float missileSpeed = 0f;
 
-    public GameObject mask;
-    public float maskSize;
+    [SerializeField] private GameObject mask = null;
+    [SerializeField] private GameObject timeStopSprite= null;
+    [SerializeField] private float maskSize = 0f;
 
     public static AnimationFX Instance { get; private set; }
+
+    private IEnumerator coroutine = null;
 
     private void Start()
     {
@@ -59,7 +62,9 @@ public class AnimationFX : MonoBehaviour
 
     public void PlayTimeStopAnimation(float waitTime)
     {
-        StartCoroutine(TimeStop(waitTime));
+        coroutine = TimeStop(waitTime);
+        StopCoroutine(coroutine);
+        StartCoroutine(coroutine);
     }
 
 
@@ -93,17 +98,13 @@ public class AnimationFX : MonoBehaviour
 
         while (elapsedTime <= waitTime)
         {
-
             elapsedTime += Time.deltaTime;
             delta = maskSize - (maskSize * (elapsedTime / waitTime));
             mask.transform.position = Game.Instance.Player.playerBlock.gameObject.transform.position;
+            timeStopSprite.transform.position = Game.Instance.Player.playerBlock.gameObject.transform.position;
             mask.transform.localScale = new Vector3(delta, delta, 0);
             yield return null;
         }
         mask.SetActive(false);
     }
-    
-    
-
-
 }

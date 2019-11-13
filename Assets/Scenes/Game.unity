@@ -640,7 +640,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 469222529}
-        m_MethodName: ButtonOneActivate
+        m_MethodName: ButtonThreeActivate
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -931,7 +931,6 @@ GameObject:
   m_Component:
   - component: {fileID: 211944909}
   - component: {fileID: 211944908}
-  - component: {fileID: 211944910}
   m_Layer: 0
   m_Name: LevelManager
   m_TagString: Untagged
@@ -951,12 +950,34 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c5bd3ea28460a34b9778429dac0c659, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sizeChancesIftwo: 2d0000000f0000000a0000000f000000050000000a000000
-  sizeChancesIfOne: 2d000000140000000a0000000f0000000a000000
-  sizeChancesIfNone: 41000000190000000a000000
-  typeChances: 1e0000000a0000003c000000
-  boostersSpawnChance: 20
-  boostersTypesSpawnChance: 0f000000050000000a0000000500000005000000050000000500000032000000
+  defChancesToSpawnDifferentType:
+  - 45
+  - 15
+  - 4
+  - 6
+  - 1
+  - 2
+  defChanceToSpawnAnything: 50
+  defChanceToMakeCubeImmovable: 25
+  defBoostersSpawnChance: 20
+  defBoostersTypesSpawnChance:
+  - 15
+  - 5
+  - 10
+  - 5
+  - 5
+  - 5
+  - 5
+  - 50
+  actualChancesToSpawnDifferentType:
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  lineCounter: 0
+  strategyStep: 40
 --- !u!4 &211944909
 Transform:
   m_ObjectHideFlags: 0
@@ -971,30 +992,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &211944910
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 211944907}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 11cd7e591e6f2d34abf70dcf3c4664fb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  testerUIprompts:
-  - {fileID: 493004442}
-  - {fileID: 252850140}
-  - {fileID: 1202333645}
-  - {fileID: 920781634}
-  testerUIcheckSums:
-  - {fileID: 1838170825}
-  - {fileID: 1949504523}
-  - {fileID: 321417746}
-  - {fileID: 1157918115}
-  ConsoleUI: {fileID: 99067260}
-  testField: {fileID: 1537602215}
 --- !u!1 &230971080
 GameObject:
   m_ObjectHideFlags: 0
@@ -1528,7 +1525,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 469222529}
-        m_MethodName: ButtonOneActivate
+        m_MethodName: ButtonTwoActivate
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1764,7 +1761,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   slotsCount: 4
-  slotCosts: 00000000010000000200000003000000
+  slotCosts: 00000000050000000a00000014000000
   slotTexts:
   - {fileID: 894716095}
   - {fileID: 1970049860}
@@ -2202,7 +2199,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 469222529}
-        m_MethodName: ButtonOneActivate
+        m_MethodName: ButtonFourActivate
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -4196,7 +4193,7 @@ Transform:
   m_GameObject: {fileID: 1171481676}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0.027744412, y: 1.4397997, z: 0.6010742}
-  m_LocalScale: {x: 50, y: 50, z: 1}
+  m_LocalScale: {x: 75, y: 75, z: 1}
   m_Children: []
   m_Father: {fileID: 1952897045}
   m_RootOrder: 0
@@ -4516,7 +4513,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 211944910}
+      - m_Target: {fileID: 0}
         m_MethodName: MakeNewChances
         m_Mode: 1
         m_Arguments:
@@ -6693,6 +6690,7 @@ MonoBehaviour:
   laserPersistance: 0.15
   missileSpeed: 0.25
   mask: {fileID: 1947714650}
+  timeStopSprite: {fileID: 1171481676}
   maskSize: 200
 --- !u!4 &1952897045
 Transform:

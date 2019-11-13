@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class ChanceParser : MonoBehaviour
 {
+    /*
     public List<Text> testerUIprompts = new List<Text>();
     public List<Text> testerUIcheckSums = new List<Text>();
     public Text ConsoleUI;
@@ -106,4 +107,5 @@ public class ChanceParser : MonoBehaviour
         }
 
     }
+    */
 }

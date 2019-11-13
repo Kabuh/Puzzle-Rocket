@@ -192,8 +192,7 @@ public class Game : MonoBehaviour
             
             if (obstructingBlock != Player.playerBlock)
             {                
-                obstructingBlock.SelfDestroy();                
-                Debug.Log(obstructingBlock.name + " under player got destroyed");                
+                obstructingBlock.SelfDestroy();
             }
             
         }
