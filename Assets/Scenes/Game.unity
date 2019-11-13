@@ -957,6 +957,13 @@ MonoBehaviour:
   - 6
   - 1
   - 2
+  actualChancesToSpawnDifferentType:
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
   defChanceToSpawnAnything: 50
   defChanceToMakeCubeImmovable: 25
   defBoostersSpawnChance: 20
@@ -969,15 +976,8 @@ MonoBehaviour:
   - 5
   - 5
   - 50
-  actualChancesToSpawnDifferentType:
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
   lineCounter: 0
-  strategyStep: 40
+  strategyStep: 80
 --- !u!4 &211944909
 Transform:
   m_ObjectHideFlags: 0
@@ -1761,7 +1761,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   slotsCount: 4
-  slotCosts: 00000000050000000a00000014000000
+  slotCosts: 0000000019000000320000004b000000
   slotTexts:
   - {fileID: 894716095}
   - {fileID: 1970049860}

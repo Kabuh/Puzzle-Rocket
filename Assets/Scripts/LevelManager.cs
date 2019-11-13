@@ -216,14 +216,12 @@ public class LevelManager : MonoBehaviour
             ChanceToSpawnAnything = Mathf.Lerp(spawnChanceStrategy[strategyCounter - 1], currentGoalSpawnChance, currentChangePartition);
             BoostersSpawnChance = Mathf.Lerp(spawnChanceStrategyBoosters[strategyCounter - 1], currentGoalSpawnChanceBoosters, currentChangePartition);
             
-            float deltaPartOne = Mathf.Lerp(valueOne, 80.0f, currentChangePartition);
-            float deltaPartTwo = (actualChancesToSpawnDifferentType[groupToBoost[strategyCounter] * 2] + actualChancesToSpawnDifferentType[groupToBoost[strategyCounter] * 2 + 1]);
-            float delta = deltaPartOne - deltaPartTwo ;
-            Debug.Log(delta);
-            delta = Mathf.Floor(delta * 100) / 100;
+            //float deltaPartOne = Mathf.Lerp(valueOne, 80.0f, currentChangePartition);
+            //float deltaPartTwo = (actualChancesToSpawnDifferentType[groupToBoost[strategyCounter] * 2] + actualChancesToSpawnDifferentType[groupToBoost[strategyCounter] * 2 + 1]);
+            //float delta = deltaPartOne - deltaPartTwo ;
+            //delta = Mathf.Floor(delta * 100) / 100;
             //RunChoiseShifting(actualChancesToSpawnDifferentType, groupToBoost[strategyCounter], delta);
 
-            Debug.Log(ChanceToSpawnAnything);
             for (x = 0; x < CreatorGrid.width; x++) {
 
                 int[] Offset = new int[2];
