@@ -15,6 +15,7 @@ public class Game : MonoBehaviour
 
     public bool isDesigner;
     public bool isTestMode;
+    public bool isHub;
 
     private Dictionary<string, GameObject> prefabs = new Dictionary<string, GameObject>();    
 
@@ -75,9 +76,12 @@ public class Game : MonoBehaviour
         }
         CameraS.CreateLevel += SpawnNewLevel;
 
-        if(isTestMode)
+        if (isTestMode)
         {
             TestGameSetup();
+        }
+        else if (isHub) {
+            HubSetup();
         }
         else
         {
@@ -155,9 +159,11 @@ public class Game : MonoBehaviour
             YPos = CombinedGrid.origin.y + item.yPos * CombinedGrid.step;
 
             ISpawnable spawnedObject = Instantiate
-                (prefabs[item.prefabName], 
-                new Vector3(XPos, YPos + offset, 0f), 
-                Quaternion.identity).GetComponent<ISpawnable>();
+                (
+                    prefabs[item.prefabName], 
+                    new Vector3(XPos, YPos + offset, 0f), 
+                    Quaternion.identity
+                ).GetComponent<ISpawnable>();
         }
     }
 
@@ -202,6 +208,20 @@ public class Game : MonoBehaviour
     private void SpawnPremadeLevel()
     {
         SpawnLevel(0f, LevelManager.Instance.premadeLevels["1premade"]);
+    }
+
+    private void SpawnHub()
+    {
+        SpawnLevel(0f, LevelManager.Instance.premadeLevels["Hub"]);
+    }
+
+    private void HubSetup()
+    {
+        cameraScript.enabled = false;
+        //Player.GetComponent<Block>().elements[0].SetCell();
+        SpawnPlayer();
+        PreparePlayerStart();
+        SpawnHub();
     }
 
     private void TestGameSetup()

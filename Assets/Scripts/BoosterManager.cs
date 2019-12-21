@@ -35,6 +35,8 @@ public class BoosterManager : MonoBehaviour
         boosters.Add(BoosterType.Shot, new Shot());
         boosters.Add(BoosterType.TimeStop, new TimeStop());
         boosters.Add(BoosterType.Teleport, new Teleport(cam));
+        boosters.Add(BoosterType.GoLeft, new ChangelevelTrigger());
+        boosters.Add(BoosterType.GoRight, new ChangelevelTrigger());
     }
 
     void Activate() {

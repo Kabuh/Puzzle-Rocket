@@ -6,5 +6,7 @@
     Laser_V,
     Shot,
     TimeStop,
-    Teleport
+    Teleport,
+    GoLeft,
+    GoRight
 }
