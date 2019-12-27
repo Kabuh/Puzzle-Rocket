@@ -25,6 +25,7 @@ public class CameraS : MonoBehaviour
     public float defaultSpeed = 0.5f;
     float stopSpeed = 0;
     public float speed;
+    public int cameraStartCellIndex = 4;
 
     int currentLevel = 1;
     int gridHeight;
@@ -39,6 +40,8 @@ public class CameraS : MonoBehaviour
         speed = defaultSpeed;
         gridHeight = Game.Instance.CombinedGrid.halfHeight;
         origin = Game.Instance.CombinedGrid.origin;
+
+        transform.position = new Vector3(0f, origin.y + Game.Instance.CombinedGrid.step * cameraStartCellIndex, -10f);
     }
 
     private void Update()
