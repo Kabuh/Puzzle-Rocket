@@ -13,6 +13,7 @@ public class MouseControls : MonoBehaviour
     private Vector3 endTouchPos;
 
     bool isBlockReadyToBeMoved;
+    bool blockShouldStay;
 
     float swipeAngle;
 
@@ -77,7 +78,7 @@ public class MouseControls : MonoBehaviour
     {
         if(block!=null)
         {
-            if (isBlockReadyToBeMoved)
+            if (isBlockReadyToBeMoved && !blockShouldStay)
             {
                 // then move (along axis) with input and update cells
                 block.UpdatePosition(input);
@@ -92,6 +93,11 @@ public class MouseControls : MonoBehaviour
                     block.SetAxis(axis);
                     block.CalculateMovementConstraints();
                     isBlockReadyToBeMoved = true;
+                    blockShouldStay = false;
+                }
+                else
+                {
+                    blockShouldStay = true;
                 }
             }
         }        
@@ -102,8 +108,11 @@ public class MouseControls : MonoBehaviour
         // trigger snappping
         if (block != null)
         {
-            block.UpdatePosition(input);
-            block.SnapToClosestCell();
+            if (!blockShouldStay)
+            {
+                block.UpdatePosition(input);
+                block.SnapToClosestCell();
+            }
             // loose block
             block = null;
             isBlockReadyToBeMoved = false;
