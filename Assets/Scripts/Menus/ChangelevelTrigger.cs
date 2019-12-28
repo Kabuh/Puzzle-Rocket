@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
+
 
 public class ChangelevelTrigger : Booster
 {
@@ -10,6 +10,6 @@ public class ChangelevelTrigger : Booster
 
     public override void Activate(Cell cell)
     {
-        SceneManager.LoadScene(2);
+        HubManagerScript.Instance.Cast(cell);
     }
 }

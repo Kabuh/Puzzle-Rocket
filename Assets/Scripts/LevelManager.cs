@@ -12,9 +12,38 @@ public class LevelManager : MonoBehaviour
 
     public static LevelManager Instance { get; private set; }
 
+    Dictionary<string, int> BlockIndex = new Dictionary<string, int>
+        {
+            {"Single"   , 1},            
+            {"Di Ver"   , 2},
+            {"Tri Ver"  , 3},
+            {"Di Hor"   , 4},
+            {"Cube"     , 5},
+            {"Tri Hor"  , 6},
+            {"SingleV"  , 7},
+            {"CubeV"    , 8},
+
+            {"Immovable"    , 9 },
+            {"IM_Di Ver"    , 10},
+            {"IM_Tri Ver"   , 11},
+            {"IM_Di Hor"    , 12},
+            {"IM_Cube"      , 13},
+            {"IM_Tri Hor"   , 14},
+            {"ImmovableV"   , 15},
+            {"IM_CubeV"     , 16}
+        };
+
+    int GetBlockIndex(string myString) {
+        int bank = BlockIndex[myString] - 1;
+        if (bank < 8) {
+            return bank;
+        }
+        return bank - 8;
+    }
+
     [Header("Cube Chances")]
-    [SerializeField] private float[] defChancesToSpawnDifferentType = { 45, 15, 10, 15, 5, 10 };
-    [SerializeField] private float[] actualChancesToSpawnDifferentType = { 0, 0, 0, 0, 0, 0 };
+    [SerializeField] private float[] defChancesToSpawnDifferentType = { 45, 15, 10, 15, 5, 10, 45, 5};
+    [SerializeField] private float[] actualChancesToSpawnDifferentType = { 0, 0, 0, 0, 0, 0, 0, 0 };
     [SerializeField] private float defChanceToSpawnAnything = 60.0f;
     [SerializeField] private float defChanceToMakeCubeImmovable = 25.0f;
 
@@ -42,9 +71,9 @@ public class LevelManager : MonoBehaviour
     #region Properties
     private float[] ChancesToSpawnDifferentType {
         get {
-            if (actualChancesToSpawnDifferentType == null) {
-                return defChancesToSpawnDifferentType;
-            }
+            //if (actualChancesToSpawnDifferentType == null) {
+            //    return defChancesToSpawnDifferentType;
+            //}
             return actualChancesToSpawnDifferentType;
         }
         set
@@ -140,7 +169,8 @@ public class LevelManager : MonoBehaviour
         currentGoalSpawnChance = spawnChanceStrategy[1];
         currentGoalSpawnChanceBoosters = spawnChanceStrategyBoosters[1];
 
-        CopyArray(defChancesToSpawnDifferentType, actualChancesToSpawnDifferentType);
+        //CopyArray(defChancesToSpawnDifferentType, actualChancesToSpawnDifferentType);
+
     }
 
     void CopyArray(float[] arrayDonor, float[] arrayRecepient) {
@@ -193,12 +223,25 @@ public class LevelManager : MonoBehaviour
 
     //main logic body
     public void RandomLevelCreator() {
+        int IndexFromSaveNode = GetBlockIndex(SaveNode.PlayerBlockChoise);
+        if (IndexFromSaveNode < 8)
+        {
+            actualChancesToSpawnDifferentType[IndexFromSaveNode] = defChancesToSpawnDifferentType[IndexFromSaveNode];
+        }
+        else {
+            Debug.Log(IndexFromSaveNode);
+        }
+        
+
         int x, y;
-        int strategyCounter = 1;
-        int internalCounter = 1;
-        float currentChangePartition = 0f;
-        float valueOne = 0f;
+        //int strategyCounter = 1;
+        //int internalCounter = 1;
+        //float currentChangePartition = 0f;
+        //float valueOne = 0f;
         for (y = 0; y < CreatorGrid.height; y++) {
+            //adaptive chances
+            /*
+
             lineCounter++;
             
             if (((float)lineCounter / (strategyStep * (float)strategyCounter)) >= (float)strategyCounter) {
@@ -215,7 +258,10 @@ public class LevelManager : MonoBehaviour
             currentChangePartition = ((float)lineCounter - (((float)strategyCounter - 1) * (float)strategyStep)) / (float)strategyStep;
             ChanceToSpawnAnything = Mathf.Lerp(spawnChanceStrategy[strategyCounter - 1], currentGoalSpawnChance, currentChangePartition);
             BoostersSpawnChance = Mathf.Lerp(spawnChanceStrategyBoosters[strategyCounter - 1], currentGoalSpawnChanceBoosters, currentChangePartition);
-            
+            */        
+
+            //non-finished part of adaptive below
+
             //float deltaPartOne = Mathf.Lerp(valueOne, 80.0f, currentChangePartition);
             //float deltaPartTwo = (actualChancesToSpawnDifferentType[groupToBoost[strategyCounter] * 2] + actualChancesToSpawnDifferentType[groupToBoost[strategyCounter] * 2 + 1]);
             //float delta = deltaPartOne - deltaPartTwo ;
@@ -357,17 +403,21 @@ public class LevelManager : MonoBehaviour
     Dictionary<int, string> FigureType = new Dictionary<int, string>
         {
             { 110, "Single" },
+            { 112, "SingleV" },
             { 120, "Di Ver" },
             { 130, "Tri Ver" },
             { 210, "Di Hor" },
             { 220, "Cube" },
+            { 222, "CubeV" },
             { 310, "Tri Hor" },
             
             { 111, "Immovable" },
+            { 113, "ImmovableV" },
             { 121, "IM_Di Ver" },
             { 131, "IM_Tri Ver" },
             { 211, "IM_Di Hor" },
             { 221, "IM_Cube" },
+            { 223, "IM_CubeV" },
             { 311, "IM_Tri Hor" }
         };
 
@@ -433,6 +483,15 @@ public class LevelManager : MonoBehaviour
                 typeIndex = 310;
                 CellOffset = new int[] { 2, 0 };
                 break;
+            case 7:
+                typeIndex = 112;
+                CellOffset = new int[] { 0, 0 };
+                break;
+            case 8:
+                typeIndex = 222;
+                CellOffset = new int[] { 1, 1 };
+                break;
+
             default:
                 typeIndex = 110;
                 Debug.LogError("Unknown Rando case");

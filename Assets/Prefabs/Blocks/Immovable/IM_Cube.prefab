@@ -102,6 +102,31 @@ PrefabInstance:
       propertyPath: m_LocalScale.y
       value: 4.1
       objectReference: {fileID: 0}
+    - target: {fileID: 7932873300062640616, guid: 891f245c6610e38448449511b0e11be8,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7932873300062640616, guid: 891f245c6610e38448449511b0e11be8,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7932873300062640616, guid: 891f245c6610e38448449511b0e11be8,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 7932873300062640616, guid: 891f245c6610e38448449511b0e11be8,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 7932873300062640616, guid: 891f245c6610e38448449511b0e11be8,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: -90
+      objectReference: {fileID: 0}
     - target: {fileID: 3926749532107152513, guid: 891f245c6610e38448449511b0e11be8,
         type: 3}
       propertyPath: m_Sprite

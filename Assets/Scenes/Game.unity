@@ -953,11 +953,15 @@ MonoBehaviour:
   defChancesToSpawnDifferentType:
   - 45
   - 15
-  - 4
-  - 6
-  - 1
-  - 2
+  - 10
+  - 15
+  - 5
+  - 10
+  - 45
+  - 5
   actualChancesToSpawnDifferentType:
+  - 0
+  - 0
   - 0
   - 0
   - 0
@@ -3933,6 +3937,7 @@ MonoBehaviour:
   cameraScript: {fileID: 519420033}
   isDesigner: 0
   isTestMode: 0
+  isHub: 0
   count: 1
 --- !u!4 &1155832399
 Transform:

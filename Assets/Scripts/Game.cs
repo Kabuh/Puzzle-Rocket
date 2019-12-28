@@ -47,7 +47,14 @@ public class Game : MonoBehaviour
         }
         #endregion        
 
-        CombinedGrid = new GridClass(5, 16, 1, "GameGrid");
+        if (isHub)
+        {
+            CombinedGrid = new GridClass(5, 16, 1, "GameGrid");
+        }
+        else {
+            CombinedGrid = new GridClass(5, 100, 1, "GameGrid");
+        }
+        
 
         PopulatePrefabs();
         
