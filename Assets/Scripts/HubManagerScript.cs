@@ -106,7 +106,14 @@ public class HubManagerScript : MonoBehaviour
         texts[3] = BoosterType[SecondRandomNumberForBooster];
 
         for (int i = 0; i < texts.Length; i++) {
-            Instantiator(ref ChoiseBlockLeft, texts[i], i);
+            if (i < 2)
+            {
+                Instantiator(ref ChoiseBlockLeft, texts[i], i);
+            }
+            else {
+                Instantiator(ref ChoiseBlockRight, texts[i], i);
+            }
+            
         }
         
     }
