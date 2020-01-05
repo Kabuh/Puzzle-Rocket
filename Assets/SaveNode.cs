@@ -9,20 +9,20 @@ public class SaveNode : ScriptableObject
     public static string PlayerBoosterChoise;
     public static string PlayerBlockChoise;
 
-    public static List<string> BlockType = new List<string>{};
-    public static List<string> BoosterType = new List<string>{};
+    public static List<string> SavedBlockType = new List<string>{};
+    public static List<string> SavedBoosterType = new List<string>{};
 
     public static void PopulateLists() {
         if (!FirstRunCompleted) {
 
-            BlockType = HubManagerScript.Instance.BlockType;
-            BoosterType = HubManagerScript.Instance.BoosterType;
+            SavedBlockType = HubManagerScript.Instance.BlockType;
+            SavedBoosterType = HubManagerScript.Instance.BoosterType;
             FirstRunCompleted = true;
         }
         else
         {
-            HubManagerScript.Instance.BlockType = BlockType;
-            HubManagerScript.Instance.BoosterType = BoosterType;
+            HubManagerScript.Instance.BlockType = SavedBlockType;
+            HubManagerScript.Instance.BoosterType = SavedBoosterType;
         }
     }
 
@@ -30,4 +30,5 @@ public class SaveNode : ScriptableObject
         FirstRunCompleted = false;
     }
 
+    //on
 }

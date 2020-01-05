@@ -72,6 +72,26 @@ PrefabInstance:
       propertyPath: boosterType
       value: 7
       objectReference: {fileID: 0}
+    - target: {fileID: 3630599782737016405, guid: 53fc56f3c2466064e9afc8eb06b69b5c,
+        type: 3}
+      propertyPath: m_Offset.x
+      value: 0.39100313
+      objectReference: {fileID: 0}
+    - target: {fileID: 3630599782737016405, guid: 53fc56f3c2466064e9afc8eb06b69b5c,
+        type: 3}
+      propertyPath: m_Offset.y
+      value: 0.6690484
+      objectReference: {fileID: 0}
+    - target: {fileID: 3630599782737016405, guid: 53fc56f3c2466064e9afc8eb06b69b5c,
+        type: 3}
+      propertyPath: m_Size.y
+      value: 2.1342232
+      objectReference: {fileID: 0}
+    - target: {fileID: 3630599782737016405, guid: 53fc56f3c2466064e9afc8eb06b69b5c,
+        type: 3}
+      propertyPath: m_Size.x
+      value: 1.539906
+      objectReference: {fileID: 0}
     - target: {fileID: 4498297852570939312, guid: 53fc56f3c2466064e9afc8eb06b69b5c,
         type: 3}
       propertyPath: m_LocalScale.y

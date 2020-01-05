@@ -8,37 +8,20 @@ public class HubManagerScript : MonoBehaviour
 {
     public static HubManagerScript Instance { get; private set; }
 
-    [SerializeField] private TextMeshProUGUI BoosterOne=null;
-    [SerializeField] private TextMeshProUGUI BlockOne=null;
-    [SerializeField] private TextMeshProUGUI BoosterTwo=null;
-    [SerializeField] private TextMeshProUGUI BlockTwo=null;
+    [SerializeField] private string[] texts = new string[4];
+
+    [SerializeField] private TextMeshProUGUI boosterOne;
+    [SerializeField] private TextMeshProUGUI boosterTwo;
 
     int FirstRandomNumberForBlock;
     int FirstRandomNumberForBooster;
     int SecondRandomNumberForBlock;
     int SecondRandomNumberForBooster;
 
-    public List<string> BlockType = new List<string>
-        {
-            { "Single" },
-            { "Di Ver" },
-            { "Tri Ver" },
-            { "Di Hor" },
-            { "Cube" },
-            { "Tri Hor" },
+    public ChoiseBlockClass ChoiseBlockLeft = null;
+    public ChoiseBlockClass ChoiseBlockRight = null;
 
-            { "SingleV" },
-            { "CubeV" },
-            { "ImmovableV" },
-            { "IM_CubeV" },
-
-            { "Immovable" },
-            { "IM_Di Ver" },
-            { "IM_Tri Ver" },
-            { "IM_Di Hor" },
-            { "IM_Cube" },
-            { "IM_Tri Hor" }
-        };
+    public List<string> BlockType;
 
     public List<string> BoosterType = new List<string>
         {
@@ -60,7 +43,16 @@ public class HubManagerScript : MonoBehaviour
            {"PH_anti-immovables" }
         };
 
-    
+    public void HubSetup(ChoiseBlockClass choiseBlock) {
+        if (ChoiseBlockLeft == null) {
+            ChoiseBlockLeft = choiseBlock;
+        }
+        else if (ChoiseBlockRight == null) {
+            ChoiseBlockRight = choiseBlock;
+            RandomizerInit();
+        }
+        
+    }
 
     private void Awake()
     {
@@ -75,21 +67,88 @@ public class HubManagerScript : MonoBehaviour
             Destroy(gameObject);
         }
         #endregion
-        Debug.Log(SaveNode.FirstRunCompleted);
-        SaveNode.PopulateLists();
 
+        SaveNode.PopulateLists();
+        BlockType = new List<string>
+        {
+            { "Single" },
+            { "Di Ver" },
+            { "Tri Ver" },
+            { "Di Hor" },
+            { "Cube" },
+            { "Tri Hor" },
+
+            { "SingleV" },
+            { "CubeV" },
+            { "ImmovableV" },
+            { "IM_CubeV" },
+
+            { "Immovable" },
+            { "IM_Di Ver" },
+            { "IM_Tri Ver" },
+            { "IM_Di Hor" },
+            { "IM_Cube" },
+            { "IM_Tri Hor" }
+        };
+    }
+
+    private void RandomizerInit() {
         FirstRandomNumberForBlock = Mathf.FloorToInt(Random.Range(0, BlockType.Count));
-        BlockOne.text = BlockType[FirstRandomNumberForBlock];
+        texts[0] = BlockType[FirstRandomNumberForBlock];
 
         FirstRandomNumberForBooster = Mathf.FloorToInt(Random.Range(0, BoosterType.Count));
-        BoosterOne.text = BoosterType[FirstRandomNumberForBooster];
+        texts[1] = BoosterType[FirstRandomNumberForBooster];
 
         SecondRandomNumberForBlock = Mathf.FloorToInt(Random.Range(0, BlockType.Count));
-        BlockTwo.text = BlockType[SecondRandomNumberForBlock];
+        texts[2] = BlockType[SecondRandomNumberForBlock];
 
         SecondRandomNumberForBooster = Mathf.FloorToInt(Random.Range(0, BoosterType.Count));
-        BoosterTwo.text = BoosterType[SecondRandomNumberForBooster];
+        texts[3] = BoosterType[SecondRandomNumberForBooster];
+
+        for (int i = 0; i < texts.Length; i++) {
+            Instantiator(ref ChoiseBlockLeft, texts[i], i);
+        }
+        
     }
+
+    private void Instantiator(ref ChoiseBlockClass item, string itemName, int isBlock) {
+        if (isBlock % 2 == 0)
+        {
+            Block FakeBlock = Instantiate(
+                Game.Instance.prefabs[itemName],
+                new Vector3(-2, 6.5f, 0f),
+                Quaternion.identity
+                ).GetComponent<Block>();
+            item.SetBlock(FakeBlock);
+            FakeBlock.SelfDestroy();
+        }
+        else {
+            if (itemName.Contains("PH_"))
+            {
+                if (isBlock == 1)
+                {
+                    boosterOne.text = itemName;
+                }
+                if (isBlock == 3)
+                {
+                    boosterTwo.text = itemName;
+                }
+            }
+            else {
+                BoosterObject FakeBooster = Instantiate(
+                Game.Instance.prefabs[itemName],
+                new Vector3(2, 8.5f, 0f),
+                Quaternion.identity
+                ).GetComponent<BoosterObject>();
+                item.SetBooster(FakeBooster);
+                FakeBooster.SelfDestroy();
+            }
+            
+        }
+        
+    }
+
+
 
 
 
@@ -97,19 +156,19 @@ public class HubManagerScript : MonoBehaviour
     {
         if (cell.XPos == 0)
         {
-            SaveNode.PlayerBlockChoise = BlockOne.text;
-            SaveNode.PlayerBoosterChoise = BoosterOne.text;
-            SaveNode.BlockType.Remove(SaveNode.BlockType[FirstRandomNumberForBlock]);
-            SaveNode.BoosterType.Remove(SaveNode.BlockType[FirstRandomNumberForBooster]);
+            SaveNode.PlayerBlockChoise = texts[0];
+            SaveNode.PlayerBoosterChoise = texts[1];
+            SaveNode.SavedBlockType.Remove(SaveNode.SavedBlockType[FirstRandomNumberForBlock]);
+            SaveNode.SavedBlockType.Remove(SaveNode.SavedBlockType[FirstRandomNumberForBooster]);
             SceneManager.LoadScene(2);
 
         }
         else if (cell.XPos == 4)
         {
-            SaveNode.PlayerBlockChoise = BlockTwo.text;
-            SaveNode.PlayerBoosterChoise = BoosterTwo.text;
-            SaveNode.BlockType.Remove(SaveNode.BlockType[SecondRandomNumberForBlock]);
-            SaveNode.BoosterType.Remove(SaveNode.BlockType[SecondRandomNumberForBooster]);
+            SaveNode.PlayerBlockChoise = texts[2];
+            SaveNode.PlayerBoosterChoise = texts[3];
+            SaveNode.SavedBlockType.Remove(SaveNode.SavedBlockType[SecondRandomNumberForBlock]);
+            SaveNode.SavedBlockType.Remove(SaveNode.SavedBlockType[SecondRandomNumberForBooster]);
             SceneManager.LoadScene(2);
         }
         else { Debug.Log("choise selection bug"); }

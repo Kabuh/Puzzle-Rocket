@@ -62,8 +62,8 @@ public class LevelManager : MonoBehaviour
 
     private int[] groupToBoost = new int[] {0, 2, 1, 1, 1, 2, 2, 2};
 
-    [SerializeField] private int lineCounter = 0;
-    [SerializeField] private int strategyStep = 100;
+    //[SerializeField] private int lineCounter = 0;
+    //[SerializeField] private int strategyStep = 100;
 
     private float currentGoalSpawnChance;
     private float currentGoalSpawnChanceBoosters;
@@ -205,17 +205,27 @@ public class LevelManager : MonoBehaviour
     List<LevelDataItem> levelDataItems = new List<LevelDataItem>();
 
     public LevelData CreateNewLevel() {
-        CreatorGrid = new GridClass(Game.Instance.CombinedGrid.width, Game.Instance.CombinedGrid.halfHeight, Game.Instance.CombinedGrid.step, "CreatorGrid");
+        CreatorGrid = new GridClass(Game.Instance.CombinedGrid.width, Game.Instance.CombinedGrid.height, Game.Instance.CombinedGrid.step, "CreatorGrid");
 
         ClearGrid(CreatorGrid);
-        RandomLevelCreator();
+        if (Game.Instance.isHub)
+        {
+            HubLevelCreator();
+        }
+        else {
+            RandomLevelCreator();
+        }
 
         LevelData levelData = new LevelData();
         levelData.items = levelDataItems.ToArray();
 
         levelDataItems.Clear();
-
         return levelData;
+    }
+
+    public void HubLevelCreator() {
+        levelDataItems.Add(new LevelDataItem("ChoiseBlock", 0, CreatorGrid.halfHeight - 3, "UI"));
+        levelDataItems.Add(new LevelDataItem("ChoiseBlock", CreatorGrid.width - 2, CreatorGrid.halfHeight - 3, "UI"));
     }
 
 
@@ -391,7 +401,14 @@ public class LevelManager : MonoBehaviour
                         int newY = y + k;
                         if (newY < CreatorGrid.height)
                         {
-                            CreatorGrid.cells[x + l, y + k].IsEmpty = false;
+                            try
+                            {
+                                CreatorGrid.cells[x + l, y + k].IsEmpty = false;
+                            }
+                            catch {
+                                Debug.Log("Cells: " + (x + l) +","+ (y + k) + "doesn't exist");
+                            }
+                            
                         }
                     }
                 }
@@ -507,7 +524,7 @@ public class LevelManager : MonoBehaviour
     }
 
     void GameReset() {
-        lineCounter = 0;
+        //lineCounter = 0;
 
         actualChanceToSpawnAnything = -1;
         actualChanceToMakeCubeImmovable = -1;
