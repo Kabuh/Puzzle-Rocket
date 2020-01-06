@@ -9,7 +9,8 @@ public class Game : MonoBehaviour
     public GameObject[] blockPrefabs;
 
     public CameraS cameraScript;
-    public Player Player { get; set; }    
+    public Player Player { get; set; }
+    public Vector2 playerSpawnCellCoordinates;
 
     public GridClass CombinedGrid;
 
@@ -105,7 +106,10 @@ public class Game : MonoBehaviour
 
     private void SpawnPlayer()
     {
-        Player p = Instantiate(prefabs["Player"], new Vector3(0f,-0.5f), Quaternion.identity).GetComponent<Player>();
+        float xPos = CombinedGrid.origin.x + playerSpawnCellCoordinates.x * CombinedGrid.step;
+        float yPos = CombinedGrid.origin.y + playerSpawnCellCoordinates.y * CombinedGrid.step;
+
+        Player p = Instantiate(prefabs["Player"], new Vector3(xPos,yPos), Quaternion.identity).GetComponent<Player>();
         Player = p;
     }
 

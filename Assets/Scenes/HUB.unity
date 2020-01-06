@@ -1972,6 +1972,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   defaultSpeed: 0
   speed: 0
+  cameraStartCellIndex: 4
 --- !u!1 &524016512
 GameObject:
   m_ObjectHideFlags: 0
@@ -4026,6 +4027,7 @@ MonoBehaviour:
   - {fileID: 8968125062405562264, guid: 8183b4566e6c3f94a89b421ccf420e89, type: 3}
   - {fileID: 2350965212857198071, guid: ebe8e24a0e68d964c81388b514906af0, type: 3}
   cameraScript: {fileID: 519420033}
+  playerSpawnCellCoordinates: {x: 2, y: 3}
   isDesigner: 0
   isTestMode: 0
   isHub: 1
