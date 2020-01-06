@@ -5,8 +5,10 @@ using UnityEngine;
 public class ChoiseBlockClass : MonoBehaviour
 {
 
-    [SerializeField] private GameObject blockSprite;
-    [SerializeField] private GameObject boosterSprite;
+    [SerializeField] private GameObject blockSprite = null;
+    [SerializeField] private GameObject boosterSprite = null;
+    public bool isRight = false;
+    public bool isLeft = false;
 
     private Sprite BlockSprite
     {
@@ -31,6 +33,12 @@ public class ChoiseBlockClass : MonoBehaviour
         }
     }
 
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        Debug.Log("boop");
+        HubManagerScript.Instance.Cast(isLeft, isRight);
+    }
+
 
     private void Awake()
     {
@@ -43,6 +51,14 @@ public class ChoiseBlockClass : MonoBehaviour
     }
     public void SetBooster(BoosterObject booster)
     {
+
         BoosterSprite = booster.artChild.GetComponent<SpriteRenderer>().sprite;
+        if (booster.boosterType == BoosterType.TimeStop) {
+            boosterSprite.transform.localScale = new Vector2(0.5f, 0.5f);
+        }
+    }
+
+    public void SelfDestroy() {
+        Destroy(this.gameObject);
     }
 }

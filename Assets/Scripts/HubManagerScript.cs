@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
-using UnityEngine.SceneManagement;
 
 public class HubManagerScript : MonoBehaviour
 {
@@ -10,8 +9,10 @@ public class HubManagerScript : MonoBehaviour
 
     [SerializeField] private string[] texts = new string[4];
 
-    [SerializeField] private TextMeshProUGUI boosterOne;
-    [SerializeField] private TextMeshProUGUI boosterTwo;
+    [SerializeField] private TextMeshProUGUI boosterOne = null;
+    [SerializeField] private TextMeshProUGUI boosterTwo = null;
+
+    public GameObject levelExit = null;
 
     int FirstRandomNumberForBlock;
     int FirstRandomNumberForBooster;
@@ -23,32 +24,16 @@ public class HubManagerScript : MonoBehaviour
 
     public List<string> BlockType;
 
-    public List<string> BoosterType = new List<string>
-        {
-           {"shot_booster"},
-           {"laser_V_booster"},
-           {"laser_H_booster"},
-           {"bomb_booster"},
-           {"bigbomb_booster"},
-           {"teleport_booster"},
-           {"time_stop_booster"},
-           {"PH_Slot" },
-           {"PH_Slot2" },
-           {"PH_Slot3" },
-           {"PH_Slot4" },
-           {"PH_Shrink" },
-           {"PH_Move-enabler" },
-           {"PH_Slow" },
-           {"PH_Breaker" },
-           {"PH_anti-immovables" }
-        };
+    public List<string> BoosterType;
 
     public void HubSetup(ChoiseBlockClass choiseBlock) {
         if (ChoiseBlockLeft == null) {
             ChoiseBlockLeft = choiseBlock;
+            choiseBlock.isLeft = true;
         }
         else if (ChoiseBlockRight == null) {
             ChoiseBlockRight = choiseBlock;
+            choiseBlock.isRight = true;
             RandomizerInit();
         }
         
@@ -90,14 +75,36 @@ public class HubManagerScript : MonoBehaviour
             { "IM_Cube" },
             { "IM_Tri Hor" }
         };
+
+        BoosterType = new List<string>
+        {
+           {"shot_booster"},
+           {"laser_V_booster"},
+           {"laser_H_booster"},
+           {"bomb_booster"},
+           {"bigbomb_booster"},
+           {"teleport_booster"},
+           {"time_stop_booster"},
+           {"PH_Slot" },
+           {"PH_Slot2" },
+           {"PH_Slot3" },
+           {"PH_Slot4" },
+           {"PH_Shrink" },
+           {"PH_Move-enabler" },
+           {"PH_Slow" },
+           {"PH_Breaker" },
+           {"PH_anti-immovables" }
+        };
     }
 
     private void RandomizerInit() {
         FirstRandomNumberForBlock = Mathf.FloorToInt(Random.Range(0, BlockType.Count));
         texts[0] = BlockType[FirstRandomNumberForBlock];
+        BlockType.Remove(BlockType[FirstRandomNumberForBlock]);
 
         FirstRandomNumberForBooster = Mathf.FloorToInt(Random.Range(0, BoosterType.Count));
         texts[1] = BoosterType[FirstRandomNumberForBooster];
+        BoosterType.Remove(BoosterType[FirstRandomNumberForBlock]);
 
         SecondRandomNumberForBlock = Mathf.FloorToInt(Random.Range(0, BlockType.Count));
         texts[2] = BlockType[SecondRandomNumberForBlock];
@@ -112,10 +119,8 @@ public class HubManagerScript : MonoBehaviour
             }
             else {
                 Instantiator(ref ChoiseBlockRight, texts[i], i);
-            }
-            
-        }
-        
+            }   
+        }   
     }
 
     private void Instantiator(ref ChoiseBlockClass item, string itemName, int isBlock) {
@@ -149,34 +154,31 @@ public class HubManagerScript : MonoBehaviour
                 ).GetComponent<BoosterObject>();
                 item.SetBooster(FakeBooster);
                 FakeBooster.SelfDestroy();
-            }
-            
-        }
-        
+            }         
+        }   
     }
 
-
-
-
-
-    public void Cast(Cell cell)
+    public void Cast(bool isLeft, bool isRight)
     {
-        if (cell.XPos == 0)
+        if (isLeft)
         {
             SaveNode.PlayerBlockChoise = texts[0];
             SaveNode.PlayerBoosterChoise = texts[1];
             SaveNode.SavedBlockType.Remove(SaveNode.SavedBlockType[FirstRandomNumberForBlock]);
             SaveNode.SavedBlockType.Remove(SaveNode.SavedBlockType[FirstRandomNumberForBooster]);
-            SceneManager.LoadScene(2);
-
+            ChoiseBlockRight.SelfDestroy();
+            boosterTwo.text = "";
+            levelExit.SetActive(true);
         }
-        else if (cell.XPos == 4)
+        else if (isRight)
         {
             SaveNode.PlayerBlockChoise = texts[2];
             SaveNode.PlayerBoosterChoise = texts[3];
             SaveNode.SavedBlockType.Remove(SaveNode.SavedBlockType[SecondRandomNumberForBlock]);
             SaveNode.SavedBlockType.Remove(SaveNode.SavedBlockType[SecondRandomNumberForBooster]);
-            SceneManager.LoadScene(2);
+            ChoiseBlockLeft.SelfDestroy();
+            boosterTwo.text = "";
+            levelExit.SetActive(true);
         }
         else { Debug.Log("choise selection bug"); }
     }
