@@ -1760,6 +1760,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dff7b0ad15f474147b54e323be1be1fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mouseControls: {fileID: 611112655}
   slotsCount: 4
   slotCosts: 0000000019000000320000004b000000
   slotTexts:
