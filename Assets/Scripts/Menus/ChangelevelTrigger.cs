@@ -1,14 +1,16 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using UnityEngine.SceneManagement;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
-public class ChangelevelTrigger : Booster
+public class ChangelevelTrigger : MonoBehaviour
 {
-    public override string BoosterName => "ChangeLevel";
-    public override int MaxInInventory => 0;
+    private void Awake()
+    {
+        HubManagerScript.Instance.levelExit = this.gameObject;
 
-    public override void Activate(Cell cell)
+        this.gameObject.SetActive(false);
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
     {
         SceneManager.LoadScene(2);
     }

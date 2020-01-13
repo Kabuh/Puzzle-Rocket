@@ -43,7 +43,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4a9fbc845f3b74346bbace400de4ba0a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isLower: 0
+  myBlock: {fileID: 0}
 --- !u!1 &5478422294893524255
 GameObject:
   m_ObjectHideFlags: 0
@@ -100,6 +100,7 @@ SpriteRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -202,3 +203,4 @@ MonoBehaviour:
   lElements: []
   rElements: []
   dElements: []
+  artChild: {fileID: 5478422294893524255}

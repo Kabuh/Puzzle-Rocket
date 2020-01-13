@@ -7,6 +7,5 @@
     Shot,
     TimeStop,
     Teleport,
-    GoLeft,
-    GoRight
+    GoUP
 }

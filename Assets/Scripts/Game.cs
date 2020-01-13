@@ -18,7 +18,7 @@ public class Game : MonoBehaviour
     public bool isTestMode;
     public bool isHub;
 
-    private Dictionary<string, GameObject> prefabs = new Dictionary<string, GameObject>();    
+    public Dictionary<string, GameObject> prefabs = new Dictionary<string, GameObject>();    
 
     private Designer designer;
 
@@ -48,7 +48,14 @@ public class Game : MonoBehaviour
         }
         #endregion        
 
-        CombinedGrid = new GridClass(5, 100, 1, "GameGrid");
+        if (isHub)
+        {
+            CombinedGrid = new GridClass(5, 16, 1, "GameGrid");
+        }
+        else {
+            CombinedGrid = new GridClass(5, 100, 1, "GameGrid");
+        }
+        
 
         PopulatePrefabs();
         
@@ -94,7 +101,7 @@ public class Game : MonoBehaviour
     {
         SpawnPlayer();
         SpawnFirstLevel();
-        SpawnSecondLevel();
+        //SpawnSecondLevel();
     }
 
     private void SpawnPlayer()
@@ -112,6 +119,8 @@ public class Game : MonoBehaviour
             SpawnLevel(0f, LevelManager.Instance.CreateNewLevel());
             PreparePlayerStart();
         }
+
+        
         
         count++;        
     }
@@ -214,18 +223,14 @@ public class Game : MonoBehaviour
         SpawnLevel(0f, LevelManager.Instance.premadeLevels["1premade"]);
     }
 
-    private void SpawnHub()
-    {
-        SpawnLevel(0f, LevelManager.Instance.premadeLevels["Hub"]);
-    }
-
     private void HubSetup()
     {
         cameraScript.enabled = false;
         //Player.GetComponent<Block>().elements[0].SetCell();
+        SpawnLevel(0f, LevelManager.Instance.premadeLevels["Hub"]);
+        SpawnLevel(0f, LevelManager.Instance.CreateNewLevel());
         SpawnPlayer();
         PreparePlayerStart();
-        SpawnHub();
     }
 
     private void TestGameSetup()

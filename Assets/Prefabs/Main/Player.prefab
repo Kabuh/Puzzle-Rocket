@@ -86,6 +86,7 @@ MonoBehaviour:
   - {fileID: 8023342222629558523}
   dElements:
   - {fileID: 8023342222629558523}
+  artChild: {fileID: 9002154684071436571}
 --- !u!114 &2595943335178814013
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -19,6 +19,9 @@ public class Block : MonoBehaviour, ISpawnable
     public bool IsPlayer { get; set; }
     private bool isMoving;
 
+    public GameObject artChild;
+    private Sprite sprite;
+
     private Axis currentAxis;
     private float maxYposition;
     private float minYposition;
@@ -42,6 +45,8 @@ public class Block : MonoBehaviour, ISpawnable
         Game.AllDestruction += SelfDestroy;
         Game.LowerDestruction += DestroyIfLower;
         Game.CellLevelShift += ChangeCellsLevel;
+
+        sprite = artChild.GetComponent<SpriteRenderer>().sprite;
     }
 
     private void Start()

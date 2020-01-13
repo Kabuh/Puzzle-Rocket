@@ -953,11 +953,15 @@ MonoBehaviour:
   defChancesToSpawnDifferentType:
   - 45
   - 15
-  - 4
-  - 6
-  - 1
-  - 2
+  - 10
+  - 15
+  - 5
+  - 10
+  - 45
+  - 5
   actualChancesToSpawnDifferentType:
+  - 0
+  - 0
   - 0
   - 0
   - 0
