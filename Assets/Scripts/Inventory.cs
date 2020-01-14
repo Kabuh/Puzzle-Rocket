@@ -6,6 +6,8 @@ public class Inventory : MonoBehaviour
 {
     public static Inventory Instance { get; private set; }
 
+    [SerializeField] private MouseControls mouseControls = default;
+
     [SerializeField] private int slotsCount = 4;
 
     [SerializeField] private int[] slotCosts = null;
@@ -23,6 +25,8 @@ public class Inventory : MonoBehaviour
 
     private int coinsCount;
     private int buttonCounter;
+
+    private bool isUseOfBoosterAllowed = true;    
 
     private void Awake()
     {
@@ -51,7 +55,10 @@ public class Inventory : MonoBehaviour
         nextSlotToUnlock = slots[buttonCounter];
         nextButtonToUnlock = buttons[buttonCounter];
         // FIRST SLOT IS UNLOCKED FROM THE START
-        slots[0].isUnlocked = true;        
+        slots[0].isUnlocked = true;
+
+        mouseControls.BeginBlockMove += DisallowBoosterUse;
+        mouseControls.EndBlockMove += AllowBoosterUse;
     }
 
     //// TEMP!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -202,6 +209,11 @@ public class Inventory : MonoBehaviour
 
     public void UseBooster(int slotIndex)
     {
+        if(!isUseOfBoosterAllowed)
+        {
+            return;
+        }
+
         Slot slot = slots[slotIndex];
 
         if (slot.isUnlocked)
@@ -247,5 +259,15 @@ public class Inventory : MonoBehaviour
         slot.boosterType = null;
         // + visual changes or fire event listened by ui
         slot.UpdateSlotText();
+    }
+
+    private void AllowBoosterUse()
+    {
+        isUseOfBoosterAllowed = true;
+    }
+
+    private void DisallowBoosterUse()
+    {
+        isUseOfBoosterAllowed = false;
     }
 }

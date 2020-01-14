@@ -1,9 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class MouseControls : MonoBehaviour
 {
+    public event Action BeginBlockMove = delegate { };
+    public event Action EndBlockMove = delegate { };
+
     public float minSwipeDistance;
 
     public GameObject canvas;
@@ -94,6 +98,7 @@ public class MouseControls : MonoBehaviour
                     block.CalculateMovementConstraints();
                     isBlockReadyToBeMoved = true;
                     blockShouldStay = false;
+                    BeginBlockMove();
                 }
                 else
                 {
@@ -116,6 +121,7 @@ public class MouseControls : MonoBehaviour
             // loose block
             block = null;
             isBlockReadyToBeMoved = false;
+            EndBlockMove();
         }        
     }
 
