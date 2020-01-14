@@ -6,8 +6,6 @@ using System.IO;
 
 public class LevelManager : MonoBehaviour
 {
-    [SerializeField]
-
     public Dictionary<string, LevelData> premadeLevels { get; private set; }
 
     public static LevelManager Instance { get; private set; }

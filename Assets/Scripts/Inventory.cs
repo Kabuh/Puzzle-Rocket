@@ -191,7 +191,7 @@ public class Inventory : MonoBehaviour
             FillSlot(emptySlot, booster);
             artNotch[emptySlot.index].sprite = sprite;
             Color fillerColor = artNotch[emptySlot.index].color;
-            fillerColor.a = 255;
+            fillerColor.a = 1;
             artNotch[emptySlot.index].color = fillerColor;
         }
         else
@@ -217,7 +217,7 @@ public class Inventory : MonoBehaviour
                     artNotch[slot.index].sprite = null;
                     Debug.Log("slot to add opaque - " + slot.index);
                     Color fillerColor = artNotch[slot.index].color;
-                    fillerColor.a = 100;
+                    fillerColor.a = 0.2f;
                     artNotch[slot.index].color = fillerColor;
                 }
             }

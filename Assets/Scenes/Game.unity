@@ -980,8 +980,6 @@ MonoBehaviour:
   - 5
   - 5
   - 50
-  lineCounter: 0
-  strategyStep: 80
 --- !u!4 &211944909
 Transform:
   m_ObjectHideFlags: 0
@@ -3935,6 +3933,10 @@ MonoBehaviour:
   - {fileID: 2153704125429311920, guid: dc9db8c6abe87674e8d28ee0f79144b7, type: 3}
   - {fileID: 5927111740627587383, guid: b47522465856265498ecd0b1e95357c8, type: 3}
   - {fileID: 7821493591131146893, guid: 0b0c5f2bbe49dd147b6a07ad8712f603, type: 3}
+  - {fileID: 1670667095749121695, guid: aecbbfa5a5764a842b0ffb63f63f66c3, type: 3}
+  - {fileID: 7199676378480999837, guid: ec72e3f31e5487a4485521ead1ecdeda, type: 3}
+  - {fileID: 6898889221447730336, guid: d0b877d863b2e1c4bab98df8b0aa5a7b, type: 3}
+  - {fileID: 656042361494447174, guid: 2ce92ad611eae3045ae138820458d19d, type: 3}
   cameraScript: {fileID: 519420033}
   playerSpawnCellCoordinates: {x: 2, y: 3}
   isDesigner: 0

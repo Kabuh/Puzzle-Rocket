@@ -13,11 +13,11 @@ public class Shot : Booster
     public override void Activate(Cell cell)
     {
         playerBlock = Game.Instance.Player.playerBlock;
-        GetTargetBlock(ref targetBlock, cell);
+        GetTargetBlock(cell);
         Explode(cell);
     }
 
-    void GetTargetBlock(ref Block target, Cell myCell) {
+    void GetTargetBlock(Cell myCell) {
         Block newTarget = null;
         for (int y = myCell.YPos+1; y < myCell.GridClass.height; y++) {
             if (!myCell.GridClass.cells[myCell.XPos, y].IsEmpty) {
@@ -27,9 +27,10 @@ public class Shot : Booster
                 }
             }
         }
+
         if (newTarget != null)
         {
-            target = newTarget;
+            targetBlock = newTarget;
         }
     }
 

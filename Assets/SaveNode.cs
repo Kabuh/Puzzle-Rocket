@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SaveNode : ScriptableObject
+public class SaveNode
 {
     public static bool FirstRunCompleted = false;
 

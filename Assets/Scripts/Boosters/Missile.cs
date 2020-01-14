@@ -23,7 +23,7 @@ public class Missile : MonoBehaviour
 
     void Update()
     {
-        transform.position += Vector3.up * mySpeed;
+        transform.position += Vector3.up * mySpeed * Time.deltaTime;
         if (notDead) {
             if (transform.position.y >= (myTarget.y - Game.Instance.CombinedGrid.step / 2))
             {
@@ -34,8 +34,8 @@ public class Missile : MonoBehaviour
                     }
                     victim.SelfDestroy();
                 }
-                Destroy(this.gameObject);
                 notDead = false;
+                Destroy(this.gameObject);
             }
         }
         

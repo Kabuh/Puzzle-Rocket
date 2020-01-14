@@ -53,7 +53,7 @@ public class Game : MonoBehaviour
             CombinedGrid = new GridClass(5, 16, 1, "GameGrid");
         }
         else {
-            CombinedGrid = new GridClass(5, 100, 1, "GameGrid");
+            CombinedGrid = new GridClass(5, 30, 1, "GameGrid");
         }
         
 
