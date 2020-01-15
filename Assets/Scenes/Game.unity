@@ -6698,7 +6698,7 @@ MonoBehaviour:
   missile: {fileID: 7226022622378754361, guid: 13c208b526210f1448c7c9f16873540e, type: 3}
   explosionPersistance: 0.4
   laserPersistance: 0.15
-  missileSpeed: 0.25
+  missileSpeed: 12.5
   mask: {fileID: 1947714650}
   timeStopSprite: {fileID: 1171481676}
   maskSize: 200
