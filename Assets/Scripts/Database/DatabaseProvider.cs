@@ -1,17 +1,17 @@
 ﻿using UnityEngine;
 
-public static class Database
+public static class DatabaseProvider
 {
-    private static DatabaseAsset databaseAsset;
+    private static Database databaseAsset;
 
     // lazy initialization
-    public static DatabaseAsset Asset
+    public static Database Asset
     {
         get
         {
             if(databaseAsset==null)
             {
-                databaseAsset = Resources.Load<DatabaseAsset>("Database");
+                databaseAsset = Resources.Load<Database>("Database");
             }            
             return databaseAsset;
         }
