@@ -8,14 +8,16 @@ public class BlockType
     public int width;
     public float SpawnChance;
     public bool isVertical;
+    public bool isImmovable;
     public GameObject blockObject;
 
-    public BlockType(string n, int h, int w, float sc, bool isV, GameObject bO)
+    public BlockType(string n, int h, int w, float sc, bool isIM ,bool isV, GameObject bO)
     {
         name = n;
         height = h;
         width = w;
         SpawnChance = sc;
+        isImmovable = isIM;
         isVertical = isV;
         blockObject = bO;
     }
