@@ -163,7 +163,7 @@ public class Inventory : MonoBehaviour
     }
 
     //after collide booster handler
-    public void TryAddBooster(Booster booster, Cell boosterCell, Sprite sprite)
+    public void TryAddBooster(BoosterType booster, Cell boosterCell, Sprite sprite)
     {
         Slot emptySlot = null;
 
@@ -193,7 +193,7 @@ public class Inventory : MonoBehaviour
         }
 
 
-        if (emptySlot != null && booster.MaxInInventory > 0)
+        if (emptySlot != null && booster.maxInInventory > 0)
         {
             FillSlot(emptySlot, booster);
             artNotch[emptySlot.index].sprite = sprite;
@@ -236,13 +236,13 @@ public class Inventory : MonoBehaviour
         }
     }    
 
-    private void FillSlot(Slot slot, IBooster booster)
+    private void FillSlot(Slot slot, BoosterType booster)
     {
 
 
         slot.boosterType = booster;
         slot.boostersCount++;
-        slot.maxBoosters = booster.MaxInInventory;
+        slot.maxBoosters = booster.maxInInventory;
 
         slot.UpdateSlotText();
     }

@@ -5,7 +5,7 @@ public class Slot
 {
     public int index;
     public bool isUnlocked;
-    public IBooster boosterType;
+    public BoosterType boosterType;
     public int boostersCount;
     public int maxBoosters;
     public Text slotText; // TEMPORARILY BEFORE ACTUAL UI PREFAB

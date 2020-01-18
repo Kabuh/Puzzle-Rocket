@@ -70,8 +70,9 @@ PrefabInstance:
     - target: {fileID: 1585680118513997222, guid: 53fc56f3c2466064e9afc8eb06b69b5c,
         type: 3}
       propertyPath: boosterType
-      value: 5
-      objectReference: {fileID: 0}
+      value: 
+      objectReference: {fileID: 11400000, guid: 8f56e506c1c9d8a42be7d210777b186a,
+        type: 2}
     - target: {fileID: 7284411506365973117, guid: 53fc56f3c2466064e9afc8eb06b69b5c,
         type: 3}
       propertyPath: m_Sprite
