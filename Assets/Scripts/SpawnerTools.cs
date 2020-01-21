@@ -14,6 +14,7 @@ public static class SpawnerTools
                 return ++i;
             }
         }
+        Debug.Log(BlockType.All.Count);
         Debug.LogError("Chance float array has false data");
         return 0;
     }
@@ -26,6 +27,14 @@ public static class SpawnerTools
             Sum += array[i];
         }
         return Sum;
+    }
+
+    public static void CopyArray(float[] arrayDonor, float[] arrayRecepient)
+    {
+        for (int i = 0; i < arrayDonor.Length; i++)
+        {
+            arrayRecepient[i] = arrayDonor[i];
+        }
     }
 
     public static bool BinaryRandom(float chance)

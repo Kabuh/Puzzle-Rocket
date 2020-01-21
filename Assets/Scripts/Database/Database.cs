@@ -7,7 +7,7 @@ using System;
 public class Database : ScriptableObject
 {
     [Header("Global Settings")]
-    public float immovableChanceMultiplier;
+    public static float immovableChanceMultiplier;
 
     #region Blocks Settings
 
@@ -34,6 +34,8 @@ public class Database : ScriptableObject
 
     #endregion
 
+    
+
     #region Boosters Settings
 
     [Header("Boosters Settings")]
@@ -51,4 +53,23 @@ public class Database : ScriptableObject
     public BoosterTypes ImmovalbeDestroyer;
 
     #endregion
+
+    private void Awake()
+    {
+        IM_SingleH.ParentBlockType = SingleH;
+        IM_SingleV.ParentBlockType = SingleH;
+
+        IM_PairH.ParentBlockType = PairH;
+        IM_PairV.ParentBlockType = PairV;
+
+        IM_TripleH.ParentBlockType = TripleH;
+        IM_TripleV.ParentBlockType = TripleV;
+
+        IM_CubeH.ParentBlockType = CubeH;
+        IM_CubeV.ParentBlockType = CubeV;
+    }
+
+    public static void PopulateLevelManagerData() {
+        Debug.Log(BlockType.All.Count);
+    }
 }

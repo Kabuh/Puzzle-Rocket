@@ -12,3 +12,191 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8d9272148d4299c4ebd7ee3a5db3dd68, type: 3}
   m_Name: Database
   m_EditorClassIdentifier: 
+  SingleH:
+    Name: SingleH
+    Height: 1
+    Width: 1
+    SpawnChance: 0
+    IsVertical: 0
+    IsImmovable: 0
+    BlockObject: {fileID: 0}
+  SingleV:
+    Name: SingleV
+    Height: 1
+    Width: 1
+    SpawnChance: 0
+    IsVertical: 1
+    IsImmovable: 0
+    BlockObject: {fileID: 0}
+  IM_SingleH:
+    Name: IMSingleH
+    Height: 1
+    Width: 1
+    SpawnChance: 0
+    IsVertical: 0
+    IsImmovable: 1
+    BlockObject: {fileID: 0}
+  IM_SingleV:
+    Name: IMSingleV
+    Height: 1
+    Width: 1
+    SpawnChance: 0
+    IsVertical: 1
+    IsImmovable: 1
+    BlockObject: {fileID: 0}
+  PairH:
+    Name: PairH
+    Height: 1
+    Width: 2
+    SpawnChance: 0
+    IsVertical: 0
+    IsImmovable: 0
+    BlockObject: {fileID: 0}
+  PairV:
+    Name: PairV
+    Height: 2
+    Width: 1
+    SpawnChance: 0
+    IsVertical: 1
+    IsImmovable: 0
+    BlockObject: {fileID: 0}
+  IM_PairH:
+    Name: IMPairH
+    Height: 1
+    Width: 2
+    SpawnChance: 0
+    IsVertical: 0
+    IsImmovable: 1
+    BlockObject: {fileID: 0}
+  IM_PairV:
+    Name: IMPairV
+    Height: 2
+    Width: 1
+    SpawnChance: 0
+    IsVertical: 1
+    IsImmovable: 1
+    BlockObject: {fileID: 0}
+  TripleH:
+    Name: TripleH
+    Height: 1
+    Width: 3
+    SpawnChance: 0
+    IsVertical: 0
+    IsImmovable: 0
+    BlockObject: {fileID: 0}
+  TripleV:
+    Name: TripleV
+    Height: 3
+    Width: 1
+    SpawnChance: 0
+    IsVertical: 1
+    IsImmovable: 0
+    BlockObject: {fileID: 0}
+  IM_TripleH:
+    Name: IMTripleH
+    Height: 1
+    Width: 3
+    SpawnChance: 0
+    IsVertical: 0
+    IsImmovable: 1
+    BlockObject: {fileID: 0}
+  IM_TripleV:
+    Name: IMTripleV
+    Height: 3
+    Width: 1
+    SpawnChance: 0
+    IsVertical: 1
+    IsImmovable: 1
+    BlockObject: {fileID: 0}
+  CubeH:
+    Name: CubeH
+    Height: 2
+    Width: 2
+    SpawnChance: 0
+    IsVertical: 0
+    IsImmovable: 0
+    BlockObject: {fileID: 0}
+  CubeV:
+    Name: CubeV
+    Height: 2
+    Width: 2
+    SpawnChance: 0
+    IsVertical: 1
+    IsImmovable: 0
+    BlockObject: {fileID: 0}
+  IM_CubeH:
+    Name: IMCubeH
+    Height: 2
+    Width: 2
+    SpawnChance: 0
+    IsVertical: 0
+    IsImmovable: 1
+    BlockObject: {fileID: 0}
+  IM_CubeV:
+    Name: IMCubeV
+    Height: 2
+    Width: 2
+    SpawnChance: 0
+    IsVertical: 1
+    IsImmovable: 1
+    BlockObject: {fileID: 0}
+  Bomb:
+    name: 
+    SpawnChance: 0
+    blockObject: {fileID: 0}
+    maxInInventory: 0
+  BigBomb:
+    name: 
+    SpawnChance: 0
+    blockObject: {fileID: 0}
+    maxInInventory: 0
+  LaserH:
+    name: 
+    SpawnChance: 0
+    blockObject: {fileID: 0}
+    maxInInventory: 0
+  LaserV:
+    name: 
+    SpawnChance: 0
+    blockObject: {fileID: 0}
+    maxInInventory: 0
+  TimeSlow:
+    name: 
+    SpawnChance: 0
+    blockObject: {fileID: 0}
+    maxInInventory: 0
+  TimeStop:
+    name: 
+    SpawnChance: 0
+    blockObject: {fileID: 0}
+    maxInInventory: 0
+  Missile:
+    name: 
+    SpawnChance: 0
+    blockObject: {fileID: 0}
+    maxInInventory: 0
+  Shrink:
+    name: 
+    SpawnChance: 0
+    blockObject: {fileID: 0}
+    maxInInventory: 0
+  Breaker:
+    name: 
+    SpawnChance: 0
+    blockObject: {fileID: 0}
+    maxInInventory: 0
+  Teleport:
+    name: 
+    SpawnChance: 0
+    blockObject: {fileID: 0}
+    maxInInventory: 0
+  ImmovableSwitch:
+    name: 
+    SpawnChance: 0
+    blockObject: {fileID: 0}
+    maxInInventory: 0
+  ImmovalbeDestroyer:
+    name: 
+    SpawnChance: 0
+    blockObject: {fileID: 0}
+    maxInInventory: 0
