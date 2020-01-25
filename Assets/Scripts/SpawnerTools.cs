@@ -11,11 +11,10 @@ public static class SpawnerTools
             currentSum += valueLib[i];
             if (x < currentSum)
             {
-                return ++i;
+                return i;
             }
         }
-        Debug.Log(BlockType.All.Count);
-        Debug.LogError("Chance float array has false data");
+        Debug.LogError("Chance float array has false data " + valueLib.Length + " "+ valueLib[0]);
         return 0;
     }
 

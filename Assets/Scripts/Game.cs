@@ -93,7 +93,6 @@ public class Game : MonoBehaviour
         }
         else
         {
-            Database.PopulateLevelManagerData();
             NewGameSetup();
         }
     }

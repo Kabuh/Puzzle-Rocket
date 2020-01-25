@@ -12,134 +12,152 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8d9272148d4299c4ebd7ee3a5db3dd68, type: 3}
   m_Name: Database
   m_EditorClassIdentifier: 
+  immovableChanceMultiplier: 0
+  spawnNothing: 60
   SingleH:
     Name: SingleH
     Height: 1
     Width: 1
-    SpawnChance: 0
+    SpawnChance: 5
     IsVertical: 0
     IsImmovable: 0
-    BlockObject: {fileID: 0}
+    BlockObject: {fileID: 6314424309019294015, guid: d6882802bd3b70c43a9e6e7d56fc0512,
+      type: 3}
   SingleV:
     Name: SingleV
     Height: 1
     Width: 1
-    SpawnChance: 0
+    SpawnChance: 5
     IsVertical: 1
     IsImmovable: 0
-    BlockObject: {fileID: 0}
+    BlockObject: {fileID: 1670667095749121695, guid: aecbbfa5a5764a842b0ffb63f63f66c3,
+      type: 3}
   IM_SingleH:
     Name: IMSingleH
     Height: 1
     Width: 1
-    SpawnChance: 0
+    SpawnChance: 5
     IsVertical: 0
     IsImmovable: 1
-    BlockObject: {fileID: 0}
+    BlockObject: {fileID: 1215945095555653725, guid: 6c214211fbae2bb439c59ff5f410042f,
+      type: 3}
   IM_SingleV:
     Name: IMSingleV
     Height: 1
     Width: 1
-    SpawnChance: 0
+    SpawnChance: 5
     IsVertical: 1
     IsImmovable: 1
-    BlockObject: {fileID: 0}
+    BlockObject: {fileID: 6898889221447730336, guid: d0b877d863b2e1c4bab98df8b0aa5a7b,
+      type: 3}
   PairH:
     Name: PairH
     Height: 1
     Width: 2
-    SpawnChance: 0
+    SpawnChance: 5
     IsVertical: 0
     IsImmovable: 0
-    BlockObject: {fileID: 0}
+    BlockObject: {fileID: 8765840255036826294, guid: cfaa6822767fed74790da8463456faa1,
+      type: 3}
   PairV:
     Name: PairV
     Height: 2
     Width: 1
-    SpawnChance: 0
+    SpawnChance: 5
     IsVertical: 1
     IsImmovable: 0
-    BlockObject: {fileID: 0}
+    BlockObject: {fileID: 7973694255813936090, guid: 31fd099fbbc8eeb419f237e21f60b47a,
+      type: 3}
   IM_PairH:
     Name: IMPairH
     Height: 1
     Width: 2
-    SpawnChance: 0
+    SpawnChance: 5
     IsVertical: 0
     IsImmovable: 1
-    BlockObject: {fileID: 0}
+    BlockObject: {fileID: 2033723524782330936, guid: 39e2abb86b5d08b47be77ddfdd32f7f4,
+      type: 3}
   IM_PairV:
     Name: IMPairV
     Height: 2
     Width: 1
-    SpawnChance: 0
+    SpawnChance: 5
     IsVertical: 1
     IsImmovable: 1
-    BlockObject: {fileID: 0}
+    BlockObject: {fileID: 1932861054393750281, guid: 1937e2588ce61004b935022ea0fc53b4,
+      type: 3}
   TripleH:
     Name: TripleH
     Height: 1
     Width: 3
-    SpawnChance: 0
+    SpawnChance: 5
     IsVertical: 0
     IsImmovable: 0
-    BlockObject: {fileID: 0}
+    BlockObject: {fileID: 1742760784469687624, guid: 1485239f282ff0b4588071dd72ff813c,
+      type: 3}
   TripleV:
     Name: TripleV
     Height: 3
     Width: 1
-    SpawnChance: 0
+    SpawnChance: 5
     IsVertical: 1
     IsImmovable: 0
-    BlockObject: {fileID: 0}
+    BlockObject: {fileID: 5775837817204913171, guid: 98285e5b059ed604db7f45b003ccc787,
+      type: 3}
   IM_TripleH:
     Name: IMTripleH
     Height: 1
     Width: 3
-    SpawnChance: 0
+    SpawnChance: 5
     IsVertical: 0
     IsImmovable: 1
-    BlockObject: {fileID: 0}
+    BlockObject: {fileID: 7517658477880504804, guid: 65436c6b9745d5c44835dda66933458b,
+      type: 3}
   IM_TripleV:
     Name: IMTripleV
     Height: 3
     Width: 1
-    SpawnChance: 0
+    SpawnChance: 5
     IsVertical: 1
     IsImmovable: 1
-    BlockObject: {fileID: 0}
+    BlockObject: {fileID: 8370872954291148963, guid: e7331c5218242df4db926c7a1266dd89,
+      type: 3}
   CubeH:
     Name: CubeH
     Height: 2
     Width: 2
-    SpawnChance: 0
+    SpawnChance: 5
     IsVertical: 0
     IsImmovable: 0
-    BlockObject: {fileID: 0}
+    BlockObject: {fileID: 1952688880196344829, guid: 891f245c6610e38448449511b0e11be8,
+      type: 3}
   CubeV:
     Name: CubeV
     Height: 2
     Width: 2
-    SpawnChance: 0
+    SpawnChance: 5
     IsVertical: 1
     IsImmovable: 0
-    BlockObject: {fileID: 0}
+    BlockObject: {fileID: 7199676378480999837, guid: ec72e3f31e5487a4485521ead1ecdeda,
+      type: 3}
   IM_CubeH:
     Name: IMCubeH
     Height: 2
     Width: 2
-    SpawnChance: 0
+    SpawnChance: 5
     IsVertical: 0
     IsImmovable: 1
-    BlockObject: {fileID: 0}
+    BlockObject: {fileID: 453434801688592368, guid: fa9285f016949924c8ba153679192973,
+      type: 3}
   IM_CubeV:
     Name: IMCubeV
     Height: 2
     Width: 2
-    SpawnChance: 0
+    SpawnChance: 5
     IsVertical: 1
     IsImmovable: 1
-    BlockObject: {fileID: 0}
+    BlockObject: {fileID: 656042361494447174, guid: 2ce92ad611eae3045ae138820458d19d,
+      type: 3}
   Bomb:
     name: 
     SpawnChance: 0
@@ -200,3 +218,375 @@ MonoBehaviour:
     SpawnChance: 0
     blockObject: {fileID: 0}
     maxInInventory: 0
+  All:
+  - Name: SingleH
+    Height: 1
+    Width: 1
+    SpawnChance: 5
+    IsVertical: 0
+    IsImmovable: 0
+    BlockObject: {fileID: 6314424309019294015, guid: d6882802bd3b70c43a9e6e7d56fc0512,
+      type: 3}
+  - Name: SingleV
+    Height: 1
+    Width: 1
+    SpawnChance: 5
+    IsVertical: 1
+    IsImmovable: 0
+    BlockObject: {fileID: 1670667095749121695, guid: aecbbfa5a5764a842b0ffb63f63f66c3,
+      type: 3}
+  - Name: IMSingleH
+    Height: 1
+    Width: 1
+    SpawnChance: 5
+    IsVertical: 0
+    IsImmovable: 1
+    BlockObject: {fileID: 1215945095555653725, guid: 6c214211fbae2bb439c59ff5f410042f,
+      type: 3}
+  - Name: IMSingleV
+    Height: 1
+    Width: 1
+    SpawnChance: 5
+    IsVertical: 1
+    IsImmovable: 1
+    BlockObject: {fileID: 6898889221447730336, guid: d0b877d863b2e1c4bab98df8b0aa5a7b,
+      type: 3}
+  - Name: PairH
+    Height: 1
+    Width: 2
+    SpawnChance: 5
+    IsVertical: 0
+    IsImmovable: 0
+    BlockObject: {fileID: 8765840255036826294, guid: cfaa6822767fed74790da8463456faa1,
+      type: 3}
+  - Name: PairV
+    Height: 2
+    Width: 1
+    SpawnChance: 5
+    IsVertical: 1
+    IsImmovable: 0
+    BlockObject: {fileID: 7973694255813936090, guid: 31fd099fbbc8eeb419f237e21f60b47a,
+      type: 3}
+  - Name: IMPairH
+    Height: 1
+    Width: 2
+    SpawnChance: 5
+    IsVertical: 0
+    IsImmovable: 1
+    BlockObject: {fileID: 2033723524782330936, guid: 39e2abb86b5d08b47be77ddfdd32f7f4,
+      type: 3}
+  - Name: IMPairV
+    Height: 2
+    Width: 1
+    SpawnChance: 5
+    IsVertical: 1
+    IsImmovable: 1
+    BlockObject: {fileID: 1932861054393750281, guid: 1937e2588ce61004b935022ea0fc53b4,
+      type: 3}
+  - Name: TripleH
+    Height: 1
+    Width: 3
+    SpawnChance: 5
+    IsVertical: 0
+    IsImmovable: 0
+    BlockObject: {fileID: 1742760784469687624, guid: 1485239f282ff0b4588071dd72ff813c,
+      type: 3}
+  - Name: TripleV
+    Height: 3
+    Width: 1
+    SpawnChance: 5
+    IsVertical: 1
+    IsImmovable: 0
+    BlockObject: {fileID: 5775837817204913171, guid: 98285e5b059ed604db7f45b003ccc787,
+      type: 3}
+  - Name: IMTripleH
+    Height: 1
+    Width: 3
+    SpawnChance: 5
+    IsVertical: 0
+    IsImmovable: 1
+    BlockObject: {fileID: 7517658477880504804, guid: 65436c6b9745d5c44835dda66933458b,
+      type: 3}
+  - Name: IMTripleV
+    Height: 3
+    Width: 1
+    SpawnChance: 5
+    IsVertical: 1
+    IsImmovable: 1
+    BlockObject: {fileID: 8370872954291148963, guid: e7331c5218242df4db926c7a1266dd89,
+      type: 3}
+  - Name: CubeH
+    Height: 2
+    Width: 2
+    SpawnChance: 5
+    IsVertical: 0
+    IsImmovable: 0
+    BlockObject: {fileID: 1952688880196344829, guid: 891f245c6610e38448449511b0e11be8,
+      type: 3}
+  - Name: CubeV
+    Height: 2
+    Width: 2
+    SpawnChance: 5
+    IsVertical: 1
+    IsImmovable: 0
+    BlockObject: {fileID: 7199676378480999837, guid: ec72e3f31e5487a4485521ead1ecdeda,
+      type: 3}
+  - Name: IMCubeH
+    Height: 2
+    Width: 2
+    SpawnChance: 5
+    IsVertical: 0
+    IsImmovable: 1
+    BlockObject: {fileID: 453434801688592368, guid: fa9285f016949924c8ba153679192973,
+      type: 3}
+  - Name: IMCubeV
+    Height: 2
+    Width: 2
+    SpawnChance: 5
+    IsVertical: 1
+    IsImmovable: 1
+    BlockObject: {fileID: 656042361494447174, guid: 2ce92ad611eae3045ae138820458d19d,
+      type: 3}
+  Immovables:
+  - Name: IMSingleH
+    Height: 1
+    Width: 1
+    SpawnChance: 5
+    IsVertical: 0
+    IsImmovable: 1
+    BlockObject: {fileID: 1215945095555653725, guid: 6c214211fbae2bb439c59ff5f410042f,
+      type: 3}
+  - Name: IMSingleV
+    Height: 1
+    Width: 1
+    SpawnChance: 5
+    IsVertical: 1
+    IsImmovable: 1
+    BlockObject: {fileID: 6898889221447730336, guid: d0b877d863b2e1c4bab98df8b0aa5a7b,
+      type: 3}
+  - Name: IMPairH
+    Height: 1
+    Width: 2
+    SpawnChance: 5
+    IsVertical: 0
+    IsImmovable: 1
+    BlockObject: {fileID: 2033723524782330936, guid: 39e2abb86b5d08b47be77ddfdd32f7f4,
+      type: 3}
+  - Name: IMPairV
+    Height: 2
+    Width: 1
+    SpawnChance: 5
+    IsVertical: 1
+    IsImmovable: 1
+    BlockObject: {fileID: 1932861054393750281, guid: 1937e2588ce61004b935022ea0fc53b4,
+      type: 3}
+  - Name: IMTripleH
+    Height: 1
+    Width: 3
+    SpawnChance: 5
+    IsVertical: 0
+    IsImmovable: 1
+    BlockObject: {fileID: 7517658477880504804, guid: 65436c6b9745d5c44835dda66933458b,
+      type: 3}
+  - Name: IMTripleV
+    Height: 3
+    Width: 1
+    SpawnChance: 5
+    IsVertical: 1
+    IsImmovable: 1
+    BlockObject: {fileID: 8370872954291148963, guid: e7331c5218242df4db926c7a1266dd89,
+      type: 3}
+  - Name: IMCubeH
+    Height: 2
+    Width: 2
+    SpawnChance: 5
+    IsVertical: 0
+    IsImmovable: 1
+    BlockObject: {fileID: 453434801688592368, guid: fa9285f016949924c8ba153679192973,
+      type: 3}
+  - Name: IMCubeV
+    Height: 2
+    Width: 2
+    SpawnChance: 5
+    IsVertical: 1
+    IsImmovable: 1
+    BlockObject: {fileID: 656042361494447174, guid: 2ce92ad611eae3045ae138820458d19d,
+      type: 3}
+  MidWidthOrLess:
+  - Name: SingleH
+    Height: 1
+    Width: 1
+    SpawnChance: 5
+    IsVertical: 0
+    IsImmovable: 0
+    BlockObject: {fileID: 6314424309019294015, guid: d6882802bd3b70c43a9e6e7d56fc0512,
+      type: 3}
+  - Name: SingleV
+    Height: 1
+    Width: 1
+    SpawnChance: 5
+    IsVertical: 1
+    IsImmovable: 0
+    BlockObject: {fileID: 1670667095749121695, guid: aecbbfa5a5764a842b0ffb63f63f66c3,
+      type: 3}
+  - Name: IMSingleH
+    Height: 1
+    Width: 1
+    SpawnChance: 5
+    IsVertical: 0
+    IsImmovable: 1
+    BlockObject: {fileID: 1215945095555653725, guid: 6c214211fbae2bb439c59ff5f410042f,
+      type: 3}
+  - Name: IMSingleV
+    Height: 1
+    Width: 1
+    SpawnChance: 5
+    IsVertical: 1
+    IsImmovable: 1
+    BlockObject: {fileID: 6898889221447730336, guid: d0b877d863b2e1c4bab98df8b0aa5a7b,
+      type: 3}
+  - Name: PairH
+    Height: 1
+    Width: 2
+    SpawnChance: 5
+    IsVertical: 0
+    IsImmovable: 0
+    BlockObject: {fileID: 8765840255036826294, guid: cfaa6822767fed74790da8463456faa1,
+      type: 3}
+  - Name: PairV
+    Height: 2
+    Width: 1
+    SpawnChance: 5
+    IsVertical: 1
+    IsImmovable: 0
+    BlockObject: {fileID: 7973694255813936090, guid: 31fd099fbbc8eeb419f237e21f60b47a,
+      type: 3}
+  - Name: IMPairH
+    Height: 1
+    Width: 2
+    SpawnChance: 5
+    IsVertical: 0
+    IsImmovable: 1
+    BlockObject: {fileID: 2033723524782330936, guid: 39e2abb86b5d08b47be77ddfdd32f7f4,
+      type: 3}
+  - Name: IMPairV
+    Height: 2
+    Width: 1
+    SpawnChance: 5
+    IsVertical: 1
+    IsImmovable: 1
+    BlockObject: {fileID: 1932861054393750281, guid: 1937e2588ce61004b935022ea0fc53b4,
+      type: 3}
+  - Name: TripleV
+    Height: 3
+    Width: 1
+    SpawnChance: 5
+    IsVertical: 1
+    IsImmovable: 0
+    BlockObject: {fileID: 5775837817204913171, guid: 98285e5b059ed604db7f45b003ccc787,
+      type: 3}
+  - Name: IMTripleV
+    Height: 3
+    Width: 1
+    SpawnChance: 5
+    IsVertical: 1
+    IsImmovable: 1
+    BlockObject: {fileID: 8370872954291148963, guid: e7331c5218242df4db926c7a1266dd89,
+      type: 3}
+  - Name: CubeH
+    Height: 2
+    Width: 2
+    SpawnChance: 5
+    IsVertical: 0
+    IsImmovable: 0
+    BlockObject: {fileID: 1952688880196344829, guid: 891f245c6610e38448449511b0e11be8,
+      type: 3}
+  - Name: CubeV
+    Height: 2
+    Width: 2
+    SpawnChance: 5
+    IsVertical: 1
+    IsImmovable: 0
+    BlockObject: {fileID: 7199676378480999837, guid: ec72e3f31e5487a4485521ead1ecdeda,
+      type: 3}
+  - Name: IMCubeH
+    Height: 2
+    Width: 2
+    SpawnChance: 5
+    IsVertical: 0
+    IsImmovable: 1
+    BlockObject: {fileID: 453434801688592368, guid: fa9285f016949924c8ba153679192973,
+      type: 3}
+  - Name: IMCubeV
+    Height: 2
+    Width: 2
+    SpawnChance: 5
+    IsVertical: 1
+    IsImmovable: 1
+    BlockObject: {fileID: 656042361494447174, guid: 2ce92ad611eae3045ae138820458d19d,
+      type: 3}
+  LowWidth:
+  - Name: SingleH
+    Height: 1
+    Width: 1
+    SpawnChance: 5
+    IsVertical: 0
+    IsImmovable: 0
+    BlockObject: {fileID: 6314424309019294015, guid: d6882802bd3b70c43a9e6e7d56fc0512,
+      type: 3}
+  - Name: SingleV
+    Height: 1
+    Width: 1
+    SpawnChance: 5
+    IsVertical: 1
+    IsImmovable: 0
+    BlockObject: {fileID: 1670667095749121695, guid: aecbbfa5a5764a842b0ffb63f63f66c3,
+      type: 3}
+  - Name: IMSingleH
+    Height: 1
+    Width: 1
+    SpawnChance: 5
+    IsVertical: 0
+    IsImmovable: 1
+    BlockObject: {fileID: 1215945095555653725, guid: 6c214211fbae2bb439c59ff5f410042f,
+      type: 3}
+  - Name: IMSingleV
+    Height: 1
+    Width: 1
+    SpawnChance: 5
+    IsVertical: 1
+    IsImmovable: 1
+    BlockObject: {fileID: 6898889221447730336, guid: d0b877d863b2e1c4bab98df8b0aa5a7b,
+      type: 3}
+  - Name: PairV
+    Height: 2
+    Width: 1
+    SpawnChance: 5
+    IsVertical: 1
+    IsImmovable: 0
+    BlockObject: {fileID: 7973694255813936090, guid: 31fd099fbbc8eeb419f237e21f60b47a,
+      type: 3}
+  - Name: IMPairV
+    Height: 2
+    Width: 1
+    SpawnChance: 5
+    IsVertical: 1
+    IsImmovable: 1
+    BlockObject: {fileID: 1932861054393750281, guid: 1937e2588ce61004b935022ea0fc53b4,
+      type: 3}
+  - Name: TripleV
+    Height: 3
+    Width: 1
+    SpawnChance: 5
+    IsVertical: 1
+    IsImmovable: 0
+    BlockObject: {fileID: 5775837817204913171, guid: 98285e5b059ed604db7f45b003ccc787,
+      type: 3}
+  - Name: IMTripleV
+    Height: 3
+    Width: 1
+    SpawnChance: 5
+    IsVertical: 1
+    IsImmovable: 1
+    BlockObject: {fileID: 8370872954291148963, guid: e7331c5218242df4db926c7a1266dd89,
+      type: 3}

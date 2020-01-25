@@ -29,6 +29,4 @@ public class SaveNode
     public static void GameOver() {
         FirstRunCompleted = false;
     }
-
-    //on
 }

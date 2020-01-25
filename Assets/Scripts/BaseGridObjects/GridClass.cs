@@ -72,7 +72,15 @@ public class GridClass
         Vector2 diff = worldPos - origin;
         int x = Mathf.RoundToInt(diff.x / step);
         int y = Mathf.RoundToInt(diff.y / step);
-        return cells[x, y];
+        Cell resultCell = null;
+        try {
+            resultCell = cells[x, y];
+        }
+        catch
+        {
+            Debug.Log("Cells " + x + " & " + y + " don't exist");
+        }
+        return resultCell;
     }
 
     public Vector2 GetCellWorldPosition(Cell cell) {
