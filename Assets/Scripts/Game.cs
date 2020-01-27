@@ -128,7 +128,7 @@ public class Game : MonoBehaviour
         }
         else
         {
-            SpawnLevel(CombinedGrid.halfHeight, LevelManager.Instance.CreateNewLevel());
+            SpawnLevel(CombinedGrid.height, LevelManager.Instance.CreateNewLevel());
         }
         
         count++;
@@ -146,7 +146,7 @@ public class Game : MonoBehaviour
         {
             try
             {
-                SpawnLevel(CombinedGrid.halfHeight, LevelManager.Instance.CreateNewLevel());
+                SpawnLevel(CombinedGrid.height, LevelManager.Instance.CreateNewLevel());
             }
             finally {
                 Debug.Log("Level spawn with key "+ count);

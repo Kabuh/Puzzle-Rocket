@@ -12,7 +12,7 @@ public class GridClass
     public float step;
     public Vector2 origin;
 
-    public int halfHeight;
+    private int halfHeight;
 
     public GridClass(int width, int height, float step, string name)
     {
