@@ -1,8 +1,12 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 
-[CreateAssetMenu(fileName = "Time Stop", menuName = "Boosters/Time Stop")]
-public class TimeStop : BoosterType
+public class TimeStop : Booster
 {
+    public override string BoosterName => "TimeStop";
+    public override int MaxInInventory => 0;
+
     public float timePauseDuration = 3f;
 
     public override void Activate(Cell cell)

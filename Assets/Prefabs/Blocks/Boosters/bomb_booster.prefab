@@ -75,23 +75,12 @@ PrefabInstance:
     - target: {fileID: 1585680118513997222, guid: 53fc56f3c2466064e9afc8eb06b69b5c,
         type: 3}
       propertyPath: boosterType
-      value: 
-      objectReference: {fileID: 11400000, guid: 16474927f9b5d8647b8c684e46365105,
-        type: 2}
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3630599782737016405, guid: 53fc56f3c2466064e9afc8eb06b69b5c,
         type: 3}
       propertyPath: m_IsTrigger
       value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 925106630918641065, guid: 53fc56f3c2466064e9afc8eb06b69b5c,
-        type: 3}
-      propertyPath: m_Name
-      value: booster_image
-      objectReference: {fileID: 0}
-    - target: {fileID: 925106630918641065, guid: 53fc56f3c2466064e9afc8eb06b69b5c,
-        type: 3}
-      propertyPath: m_Layer
-      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 4498297852570939312, guid: 53fc56f3c2466064e9afc8eb06b69b5c,
         type: 3}
@@ -102,6 +91,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalScale.y
       value: 4.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 925106630918641065, guid: 53fc56f3c2466064e9afc8eb06b69b5c,
+        type: 3}
+      propertyPath: m_Name
+      value: booster_image
+      objectReference: {fileID: 0}
+    - target: {fileID: 925106630918641065, guid: 53fc56f3c2466064e9afc8eb06b69b5c,
+        type: 3}
+      propertyPath: m_Layer
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 7284411506365973117, guid: 53fc56f3c2466064e9afc8eb06b69b5c,
         type: 3}

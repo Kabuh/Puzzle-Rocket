@@ -10,6 +10,8 @@ public class Inventory : MonoBehaviour
 
     [SerializeField] private int slotsCount = 4;
 
+    [SerializeField] private int[] slotCosts = null;
+
     [SerializeField] private Text[] slotTexts = null;
 
     [SerializeField] private Button[] buttons = null;
@@ -21,6 +23,7 @@ public class Inventory : MonoBehaviour
     private Slot nextSlotToUnlock;
     private Button nextButtonToUnlock;
 
+    private int coinsCount;
     private int buttonCounter;
 
     private bool isUseOfBoosterAllowed = true;    
@@ -45,6 +48,7 @@ public class Inventory : MonoBehaviour
             slots[i] = new Slot();
             slots[i].index = i;
             slots[i].slotText = slotTexts[i];
+            slots[i].coinsToUnlock = slotCosts[i];
             slots[i].UpdateSlotText();
         }
         buttonCounter = 1;
@@ -78,7 +82,12 @@ public class Inventory : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Alpha4))
         {
             OnSlotTouch(3);
-        }        
+        }
+
+        if (Input.GetKeyDown(KeyCode.Alpha5))
+        {
+            AddCoins(1);
+        }
 
         //if (Input.GetKeyDown(KeyCode.T))
         //{
@@ -122,13 +131,39 @@ public class Inventory : MonoBehaviour
 
     public void UnlockSlot(Slot slot)
     {
+        //if (coinsCount >= slotCosts[slotIndex])
+        //{
+        //    slots[slotIndex].isUnlocked = true;
+        //    coinsCount -= slotCosts[slotIndex];
+        //    // visual changes
+        //    slots[slotIndex].UpdateSlotText();
+        //}
+
         slot.isUnlocked = true;        
         // visual changes
         slot.UpdateSlotText();
-    }    
+    }
+
+    public void AddCoins(int amount)
+    {
+        //coinsCount += amount;
+        nextSlotToUnlock.coinsToUnlock -= amount;
+        nextSlotToUnlock.UpdateSlotText();
+        if(nextSlotToUnlock.coinsToUnlock<=0)
+        {
+            UnlockSlot(nextSlotToUnlock);
+            nextButtonToUnlock.interactable = true;
+            if (nextSlotToUnlock.index < slots.Length - 1)
+            {
+                buttonCounter++;
+                nextSlotToUnlock = slots[buttonCounter];
+                nextButtonToUnlock = buttons[buttonCounter];
+            }
+        }
+    }
 
     //after collide booster handler
-    public void TryAddBooster(BoosterType booster, Cell boosterCell, Sprite sprite)
+    public void TryAddBooster(Booster booster, Cell boosterCell, Sprite sprite)
     {
         Slot emptySlot = null;
 
@@ -158,7 +193,7 @@ public class Inventory : MonoBehaviour
         }
 
 
-        if (emptySlot != null && booster.maxInInventory > 0)
+        if (emptySlot != null && booster.MaxInInventory > 0)
         {
             FillSlot(emptySlot, booster);
             artNotch[emptySlot.index].sprite = sprite;
@@ -201,13 +236,13 @@ public class Inventory : MonoBehaviour
         }
     }    
 
-    private void FillSlot(Slot slot, BoosterType booster)
+    private void FillSlot(Slot slot, IBooster booster)
     {
 
 
         slot.boosterType = booster;
         slot.boostersCount++;
-        slot.maxBoosters = booster.maxInInventory;
+        slot.maxBoosters = booster.MaxInInventory;
 
         slot.UpdateSlotText();
     }

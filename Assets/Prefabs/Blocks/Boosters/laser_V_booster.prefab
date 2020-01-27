@@ -75,9 +75,8 @@ PrefabInstance:
     - target: {fileID: 4909039665050770489, guid: 6e9e5cc223212b64e817261384981249,
         type: 3}
       propertyPath: boosterType
-      value: 
-      objectReference: {fileID: 11400000, guid: f302cff818b974f4ebb7ee4ef06ca90e,
-        type: 2}
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 7803669610069157423, guid: 6e9e5cc223212b64e817261384981249,
         type: 3}
       propertyPath: m_LocalRotation.x

@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName ="BigBomb",menuName = "Boosters/BigBomb")]
 public class BigBomb : Bomb
 {
+    public override string BoosterName => "Big Bomb";
+    public override int MaxInInventory => 1;
+
     public override void Activate(Cell cell)
     {
         playerBlock = Game.Instance.Player.playerBlock;
