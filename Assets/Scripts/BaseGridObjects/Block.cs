@@ -43,8 +43,6 @@ public class Block : MonoBehaviour, ISpawnable
         }
 
         Game.AllDestruction += SelfDestroy;
-        Game.LowerDestruction += DestroyIfLower;
-        Game.CellLevelShift += ChangeCellsLevel;
 
         sprite = artChild.GetComponent<SpriteRenderer>().sprite;
     }
@@ -107,14 +105,6 @@ public class Block : MonoBehaviour, ISpawnable
     {
         StartCoroutine(Moving(closestCellPosition));
     }
-    
-    public void ChangeCellsLevel()
-    {
-        foreach (var item in elements)
-        {
-            item.ChangeCellLevel();
-        }
-    }
 
     //actual movement coroutine
     IEnumerator Moving(Vector3 destination){
@@ -135,25 +125,6 @@ public class Block : MonoBehaviour, ISpawnable
         isMoving = false;
     }
 
-    public bool ShouldBeDestroyed()
-    {
-        foreach(Element e in elements)
-        {
-            if (e.myCell.YPos <= 7) {
-                return true;
-            } 
-        }
-        return false;
-    }
-
-    public void DestroyIfLower()
-    {
-        if(ShouldBeDestroyed() && !IsPlayer)
-        {
-            SelfDestroy();
-        }
-    }
-
     public void SelfDestroy()
     {
         foreach (var item in elements)
@@ -163,8 +134,6 @@ public class Block : MonoBehaviour, ISpawnable
         }
 
         Game.AllDestruction -= SelfDestroy;
-        Game.LowerDestruction -= DestroyIfLower;
-        Game.CellLevelShift -= ChangeCellsLevel;
 
         Destroy(gameObject);
     }

@@ -16,9 +16,7 @@ public class BoosterObject : MonoBehaviour, ISpawnable
     {
         SetCell();
 
-        Game.LowerDestruction += DestroyIfLower;
         Game.AllDestruction += SelfDestroy;
-        Game.CellLevelShift += ChangeCellsLevel;
         sprite = artChild.GetComponent<SpriteRenderer>().sprite;
     }
 
@@ -47,30 +45,13 @@ public class BoosterObject : MonoBehaviour, ISpawnable
 
     public void SelfDestroy()
     {
-        Game.LowerDestruction -= DestroyIfLower;
         Game.AllDestruction -= SelfDestroy;
-        Game.CellLevelShift -= ChangeCellsLevel;
 
         Destroy(this.gameObject);
-    }
-
-    public bool ShouldBeDestroyed()
-    {
-        if (myCell.YPos <= 7)
-            return true;
-        return false;
-    }
+    }    
 
     public void ChangeCellsLevel()
     {
         myCell = Game.Instance.CombinedGrid.cells[myCell.XPos, myCell.YPos - 8];
-    }
-
-    public void DestroyIfLower()
-    {
-        if(ShouldBeDestroyed())
-        {
-            SelfDestroy();
-        }
-    }
+    }    
 }

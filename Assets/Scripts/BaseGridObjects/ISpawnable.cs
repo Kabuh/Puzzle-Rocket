@@ -1,7 +1,4 @@
 ﻿public interface ISpawnable
 {
-    void SelfDestroy();
-    void DestroyIfLower();
-    bool ShouldBeDestroyed();
-    void ChangeCellsLevel();
+    void SelfDestroy();    
 }

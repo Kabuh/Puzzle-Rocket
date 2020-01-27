@@ -24,12 +24,5 @@ public class Element : MonoBehaviour
     public Cell GetNeighbourCell(Directions dir, int jump)            
     {
         return myCell.GridClass.GetNeighbour(dir, myCell, jump);
-    }    
-
-    public void ChangeCellLevel()                           //something about seamless level switch???
-    {
-        myCell = Game.Instance.CombinedGrid.cells[myCell.XPos, myCell.YPos - 8];
-        myCell.Element = this;
-        myCell.IsEmpty = false;
     }
 }

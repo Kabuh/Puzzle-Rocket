@@ -29,8 +29,6 @@ public class Game : MonoBehaviour
     public static event GameScriptEvents PlayerDead;
 
     public static event GameScriptEvents AllDestruction;
-    public static event GameScriptEvents LowerDestruction;
-    public static event GameScriptEvents CellLevelShift;
 
     public static event GameScriptEvents ExplosionEnded;
 
@@ -78,11 +76,8 @@ public class Game : MonoBehaviour
         {
             designer.ClearLevel();
             Player.gameObject.SetActive(true);
-            designer.background.SetActive(false);
-
-            
+            designer.background.SetActive(false);            
         }
-        CameraS.CreateLevel += SpawnNewLevel;
 
         if (isTestMode)
         {
@@ -141,10 +136,8 @@ public class Game : MonoBehaviour
 
     public void SpawnNewLevel()
     {
-        LowerDestruction();
         CombinedGrid.AddOffsetToOrigin();
         CombinedGrid.ShiftGrid();
-        CellLevelShift();
         if (isDesigner)
         {
             //SpawnLevel(CombinedGrid.halfHeight * count, LevelManager.Instance.levels[designer.currentLevelName]);

@@ -31,33 +31,37 @@ public class CameraS : MonoBehaviour
     int gridHeight;
     bool camCheat = false;
     Vector2 origin;
-
-    public delegate void CameraEvents();
-    public static event CameraEvents CreateLevel;
-
+    
     private void Start()
     {
         speed = defaultSpeed;
-        gridHeight = Game.Instance.CombinedGrid.halfHeight;
+        gridHeight = Game.Instance.CombinedGrid.height;
         origin = Game.Instance.CombinedGrid.origin;
-
-        transform.position = new Vector3(0f, origin.y + Game.Instance.CombinedGrid.step * cameraStartCellIndex, -10f);
+        ResetPosition();
     }
 
     private void Update()
     {
-        transform.Translate(0f, speed * Time.deltaTime, 0f);
-        if (transform.position.y >= currentLevel * gridHeight)
+        if (transform.position.y <= origin.y + Game.Instance.CombinedGrid.step * (gridHeight-5))
         {
-            CreateLevel();
-            currentLevel++;
+            transform.Translate(0f, speed * Time.deltaTime, 0f);
         }
+        //if (transform.position.y >= currentLevel * gridHeight)
+        //{
+        //    CreateLevel();
+        //    currentLevel++;
+        //}
     }
 
     public void ResetCamera()
     {
         currentLevel = 1;
-        transform.position = new Vector3(0f, 0f, -10f);
+        ResetPosition();
+    }
+
+    private void ResetPosition()
+    {
+        transform.position = new Vector3(0f, origin.y + Game.Instance.CombinedGrid.step * cameraStartCellIndex, -10f);
     }
 
     public void StopSpeed() {
