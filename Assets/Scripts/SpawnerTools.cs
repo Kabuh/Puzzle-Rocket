@@ -11,10 +11,10 @@ public static class SpawnerTools
             currentSum += valueLib[i];
             if (x < currentSum)
             {
-                return ++i;
+                return i;
             }
         }
-        Debug.LogError("Chance float array has false data");
+        Debug.LogError("Chance float array has false data " + valueLib.Length + " "+ valueLib[0]);
         return 0;
     }
 
@@ -26,6 +26,14 @@ public static class SpawnerTools
             Sum += array[i];
         }
         return Sum;
+    }
+
+    public static void CopyArray(float[] arrayDonor, float[] arrayRecepient)
+    {
+        for (int i = 0; i < arrayDonor.Length; i++)
+        {
+            arrayRecepient[i] = arrayDonor[i];
+        }
     }
 
     public static bool BinaryRandom(float chance)
