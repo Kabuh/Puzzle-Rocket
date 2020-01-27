@@ -1,15 +1,10 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
-public class LaserH : Booster
-
+[CreateAssetMenu(fileName = "Laser Horizontal", menuName = "Boosters/Lazer Horizontal")]
+public class LaserH : BoosterType
 {
     protected List<Block> BlocksToDestroy;
-
-    public override string BoosterName => "Port lasers";
-    public override int MaxInInventory => 3;
-
     protected Block playerBlock;
 
     public override void Activate(Cell cell)
@@ -20,10 +15,12 @@ public class LaserH : Booster
         Cut(cell, Axis.Horizontal);
     }
 
-    protected void GetBlocks(Cell myCell, Axis axis) {
+    protected void GetBlocks(Cell myCell, Axis axis)
+    {
         BlocksToDestroy = new List<Block>();
 
-        if (axis == Axis.Horizontal) {
+        if (axis == Axis.Horizontal)
+        {
             int OriginX = myCell.XPos;
 
             for (int i = -2; i <= 2; i++)
@@ -65,7 +62,8 @@ public class LaserH : Booster
 
     }
 
-    protected void Cut(Cell cell, Axis axis) {
+    protected void Cut(Cell cell, Axis axis)
+    {
         AnimationFX.Instance.PlayLaserFx(cell.GridClass.GetCellWorldPosition(cell), axis);
         foreach (Block item in BlocksToDestroy)
         {

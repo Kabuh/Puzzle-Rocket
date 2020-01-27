@@ -5,7 +5,7 @@ public static class DatabaseProvider
     private static Database databaseAsset;
 
     // lazy initialization
-    public static Database Asset
+    public static Database Database
     {
         get
         {

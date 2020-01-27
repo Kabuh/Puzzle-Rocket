@@ -40,18 +40,18 @@ public class Database : ScriptableObject
     #region Boosters Settings
 
     [Header("Boosters Settings")]
-    public BoosterTypes Bomb;
-    public BoosterTypes BigBomb;
-    public BoosterTypes LaserH;
-    public BoosterTypes LaserV;
-    public BoosterTypes TimeSlow;
-    public BoosterTypes TimeStop;
-    public BoosterTypes Missile;
-    public BoosterTypes Shrink;
-    public BoosterTypes Breaker;
-    public BoosterTypes Teleport;
-    public BoosterTypes ImmovableSwitch;
-    public BoosterTypes ImmovalbeDestroyer;
+    public BoosterType Bomb;
+    public BoosterType BigBomb;
+    public BoosterType LaserH;
+    public BoosterType LaserV;
+    public BoosterType TimeSlow;
+    public BoosterType TimeStop;
+    public BoosterType Shot;
+    public BoosterType Shrink;
+    public BoosterType Breaker;
+    public BoosterType Teleport;
+    public BoosterType ImmovableSwitch;
+    public BoosterType ImmovalbeDestroyer;
 
     #endregion
 

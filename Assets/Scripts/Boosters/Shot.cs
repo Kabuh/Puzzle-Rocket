@@ -1,12 +1,8 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-public class Shot : Booster
-{
-    public override string BoosterName => "Missile Shot";
-    public override int MaxInInventory => 5;
-
+[CreateAssetMenu(fileName = "Shot", menuName = "Boosters/Shot")]
+public class Shot : BoosterType
+{    
     protected Block playerBlock;
     Block targetBlock;
 
@@ -17,11 +13,15 @@ public class Shot : Booster
         Explode(cell);
     }
 
-    void GetTargetBlock(Cell myCell) {
+    void GetTargetBlock(Cell myCell)
+    {
         Block newTarget = null;
-        for (int y = myCell.YPos+1; y < myCell.GridClass.height; y++) {
-            if (!myCell.GridClass.cells[myCell.XPos, y].IsEmpty) {
-                if (myCell.GridClass.cells[myCell.XPos, y].Element.myBlock != playerBlock) {
+        for (int y = myCell.YPos+1; y < myCell.GridClass.height; y++)
+        {
+            if (!myCell.GridClass.cells[myCell.XPos, y].IsEmpty)
+            {
+                if (myCell.GridClass.cells[myCell.XPos, y].Element.myBlock != playerBlock)
+                {
                     newTarget = myCell.GridClass.cells[myCell.XPos, y].Element?.myBlock;
                     break;
                 }
@@ -34,12 +34,14 @@ public class Shot : Booster
         }
     }
 
-    void Explode(Cell cell) {
+    void Explode(Cell cell)
+    {
         if (targetBlock != null)
         {
             AnimationFX.Instance.PlayShootingAnimation(cell.GridClass.GetCellWorldPosition(cell), targetBlock);
         }
-        else {
+        else
+        {
             AnimationFX.Instance.PlayFakeShooting(cell.GridClass.GetCellWorldPosition(cell));
         }
 
