@@ -126,8 +126,8 @@ public class LevelManager : MonoBehaviour
     }
 
     public void HubLevelCreator() {
-        levelDataItems.Add(new LevelDataItem("ChoiseBlock", 0, CreatorGrid.halfHeight - 3, "UI"));
-        levelDataItems.Add(new LevelDataItem("ChoiseBlock", CreatorGrid.width - 2, CreatorGrid.halfHeight - 3, "UI"));
+        levelDataItems.Add(new LevelDataItem("ChoiseBlock", 0, CreatorGrid.height/2 - 3, "UI"));
+        levelDataItems.Add(new LevelDataItem("ChoiseBlock", CreatorGrid.width - 2, CreatorGrid.height/2 - 3, "UI"));
     }
 
     void RandomLevelCreator() {
