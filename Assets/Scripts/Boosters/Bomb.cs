@@ -1,15 +1,12 @@
 ﻿using System.Collections.Generic;
+using UnityEngine;
 
-
-public class Bomb : Booster
+[CreateAssetMenu(fileName = "Bomb", menuName = "Boosters/Bomb")]
+public class Bomb : BoosterType
 {
-    protected List<Block> BlocksToDestroy;
+    protected List<Block> BlocksToDestroy;    
 
-    public override string BoosterName => "Small Bomb";
-    public override int MaxInInventory => 3;
-
-    protected Block playerBlock;
-    
+    protected Block playerBlock;    
     
     public override void Activate(Cell cell)
     {
