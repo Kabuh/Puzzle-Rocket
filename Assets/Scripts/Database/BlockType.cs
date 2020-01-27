@@ -1,42 +1,22 @@
-﻿using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 [System.Serializable]
 public class BlockType
 {
-    public string Name;
-    public BlockType ParentBlockType;
-    public int Height;
-    public int Width;
+    public string name;
+    public int height;
+    public int width;
     public float SpawnChance;
-    public bool IsVertical;
-    public bool IsImmovable;
-    public GameObject BlockObject;
+    public bool isVertical;
+    public GameObject blockObject;
 
-    //public BlockType(string name, BlockType parentBlockType, int height, int width, float spawnChance, bool isVertical, bool isImmovable, GameObject blockObject)
-    //{
-    //    Debug.Log("boop");
-    //    Name = name;
-    //    ParentBlockType = parentBlockType;
-    //    Height = height;
-    //    Width = width;
-    //    if (width <= 2) {
-    //        if (width <= 1)
-    //        {
-    //            LowWidth.Add(this);
-    //        }
-    //        MidWidthOrLess.Add(this);
-    //    }
-
-    //    SpawnChance = spawnChance;
-    //    IsVertical = isVertical;
-    //    IsImmovable = isImmovable;
-    //    if (IsImmovable == true) {
-    //        SpawnChance = parentBlockType.SpawnChance * Database.immovableChanceMultiplier;
-    //        Immovables.Add(this);
-    //    }
-    //    BlockObject = blockObject;
-
-    //    All.Add(this);
-    //}
+    public BlockType(string n, int h, int w, float sc, bool isV, GameObject bO)
+    {
+        name = n;
+        height = h;
+        width = w;
+        SpawnChance = sc;
+        isVertical = isV;
+        blockObject = bO;
+    }
 }
