@@ -106,22 +106,22 @@ public class LevelManager : MonoBehaviour
 
         CoordinatesData = new List<int[]>(AllCellCoordinates);
 
-        allBlockTypesChanceAggregate = new float[DatabaseProvider.Asset.All.Count];
+        allBlockTypesChanceAggregate = new float[DatabaseProvider.Database.All.Count];
         for (int i = 0; i < allBlockTypesChanceAggregate.Length; i++)
         {
-            allBlockTypesChanceAggregate[i] = DatabaseProvider.Asset.All[i].SpawnChance;
+            allBlockTypesChanceAggregate[i] = DatabaseProvider.Database.All[i].SpawnChance;
         }
 
-        MidBlockTypesChanceAggregate = new float[DatabaseProvider.Asset.MidWidthOrLess.Count];
+        MidBlockTypesChanceAggregate = new float[DatabaseProvider.Database.MidWidthOrLess.Count];
         for (int i = 0; i < MidBlockTypesChanceAggregate.Length; i++)
         {
-            MidBlockTypesChanceAggregate[i] = DatabaseProvider.Asset.MidWidthOrLess[i].SpawnChance;
+            MidBlockTypesChanceAggregate[i] = DatabaseProvider.Database.MidWidthOrLess[i].SpawnChance;
         }
 
-        ThinBlockTypesChanceAggregate = new float[DatabaseProvider.Asset.LowWidth.Count];
+        ThinBlockTypesChanceAggregate = new float[DatabaseProvider.Database.LowWidth.Count];
         for (int i = 0; i < ThinBlockTypesChanceAggregate.Length; i++)
         {
-            ThinBlockTypesChanceAggregate[i] = DatabaseProvider.Asset.LowWidth[i].SpawnChance;
+            ThinBlockTypesChanceAggregate[i] = DatabaseProvider.Database.LowWidth[i].SpawnChance;
         }
     }
 
@@ -144,7 +144,7 @@ public class LevelManager : MonoBehaviour
     {
         
         projectedSpace = item[0];
-        if (SpawnerTools.BinaryRandom(DatabaseProvider.Asset.spawnNothing) == false) {
+        if (SpawnerTools.BinaryRandom(DatabaseProvider.Database.spawnNothing) == false) {
             BlockCasing(projectedSpace, item);
 
 
@@ -159,13 +159,13 @@ public class LevelManager : MonoBehaviour
             case 0:
             case 1:
             case 2:
-                chosenBlock = DatabaseProvider.Asset.All[SpawnerTools.ComplexRando(allBlockTypesChanceAggregate, 0)];
+                chosenBlock = DatabaseProvider.Database.All[SpawnerTools.ComplexRando(allBlockTypesChanceAggregate, 0)];
                 break;
             case 3:
-                chosenBlock = DatabaseProvider.Asset.MidWidthOrLess[SpawnerTools.ComplexRando(MidBlockTypesChanceAggregate, 0)];
+                chosenBlock = DatabaseProvider.Database.MidWidthOrLess[SpawnerTools.ComplexRando(MidBlockTypesChanceAggregate, 0)];
                 break;
             case 4:
-                chosenBlock = DatabaseProvider.Asset.LowWidth[SpawnerTools.ComplexRando(ThinBlockTypesChanceAggregate, 0)];
+                chosenBlock = DatabaseProvider.Database.LowWidth[SpawnerTools.ComplexRando(ThinBlockTypesChanceAggregate, 0)];
                 break;
 
             default:
