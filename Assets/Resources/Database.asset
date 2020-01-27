@@ -1198,3 +1198,128 @@ MonoBehaviour:
     IsImmovable: 1
     BlockObject: {fileID: 8370872954291148963, guid: e7331c5218242df4db926c7a1266dd89,
       type: 3}
+=======
+  SingleH:
+    name: 
+    height: 0
+    width: 0
+    SpawnChance: 0
+    isVertical: 0
+    blockObject: {fileID: 0}
+  SingleV:
+    name: 
+    height: 0
+    width: 0
+    SpawnChance: 0
+    isVertical: 0
+    blockObject: {fileID: 0}
+  IM_SingleH:
+    name: 
+    height: 0
+    width: 0
+    SpawnChance: 0
+    isVertical: 0
+    blockObject: {fileID: 0}
+  IM_SingleV:
+    name: 
+    height: 0
+    width: 0
+    SpawnChance: 0
+    isVertical: 0
+    blockObject: {fileID: 0}
+  PairH:
+    name: 
+    height: 0
+    width: 0
+    SpawnChance: 0
+    isVertical: 0
+    blockObject: {fileID: 0}
+  PairV:
+    name: 
+    height: 0
+    width: 0
+    SpawnChance: 0
+    isVertical: 0
+    blockObject: {fileID: 0}
+  IM_PairH:
+    name: 
+    height: 0
+    width: 0
+    SpawnChance: 0
+    isVertical: 0
+    blockObject: {fileID: 0}
+  IM_PairV:
+    name: 
+    height: 0
+    width: 0
+    SpawnChance: 0
+    isVertical: 0
+    blockObject: {fileID: 0}
+  TripleH:
+    name: 
+    height: 0
+    width: 0
+    SpawnChance: 0
+    isVertical: 0
+    blockObject: {fileID: 0}
+  TripleV:
+    name: 
+    height: 0
+    width: 0
+    SpawnChance: 0
+    isVertical: 0
+    blockObject: {fileID: 0}
+  IM_TripleH:
+    name: 
+    height: 0
+    width: 0
+    SpawnChance: 0
+    isVertical: 0
+    blockObject: {fileID: 0}
+  IM_TripleV:
+    name: 
+    height: 0
+    width: 0
+    SpawnChance: 0
+    isVertical: 0
+    blockObject: {fileID: 0}
+  CubeH:
+    name: 
+    height: 0
+    width: 0
+    SpawnChance: 0
+    isVertical: 0
+    blockObject: {fileID: 0}
+  CubeV:
+    name: 
+    height: 0
+    width: 0
+    SpawnChance: 0
+    isVertical: 0
+    blockObject: {fileID: 0}
+  IM_CubeH:
+    name: 
+    height: 0
+    width: 0
+    SpawnChance: 0
+    isVertical: 0
+    blockObject: {fileID: 0}
+  IM_CubeV:
+    name: 
+    height: 0
+    width: 0
+    SpawnChance: 0
+    isVertical: 0
+    blockObject: {fileID: 0}
+  Bomb: {fileID: 11400000, guid: 16474927f9b5d8647b8c684e46365105, type: 2}
+  BigBomb: {fileID: 11400000, guid: ba24952322ddfbe4a825e6609fc10aed, type: 2}
+  LaserH: {fileID: 11400000, guid: 31f6b413f97eca944a791c5d31f927c9, type: 2}
+  LaserV: {fileID: 11400000, guid: f302cff818b974f4ebb7ee4ef06ca90e, type: 2}
+  TimeSlow: {fileID: 0}
+  TimeStop: {fileID: 11400000, guid: 8f56e506c1c9d8a42be7d210777b186a, type: 2}
+  Shot: {fileID: 11400000, guid: a4b4b5847c88e27468df824f64634294, type: 2}
+  Shrink: {fileID: 0}
+  Breaker: {fileID: 0}
+  Teleport: {fileID: 11400000, guid: 7f2febd236f0b1a44b74d405ce4c5504, type: 2}
+  ImmovableSwitch: {fileID: 0}
+  ImmovalbeDestroyer: {fileID: 0}
