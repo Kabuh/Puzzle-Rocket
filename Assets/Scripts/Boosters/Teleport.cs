@@ -1,9 +1,12 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 
-[CreateAssetMenu(fileName = "Teleport", menuName = "Boosters/Teleport")]
-public class Teleport : BoosterType
-{ 
+public class Teleport : Booster
+{
+    public override string BoosterName => "Teleport";
+
+    public override int MaxInInventory => 1;
+
     private Camera cam;
     private GridClass grid;
 

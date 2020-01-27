@@ -53,7 +53,7 @@ public class ChoiseBlockClass : MonoBehaviour
     {
 
         BoosterSprite = booster.artChild.GetComponent<SpriteRenderer>().sprite;
-        if (booster.boosterType == DatabaseProvider.Database.TimeStop) {
+        if (booster.boosterType == BoosterType.TimeStop) {
             boosterSprite.transform.localScale = new Vector2(0.5f, 0.5f);
         }
     }

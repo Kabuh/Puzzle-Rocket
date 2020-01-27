@@ -27,7 +27,7 @@ public class BoosterObject : MonoBehaviour, ISpawnable
         playerBlock = collision.gameObject.GetComponent<Block>();
         if (playerBlock != null)
         {
-            Inventory.Instance.TryAddBooster(boosterType, myCell, sprite);
+            Inventory.Instance.TryAddBooster(BoosterManager.Instance.boosters[boosterType], myCell, sprite);
         }
 
         SelfDestroy();

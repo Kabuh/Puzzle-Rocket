@@ -1,8 +1,12 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 
-[CreateAssetMenu(fileName = "Laser Vertical", menuName = "Boosters/Lazer Vertical")]
 public class LaserV : LaserH
 {
+    public override string BoosterName => "Frontal lasers";
+    public override int MaxInInventory => 3;
+
     public override void Activate(Cell cell)
     {
         playerBlock = Game.Instance.Player.playerBlock;

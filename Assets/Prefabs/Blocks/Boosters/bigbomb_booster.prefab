@@ -70,9 +70,8 @@ PrefabInstance:
     - target: {fileID: 4074826607973429873, guid: 8e8318ff37c67db449ec02fbe2a3a4b6,
         type: 3}
       propertyPath: boosterType
-      value: 
-      objectReference: {fileID: 11400000, guid: ba24952322ddfbe4a825e6609fc10aed,
-        type: 2}
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4074826607973429873, guid: 8e8318ff37c67db449ec02fbe2a3a4b6,
         type: 3}
       propertyPath: artChild
